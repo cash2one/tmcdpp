@@ -26,14 +26,17 @@ class LiveModel(DbBase):
 
     def get_live_list(self,gid):
     	"""根据赛事id 获取赛事实况列表"""
-    	live_list =  self.find_data(['*'],order='time desc',gid=gid,status=0)
+        if int(gid):
+    	   live_list =  self.find_data(['*'],order='time desc',gid=gid,status=0)
+        else:
+            live_list = self.find_data(['*'],order='time desc',status=0)
     	for index,live in enumerate(live_list):
-    		live_list[index]['pic'] = options.ipnet + live['pic']
-    		live_list[index]['time'] = PublicFunc.stamp_to_YmdHM(live['time'])
+    	   live_list[index]['pic'] = options.ipnet + live['pic']
+    	   live_list[index]['time'] = PublicFunc.stamp_to_YmdHM(live['time'])
         return live_list
         
     @classmethod
     def get_instance(cls):
-    	if not cls.model_instance: cls.model_instance = LiveModel()
-    	return cls.model_instance
+        if not cls.model_instance: cls.model_instance = LiveModel()
+        return cls.model_instance
 

@@ -51,6 +51,7 @@ class PostModel(MongoBase):
 		MongoBase.__init__(self)
 		self.m_c = self.mongo_db.post
 		self.post_per_page = int(options.post_per_page)
+		
 
 	def get_post_list(self,uid,page):
 		"""
@@ -126,6 +127,24 @@ class PostModel(MongoBase):
 		"""判断说说是否存在"""
 		return self.m_c.find({"_id":ObjectId(post_id)},{'status':0}).count()
 
+	def recommend_user(self):
+		"""
+		推荐两个用户 有帖子的用户哦亲
+		"""
+		init_num = 0
+		recommend_user_info = []
+		while True:
+			post_list = self.m_c.find({'status':0},{'_id':0,'uid':1,'pic_num':1,'pic_list':1}).skip(init_num).limit(2)
+			init_num += 2
+			if len(recommend_user_info) >= 2 :break
+			for post in post_list:
+				if len(recommend_user_info) >= 2 :break
+				if post['pic_num'] >= 3:
+					post['pic_list'] = post['pic_list'][:3]
+					recommend_user_info.append(post)
+		return recommend_user_info
+
+
 	def get_user_post(self,uid,page):
 		"""获取用户朋友圈"""
 		page = int(page)
@@ -133,7 +152,6 @@ class PostModel(MongoBase):
 		post_per_page = self.post_per_page
 		post_list = list(self.m_c.find({'status':0,'uid':uid},{'comm_list':0,'latitude':0,'longitude':0,'love_list':0,'pic_list':{"$slice":[0,3]}}).sort([('time',-1)]).skip(page*post_per_page).limit(post_per_page)) 
 		return post_list
-
 
 
 

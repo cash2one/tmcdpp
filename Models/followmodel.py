@@ -44,18 +44,28 @@ class FollowModel(MongoBase):
 
 	def following_man(self,uid,fuid):
 		"""
-		function: 关注他人
+		function: 关注他人,或者取消对他人的关注
 		input param: 
-				uid 关注时间
-				fuid  关注的人的id 
+				uid 关注者 
+				fuid  被关注的人的id 
 		"""
 		uid = int(uid)
 		fuid = int(fuid)
 		count = self.m_c.find({'uid':uid,'fuid':fuid,'status':0}).count()
-		if count: return 'has_following' 
+		if count:
+			self.m_c.update({'uid':uid,'fuid':fuid,'status':0},{"$set":{'status':1}})
+			return 'cancel_success'
 		else:
 			self.m_c.insert({'uid':uid,'fuid':fuid,'status':0,'time':PublicFunc.get_current_stamp()})
-			return 'following'
+			return 'follow_success'
+
+
+
+			# self.m_c.update({'uid':uid,'status':0},{"$inc":{"follower_num":1},"$push":{"follower_list":{'uid':fuid,'time':PublicFunc.get_current_stamp()}}})
+		# if count: return 'has_following' 
+		# else:
+		# 	self.m_c.insert({'uid':uid,'fuid':fuid,'status':0,'time':PublicFunc.get_current_stamp()})
+		# 	return 'following'
 
 
 	def get_following_list(self,uid,page):
@@ -82,7 +92,19 @@ class FollowModel(MongoBase):
 		follower_list = self.m_c.find({'fuid':uid,'status':0},{'_id':0,'uid':1,'time':1}).sort([('time',-1)]).skip(self.following_per_page*page).limit(self.following_per_page)
 		return list(follower_list)
 
-	
+	def get_follow_status(self,uid,fuid):
+		"""
+		function:获取用户是否关住
+		input param:
+			uid 用户id  
+			fuid 被关注的人的id
+		"""
+		uid = int(uid)
+		fuid = int(fuid)
+		count = self.m_c.find({'uid':uid,'fuid':fuid,'status':0}).count()
+		return True if count else False
+
+
 
 
 

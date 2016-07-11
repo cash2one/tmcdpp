@@ -161,6 +161,15 @@ class UsersModel(DbBase):
         if self.cache.exists('users:uid:' + uid):
             self.cache.hset('users:uid:' + uid,'tel',tel)
 
+    def find_friends(self,find_nick,page):
+        """
+         根据昵称找好友
+        """
+        friends_find_per_page = int(options.friends_find_per_page)
+        page = int(page)
+        friends_list = self.find_data(['uid','nickname','avatar'],get_some=(friends_find_per_page*page,friends_find_per_page),nickname={'rule':'like','value':str(find_nick)})
+        return friends_list
+
 
 
     def treat_tel_bind(self,tel,code,uid):

@@ -50,7 +50,8 @@ class RunDataModel(DbBase):
     	return recent_man_list
 
 
-
+    def get_user_sum_run(self,uid):
+        return self.db.get("SELECT duration,distance from fs_sumrun WHERE uid=%s",uid)
 
 
 

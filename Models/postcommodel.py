@@ -39,10 +39,13 @@ class PostComModel(MongoBase):
 	def __init__(self):
 		MongoBase.__init__(self)
 		self.m_c = self.mongo_db.postcomment
+		self.post_comm_per_page = int(options.post_comm_per_page)
 
-	def get_comment_list(self,post_id,page):
-		"""获取说说评论列表"""
-		pass
+	def get_comm_list(self,post_id,page):
+		"""获取评论列表"""
+		page = int(page)
+		comm_list = self.m_c.find({'post_id':post_id,'status':0},{'_id':0,'status':0,'post_id':0}).sort([('time',-1)]).skip(page*self.post_comm_per_page).limit(self.post_comm_per_page)
+		return list(comm_list)
 
 	def send_comment(self,uid,post_id,comm_content):
 		"""发布评论"""

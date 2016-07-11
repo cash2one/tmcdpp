@@ -52,12 +52,15 @@ class FollowController:
 		if not self.usersmodel.judge_uid_exist(fuid):
 			return 'uid为' + fuid + '的用户不存在'
 		result = self.followmodel.following_man(uid,fuid)
-		if result == 'has_following':
-			return '已经关注过了'
-		else:
+		if result == 'follow_success':
 			MUserModel().add_following(uid,fuid) #修改自己的关注列表
 			MUserModel().add_follower(fuid,uid) #修改被关注用户的的粉丝列表
-		return True
+			return '取消关注'
+		elif result == 'cancel_success':
+			# print 'start cancel'
+			MUserModel().cancel_following(uid,fuid) #取消自己所关注的人
+			MUserModel().cancel_follower(uid,fuid) #自己不再是别人的粉丝了
+			return '关注'
 
 
 	def get_following_list(self,uid,page):

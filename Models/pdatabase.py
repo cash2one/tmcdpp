@@ -68,7 +68,7 @@ class DbBase:
         except Exception,e: 
             print e
             raise
-        return int(sum) if int(sum) else False
+        return int(sum) if int(sum) else 0
 
     def find_data(self,field_list,get_some=True,order=None,**query_dict):
         """ find one or more data from mysql"""
@@ -81,7 +81,10 @@ class DbBase:
             if query_dict:
                 for index in query_dict:
                     if not isinstance(query_dict[index],dict): query_sql += " %s = '%s' and" % (index,query_dict[index]) 
-                    else:   query_sql += " %s %s '%s' and" % (index,query_dict[index]['rule'],query_dict[index]['value'])
+                    elif query_dict[index]['rule'] == 'like':
+                        query_sql += str(index)  + " like '%%" + query_dict[index]['value'] + "%%' and"
+                    else: 
+                        query_sql += " %s %s '%s' and" % (index,query_dict[index]['rule'],query_dict[index]['value'])
             sql = (start_sql + query_sql)[0:-3]   
             if order: sql= sql + ' order by ' + order
             if get_some is True: info_list = self.db.query(sql)

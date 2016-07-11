@@ -34,6 +34,9 @@ from Models.notecommodel import NoteComModel
 from Models.postmodel import PostModel
 from Models.postcommodel import PostComModel
 from Models.postlovemodel import PostLove
+from Models.interestmodel import InterestModel
+from Models.rundatamodel import RunDataModel
+from Models.groupmodel import GroupModel
 from Func.publicfunc import PublicFunc
 # from Func.publicfunc import PublicFunc
 from bson.objectid import ObjectId
@@ -78,14 +81,15 @@ class UserController:
 		person_center['avatar'] = user_info['avatar']
 		person_center['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		person_center['ready_id'] = '100' + str(uid)
-		person_center['run_duration'] = 2.5 
-		person_center['run_distance'] = 250
-		person_center['interest'] = ['跑步','健走','足球']  
-		person_center['group_num'] = 25
-		person_center['group_list'] = [] 
-		group_info = {'group_name':'测试团队','group_id':25,'avatar':'http://101.200.214.68/Uploads/group.jpg'}
-		person_center['group_list'].append(group_info)
-		person_center['group_list'].append(group_info)
+		sum_run_info = RunDataModel().get_user_sum_run(uid)
+		person_center['run_duration'] = round(sum_run_info['duration']/3600.0,1)
+		person_center['run_distance'] = round(sum_run_info['distance']/1000.0,1)
+		person_center['interest'] = [iname['iname'] for iname in InterestModel().get_user_interest(uid)]
+		person_center['group_num'] =  GroupModel().get_group_num(uid) 
+		group_list = GroupModel().get_some_group(uid,options.group_get_num)
+		for group in group_list:
+			group['avatar'] = options.ipnet + group['avatar']
+		person_center['group_list'] = group_list
 		person_center['cir_back'] = options.ipnet + person_center['cir_back']
 
 		return person_center

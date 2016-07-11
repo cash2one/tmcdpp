@@ -93,6 +93,19 @@ class GroupModel(DbBase):
     	self.__change_group_info_cache(group_id,{'membernum':new_membernum})
     	return True
 
+    def get_group_num(self,uid):
+        """
+        获取团队总数 
+        """
+        uid = int(uid)
+        return self.find_db_sum(leader_id=uid,status=0)
+
+    def get_some_group(self,uid,get_num):
+        """
+        获取指定数目的团队
+        """
+        return self.find_data(['group_name','avatar','id as group_id'],get_some=get_num,order=' createtime desc ',leader_id=uid,status=0)
+
 
 
 

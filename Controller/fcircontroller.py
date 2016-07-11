@@ -34,6 +34,8 @@ from Models.notecommodel import NoteComModel
 from Models.postmodel import PostModel
 from Models.postcommodel import PostComModel
 from Models.postlovemodel import PostLove
+from Models.followmodel import FollowModel
+from Models.interestmodel import InterestModel
 from Func.publicfunc import PublicFunc
 # from Func.publicfunc import PublicFunc
 from bson.objectid import ObjectId
@@ -101,18 +103,23 @@ class FCirController:
 
 		return post_info
 
-	def get_recommend_list(self):
+	def get_recommend_list(self,uid):
 		"""
 		获取推荐的关注列表
 		"""
-		user_list = UsersModel().get_double_user_info()
-		for user in user_list:
-			user['nickname'] = user['nickname'] if user['nickname'] else options.default_nick_name
-			user['avatar'] = options.ipnet + user['avatar']
-			user['run'] = 333
-		return user_list
-
-
+		recommend_user_list  =  PostModel().recommend_user()
+		for recommend_user in recommend_user_list:
+			user_info = UsersModel().get_import_user_info(recommend_user['uid'],['avatar','nickname'])
+			recommend_user['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
+			recommend_user['run'] = '我运动了333 米哦'
+			recommend_user['avatar'] = user_info['avatar']
+			del recommend_user['pic_num']
+			recommend_user['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in recommend_user['pic_list']]
+			if int(uid):
+				recommend_user['has_follow'] = '取消关注' if FollowModel().get_follow_status(uid,recommend_user['uid']) else '关注'
+			else:
+				recommend_user['has_follow'] = '关注'
+		return recommend_user_list
 
 
 	def get_post_list(self,uid,page):
@@ -122,6 +129,7 @@ class FCirController:
 		post_list = PostModel().get_post_list(page)
 		current_time = PublicFunc.get_current_stamp()
 		for post in post_list:
+			# print post
 			post['post_id'] = str(post['_id'])
 			post['have_love'] = 1 if PostLove().judge_post_love(uid,post['_id']) else 0 
 			del post['_id']
@@ -130,6 +138,7 @@ class FCirController:
 			user_info = UsersModel().get_import_user_info(post['uid'],['avatar','nickname'])
 			post['avatar'] = user_info['avatar']
 			post['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
+			post['has_follow'] = '取消关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
 		return post_list
 
 	def get_lover_list(self,post_id,page):
@@ -144,6 +153,34 @@ class FCirController:
 			lover['avatar'] = user_info['avatar']
 			lover['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		return lover_list
+
+	def find_friends(self,nick_find,page):
+		"""
+		 根据昵称找好友
+		"""
+		friends_list = UsersModel().find_friends(nick_find,page)
+		for friend in friends_list:
+			friend['avatar'] = options.ipnet + friend['avatar']
+			friend['nickname'] = friend['nickname'] if friend['nickname'] else options.default_nick_name 
+			user_interest = InterestModel().get_user_interest(friend['uid'])
+			friend['interest'] = [iname['iname'] for iname in user_interest]
+		return friends_list
+
+
+
+	def get_comm_list(self,post_id,page):
+		"""
+		get the comment list of the user post 
+		"""
+		current_time = PublicFunc.get_current_stamp()
+		comm_list = PostComModel().get_comm_list(post_id,page)
+		for comm in comm_list:
+			comm['time'] = PublicFunc.time_format_span(comm['time'],current_time)
+			user_info = UsersModel().get_import_user_info(comm['uid'],['avatar','nickname'])
+			comm['avatar'] = user_info['avatar']
+			comm['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
+		return comm_list
+
 
 	def judge_post_exist(self,post_id):
 		"""判断是否存在该帖子"""

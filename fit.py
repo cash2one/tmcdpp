@@ -398,7 +398,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.find_some('fs_user_event',info_list,uid=uid,status=0)
 
     def justify_user_attend(self,eid,idcard):
-        try:  count = self.find_db_sum('fs_user_event',eidcard=idcard,eid=eid)
+        try:  count = self.find_db_sum('fs_user_event',eidcard=idcard,eid=eid,status=0)
         except Exception,e: self.treat_except(e)
         return True if count > 0 else False
 
@@ -905,6 +905,7 @@ class AttendHandler(BaseHandler):
             is_group = self.get_argument('is_group') #justify if it need the group event
             level3_event_list = self.get_third_level(id,is_group)
             self.return_param(1,0,level3_event_list,'成功')
+
         elif action == 'group_attend':
             a_d = self.get_multi_argument(['id','eid','gid','leader_name','leader_tel','leader_email','org_name','mem_str',{'version':False,'token':False,'uid':False}])
             if a_d.has_key('token') and a_d['version'] == options.token_request_more_version: self.check_token_available(a_d['uid'],a_d['token']) # for that there is no  uid 
@@ -975,14 +976,16 @@ class AttendHandler(BaseHandler):
             a_d = self.get_multi_argument(['uid','eid','gid','eidcard','eusername','esex','etel','org_name',{'version':False,'token':False}])
             if a_d.has_key('token') and a_d['version'] == options.token_request_more_version: self.check_token_available(a_d['uid'],a_d['token'])
             age = self.get_age_via_idcard(a_d['eidcard'])
-            if self.justify_user_attend(a_d['eid'],a_d['eidcard']): self.return_param(0,200,{},'你已经报名了该项目')
+            if self.justify_user_attend(a_d['eid'],a_d['eidcard']): return self.return_param(0,200,{},'你已经报名了该项目')
             available_sign = self.check_event_available(a_d['eid'],1)
-            if available_sign is 1:  self.return_param(0,201,{},'报名结束')
-            if available_sign is 2:  self.return_param(0,202,{},'该项目报名名额已满')
+            if available_sign is 1:  return self.return_param(0,201,{},'报名结束')
+            if available_sign is 2:  return self.return_param(0,202,{},'该项目报名名额已满')
             data_write = self.treat_ar_dict(a_d,['token','version'],eage=age,attendtime=int(time.time()))
             user_avatar = self.get_userinfo_via_search_param(['avatar'],a_d['uid'])['avatar']
             data_write['picPath'] =   user_avatar[user_avatar.index('/Uploads'):] 
-            epayfee = self.get_event_info(a_d['eid'])['epayfee']
+            event_info = self.get_event_info(a_d['eid'])
+            epayfee = event_info['epayfee']
+            ename = event_info['ename']
             game_info = self.get_game_info(a_d['gid'])
             gtype_id = int(game_info['gtype_id'])
             #if the game type if person not need payfee then we set the checkstatus 2 
@@ -991,7 +994,11 @@ class AttendHandler(BaseHandler):
             if gtype_id in self.run_game_not_need_check_type: data_write['checkstatus'] = 2 #the type of the game dont need pay and dont need check
             pri_id = self.insert_into_db('fs_user_event',data_write)
             self.incr_game_attend_num(a_d['eid'],1)
-            self.return_param(1,0,{'id':pri_id},'成功')
+            #send sms 
+            send_content = "%s,恭喜您成功报名 %s 赛事项目" % (a_d['eusername'],ename)
+            # print send_content
+            PublicFunc.send_sms(a_d['etel'],send_content)
+            return self.return_param(1,0,{'id':pri_id},'成功')
 
 class MapHandler(BaseHandler):
 
@@ -1108,13 +1115,7 @@ class GameHandler(BaseHandler):
 
         elif action == 'get_all_lives':
             gid = self.get_argument('gid',0)
-            if not gid:
-                lives_info_db = self.find_some('fs_lives',['id','title','pic','time'])
-            else: lives_info_db = self.find_some('fs_lives',['id','title','pic','time'],gid=gid)
-            for index,live_info in enumerate(lives_info_db):
-                lives_info_db[index]['time'] = time.strftime("%Y-%m-%d %H:%M",time.localtime(live_info['time']))
-                lives_info_db[index]['content'] = options.ipnet + '/py/game?action=get_live&id=' + str(live_info['id'])
-                lives_info_db[index]['pic'] = options.ipnet + live_info['pic']
+            lives_info_db = LiveModel().get_live_list(gid)
             self.return_param(1,0,lives_info_db,'成功')
 
 class InteractHandler(BaseHandler):
@@ -1688,6 +1689,12 @@ class PostPubHandler(BaseHandler):
                     post_info = FCirController().get_post_info(a_d_m['post_id'])
                     self.return_param(1,0,post_info,'操作成功')
 
+            elif a_d['action'] == 'get_comm_list':
+                if a_d['version'] >= '3.2':
+                    a_d_m = self.get_multi_argument(['post_id','page'])
+                    comm_list = FCirController().get_comm_list(a_d_m['post_id'],a_d_m['page'])
+                    self.return_param(1,0,comm_list,'success')
+
             elif a_d['action'] == 'get_post_list':#获取说说列表,
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['page','uid'])
@@ -1701,8 +1708,16 @@ class PostPubHandler(BaseHandler):
                     self.return_param(1,0,post_list,'sucess')
             elif a_d['action'] == 'get_recommend_list':
                 if a_d['version'] >= '3.2':
-                    re_list = FCirController().get_recommend_list()
-                    self.return_param(1,0,re_list,'sucess')
+                    re_list = FCirController().get_recommend_list(a_d['uid'])
+                    self.return_param(1,0,re_list,'success')
+
+            elif a_d['action'] == 'find_friends':
+                if a_d['version'] >= '3.2':
+                    a_d_m = self.get_multi_argument(['nick_find','page'])
+                    # self.write(a_d_m)
+                    friends_list = FCirController().find_friends(a_d_m['nick_find'],a_d_m['page'])
+                    self.return_param(1,0,friends_list,'success')
+
 
         except Exception,e:
             self.treat_except(e)
@@ -1813,8 +1828,7 @@ class FollowPriHandler(BaseHandler):
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['fuid'])
                     result = FollowController().following_man(a_d['uid'],a_d_m['fuid'])
-                    if not result is True: return self.return_param(0,200,{},result)
-                    return self.return_param(1,0,{},'关注成功!')
+                    return self.return_param(1,0,{'result':result},'操作成功!')
         except Exception,e:
             self.treat_except(e)
 

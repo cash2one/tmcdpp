@@ -87,6 +87,23 @@ class MUserModel(MongoBase):
 		return True
 
 
+	def cancel_following(self,uid,fuid):
+		"""
+		删除自己所关注的人
+		"""
+		uid = int(uid)
+		fuid = int(fuid)
+		# print fuid
+		following_info = self.m_c.find_one({'uid':uid,'status':0},{'_id':0,'following_list':1})
+		following_list = following_info['following_list']
+		for index,following in enumerate(following_list):
+			if following['uid'] == fuid:
+				# print 'index:' + str(index)
+				del following_list[index]
+		self.m_c.update({'uid':uid,'status':0},{"$set":{"following_list":following_list}})
+		# db.demo.update({people_id:2, "albums.id":2}, { $set : {"albums.$.name":6 }})
+# {"$inc":{"comm_member.$.distance":distance,"comm_member.$.duration":duration}})
+
 	def add_follower(self,uid,fuid):
 		"""
 		function: 用户id 
@@ -105,6 +122,24 @@ class MUserModel(MongoBase):
 			follower_list = follower_list[0:self.follower_save_num]
 			self.m_c.update({'uid':uid,'status':0},{"$inc":{"following_num":1},"$set":{"follower_list":following_list}})
 		return True
+
+	def cancel_follower(self,uid,fuid):
+		"""
+		删除自己的粉丝
+		那么uid 不再是fuid的粉丝了
+
+		"""
+		uid = int(uid)
+		fuid = int(fuid)
+		follower_info = self.m_c.find_one({"uid":fuid,'status':0},{'_id':0,'follower_list':1})
+		follower_list = follower_info['follower_list']
+		for index,follower in enumerate(follower_list):
+			if follower['uid'] == uid:
+				del follower_list[index]
+		self.m_c.update({'uid':fuid,'status':0},{"$set":{"follower_list":follower_list}})
+		return True
+		
+
 
 	def add_note(self,uid,note_id,note_title):
 		"""将配置个帖子存储到用户信息里面"""
