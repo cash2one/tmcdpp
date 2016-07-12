@@ -33,7 +33,7 @@ from Models.notemodel import NoteModel
 from Models.notecommodel import NoteComModel
 from Models.postmodel import PostModel
 from Models.postcommodel import PostComModel
-from Models.postlovemodel import PostLove
+from Models.postlovemodel import PostLoveModel
 from Models.followmodel import FollowModel
 from Models.interestmodel import InterestModel
 from Func.publicfunc import PublicFunc
@@ -70,7 +70,7 @@ class FCirController:
 		return comm_id
 
 	def send_love(self,uid,post_id):
-		result = PostLove().send_love(uid,post_id)
+		result = PostLoveModel().send_love(uid,post_id)
 		if result == 'send_love':
 			PostModel().love_oper(uid,post_id)
 			return True
@@ -100,6 +100,8 @@ class FCirController:
 			lover_info = UsersModel().get_import_user_info(lover['uid'],['avatar','nickname'])#获取评论说说的人的信息
 			lover['avatar'] = lover_info['avatar']
 		post_info['pic_list'] = [options.ipnet + pic for pic in post_info['pic_list']]
+		#man has love? 
+		post_info['has_love'] = PostLoveModel().judge_post_love(post_info['uid'],post_info['post_id'])
 
 		return post_info
 
@@ -131,7 +133,7 @@ class FCirController:
 		for post in post_list:
 			# print post
 			post['post_id'] = str(post['_id'])
-			post['have_love'] = 1 if PostLove().judge_post_love(uid,post['_id']) else 0 
+			post['have_love'] = 1 if PostLoveModel().judge_post_love(uid,post['_id']) else 0 
 			del post['_id']
 			post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post['pic_list']]
 			post['time'] = PublicFunc.time_format_span(post['time'],current_time)
@@ -143,7 +145,7 @@ class FCirController:
 
 	def get_lover_list(self,post_id,page):
 		""" 获取说说喜欢用户列表"""
-		lover_list = PostLove().get_lover_list(post_id,page)
+		lover_list = PostLoveModel().get_lover_list(post_id,page)
 		current_time = PublicFunc.get_current_stamp()
 		for lover in lover_list:
 			del lover['_id']

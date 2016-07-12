@@ -33,7 +33,6 @@ from Models.notemodel import NoteModel
 from Models.notecommodel import NoteComModel
 from Models.postmodel import PostModel
 from Models.postcommodel import PostComModel
-from Models.postlovemodel import PostLove
 from Models.interestmodel import InterestModel
 from Models.rundatamodel import RunDataModel
 from Models.groupmodel import GroupModel

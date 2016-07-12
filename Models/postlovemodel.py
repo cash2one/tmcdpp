@@ -34,7 +34,7 @@ time 点赞时间
 status 状态
 
 """
-class PostLove(MongoBase):
+class PostLoveModel(MongoBase):
 	def __init__(self):
 		MongoBase.__init__(self)
 		self.m_c = self.mongo_db.postlove

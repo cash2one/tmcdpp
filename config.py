@@ -4,7 +4,7 @@
 # -*- coding: utf-8 -*-
 from tornado.options import define, options
 
-
+define("test",default="44",help="")
 #open debug mode 
 define("debug",default=True,help="debug mode",type=bool)
 

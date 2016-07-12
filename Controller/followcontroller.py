@@ -70,7 +70,7 @@ class FollowController:
 		for f in following_list:
 			f['time'] = PublicFunc.time_format_span(f['time'],current_time)
 			user_info = UsersModel().get_import_user_info(f['fuid'],['avatar','nickname'])
-			f['avatar'] = options.ipnet +  user_info['avatar']
+			f['avatar'] = user_info['avatar']
 			f['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		return following_list
 
@@ -81,7 +81,7 @@ class FollowController:
 		for f in follower_list:
 			f['time'] = PublicFunc.time_format_span(f['time'],current_time)
 			user_info = UsersModel().get_import_user_info(f['uid'],['avatar','nickname'])
-			f['avatar'] = options.ipnet +  user_info['avatar']
+			f['avatar'] =  user_info['avatar']
 			f['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		return follower_list
 

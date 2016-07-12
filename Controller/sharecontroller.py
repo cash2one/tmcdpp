@@ -32,7 +32,6 @@ from Models.notemodel import NoteModel
 from Models.notecommodel import NoteComModel
 from Models.postmodel import PostModel
 from Models.postcommodel import PostComModel
-from Models.postlovemodel import PostLove
 from Func.publicfunc import PublicFunc
 # from Func.publicfunc import PublicFunc
 from bson.objectid import ObjectId
