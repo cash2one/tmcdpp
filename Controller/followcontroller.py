@@ -75,9 +75,9 @@ class FollowController:
 		if self.followmodel.follow_other(uid,fuid):
 			MUserModel().add_following(uid,fuid) #修改自己的关注列表
 			MUserModel().add_follower(fuid,uid) #修改被关注用户的的粉丝列表
-			return '关注成功'
+			return '已关注'
 		else:
-			return '您已经关注过了'
+			return '已关注'
 
 
 
