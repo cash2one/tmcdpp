@@ -1686,7 +1686,7 @@ class PostPubHandler(BaseHandler):
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['post_id'])
                     if not FCirController().judge_post_exist(a_d_m['post_id']):return self.return_param(0,200,{},options.post_not_exist)
-                    post_info = FCirController().get_post_info(a_d_m['post_id'])
+                    post_info = FCirController().get_post_info(a_d['uid'],a_d_m['post_id'])
                     self.return_param(1,0,post_info,'操作成功')
 
             elif a_d['action'] == 'get_comm_list':

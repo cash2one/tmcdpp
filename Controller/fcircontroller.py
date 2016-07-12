@@ -77,10 +77,11 @@ class FCirController:
 		return False #已经发送过了
 
 
-	def get_post_info(self,post_id):
+	def get_post_info(self,uid,post_id):
 		"""
 		获取说说详情
 		"""
+
 		post_info = PostModel().get_post_info(post_id)
 		post_info['post_id'] = str(post_info['_id'])
 		current_time = PublicFunc.get_current_stamp()
@@ -102,6 +103,8 @@ class FCirController:
 		post_info['pic_list'] = [options.ipnet + pic for pic in post_info['pic_list']]
 		#man has love? 
 		post_info['has_love'] = 1 if PostLoveModel().judge_post_love(post_info['uid'],post_info['post_id']) else 0
+		post_info['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post_info['uid']) else '关注'
+		# post['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
 
 		return post_info
 
@@ -118,7 +121,7 @@ class FCirController:
 			del recommend_user['pic_num']
 			recommend_user['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in recommend_user['pic_list']]
 			if int(uid):
-				recommend_user['has_follow'] = '取消关注' if FollowModel().get_follow_status(uid,recommend_user['uid']) else '关注'
+				recommend_user['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,recommend_user['uid']) else '关注'
 			else:
 				recommend_user['has_follow'] = '关注'
 		return recommend_user_list
@@ -140,7 +143,7 @@ class FCirController:
 			user_info = UsersModel().get_import_user_info(post['uid'],['avatar','nickname'])
 			post['avatar'] = user_info['avatar']
 			post['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
-			post['has_follow'] = '取消关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
+			post['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
 		return post_list
 
 	def get_lover_list(self,post_id,page):
