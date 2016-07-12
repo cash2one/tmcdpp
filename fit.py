@@ -1829,6 +1829,9 @@ class FollowPriHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['fuid'])
                     result = FollowController().following_man(a_d['uid'],a_d_m['fuid'])
                     return self.return_param(1,0,{'result':result},'操作成功!')
+            elif a_d['action'] == 'follow_other':
+                if a_d['version'] >= '3.2':
+                    self.write('fda')
         except Exception,e:
             self.treat_except(e)
 
