@@ -59,6 +59,20 @@ class FollowModel(MongoBase):
 			self.m_c.insert({'uid':uid,'fuid':fuid,'status':0,'time':PublicFunc.get_current_stamp()})
 			return 'follow_success'
 
+	def follow_other(self,uid,fuid):
+		"""
+		仅仅关注他人
+		"""
+		uid = int(uid)
+		fuid = int(fuid)
+		count = self.m_c.find({'uid':uid,'fuid':fuid,'status':0}).count()
+		if not count:
+			self.m_c.insert({'uid':uid,'fuid':fuid,'status':0,'time':PublicFunc.get_current_stamp()})
+			return True#关注成功
+		else:
+			return False#之前已经关注过了
+
+
 
 
 			# self.m_c.update({'uid':uid,'status':0},{"$inc":{"follower_num":1},"$push":{"follower_list":{'uid':fuid,'time':PublicFunc.get_current_stamp()}}})

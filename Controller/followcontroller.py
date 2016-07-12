@@ -63,6 +63,27 @@ class FollowController:
 			return '关注'
 
 
+
+	def follow_other(self,uid,fuid):
+		"""
+		关注他人，只具有关注功能
+		"""
+		if not self.usersmodel.judge_uid_exist(uid):
+			return 'uid为' + uid + '的用户不存在'
+		if not self.usersmodel.judge_uid_exist(fuid):
+			return 'uid为' + fuid + '的用户不存在'
+		if self.followmodel.follow_other(uid,fuid):
+			MUserModel().add_following(uid,fuid) #修改自己的关注列表
+			MUserModel().add_follower(fuid,uid) #修改被关注用户的的粉丝列表
+			return '关注成功'
+		else:
+			return '您已经关注过了'
+
+
+
+
+
+
 	def get_following_list(self,uid,page):
 		"""获取我所关注的人的列表"""
 		following_list = self.followmodel.get_following_list(uid,page)
