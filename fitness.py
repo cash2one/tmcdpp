@@ -1833,7 +1833,7 @@ class FollowPriHandler(BaseHandler):
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['fuid'])
                     result = FollowController().follow_other(a_d['uid'],a_d_m['fuid'])
-                    return self.return_param(1,0,result,'success')
+                    return self.return_param(1,0,{'result':result},'success')
 
         except Exception,e:
             self.treat_except(e)
