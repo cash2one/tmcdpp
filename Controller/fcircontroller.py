@@ -101,7 +101,7 @@ class FCirController:
 			lover['avatar'] = lover_info['avatar']
 		post_info['pic_list'] = [options.ipnet + pic for pic in post_info['pic_list']]
 		#man has love? 
-		post_info['has_love'] = PostLoveModel().judge_post_love(post_info['uid'],post_info['post_id'])
+		post_info['has_love'] = 1 if PostLoveModel().judge_post_love(post_info['uid'],post_info['post_id']) else 0
 
 		return post_info
 
