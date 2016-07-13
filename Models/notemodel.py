@@ -116,7 +116,8 @@ class NoteModel(MongoBase):
 		page = int(page)
 		per_page = int(options.note_per_page)
 		uid = int(uid)
-		note_cur = self.m_c.find({"uid":uid,'status':0},{'uid':0,'content':0}).skip(page*per_page).limit(page)
+		note_cur = self.m_c.find({"uid":uid,'status':0},{'uid':0,'content':0}).sort([('time',-1)]).skip(page*per_page).limit(page)
+
 		return list(note_cur)
 
 
