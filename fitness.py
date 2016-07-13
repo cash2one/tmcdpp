@@ -1544,7 +1544,8 @@ class UserHandler(BaseHandler):
             try:
                 a_d = self.get_multi_argument(['uid','version','action'])
                 if a_d['version'] >= '3.2':
-                    person_center = UserController().person_center(a_d['uid'])
+                    a_d_m = self.get_multi_argument(['other_uid'])
+                    person_center = UserController().person_center(a_d['uid'],a_d_m['other_uid'])
                     self.return_param(1,0,person_center,'success')
             except Exception,e:
                 raise

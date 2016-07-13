@@ -36,6 +36,7 @@ from Models.postcommodel import PostComModel
 from Models.interestmodel import InterestModel
 from Models.rundatamodel import RunDataModel
 from Models.groupmodel import GroupModel
+from Models.followmodel import FollowModel
 from Func.publicfunc import PublicFunc
 # from Func.publicfunc import PublicFunc
 from bson.objectid import ObjectId
@@ -64,9 +65,13 @@ class UserController:
 		bind_layer_show = 1 if self.usersmodel.judge_show_bind_layer(login_info['uid']) else 0
 		return token,login_info['uid'],bind_layer_show
 
-	def person_center(self,uid):
-		"""获取用户个人中心的信息"""
+	def person_center(self,uid,other_uid):
+		"""
+		获取用户个人中心的信息
+		uid 用户id  other_id 所打开的其他人的id
+		"""
 		uid = int(uid)
+		other_uid = int(other_uid)
 		person_center = self.musermodel.person_center(uid)
 		for following in person_center['following_list']:
 			user_info = self.usersmodel.get_import_user_info(following['uid'],['avatar','nickname'])
@@ -81,16 +86,27 @@ class UserController:
 		person_center['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		person_center['ready_id'] = '100' + str(uid)
 		sum_run_info = RunDataModel().get_user_sum_run(uid)
-		person_center['run_duration'] = round(sum_run_info['duration']/3600.0,1)
-		person_center['run_distance'] = round(sum_run_info['distance']/1000.0,1)
+		if sum_run_info:
+			person_center['run_duration'] = round(sum_run_info['duration']/3600.0,1)
+			person_center['run_distance'] = round(sum_run_info['distance']/1000.0,1)
+		else:
+			person_center['run_duration'] = 0
+			person_center['run_distance'] = 0
+
+		if not uid == other_uid:
+			person_center['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,other_uid) else '关注'
+
+
 		person_center['interest'] = [iname['iname'] for iname in InterestModel().get_user_interest(uid)]
 		person_center['group_num'] =  GroupModel().get_group_num(uid) 
 		group_list = GroupModel().get_some_group(uid,options.group_get_num)
 		for group in group_list:
 			group['avatar'] = options.ipnet + group['avatar']
 		person_center['group_list'] = group_list
-		person_center['cir_back'] = options.ipnet + person_center['cir_back']
-
+		if 'cir_back' in person_center:
+			person_center['cir_back'] = options.ipnet + person_center['cir_back']
+		else:
+			person_center['cir_back'] = options.ipnet + '/Uploads/head.png'
 		return person_center
 
 	def update_cir_back(self,uid,pic_path):

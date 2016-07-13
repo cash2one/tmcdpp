@@ -36,6 +36,7 @@ from Models.postcommodel import PostComModel
 from Models.postlovemodel import PostLoveModel
 from Models.followmodel import FollowModel
 from Models.interestmodel import InterestModel
+from Models.rundatamodel import RunDataModel
 from Func.publicfunc import PublicFunc
 # from Func.publicfunc import PublicFunc
 from bson.objectid import ObjectId
@@ -116,7 +117,13 @@ class FCirController:
 		for recommend_user in recommend_user_list:
 			user_info = UsersModel().get_import_user_info(recommend_user['uid'],['avatar','nickname'])
 			recommend_user['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
-			recommend_user['run'] = '我运动了333 米哦'
+			run_data = RunDataModel().get_user_sum_run(uid)
+			if run_data:
+				duration = round(run_data['duration']/3600.0,1)
+				distance = round(run_data['distance']/1000.0,1)
+				recommend_user['run'] = '我总共运动了%sh，运动了%sKm' % (duration,distance)
+			else:
+				recommend_user['run'] = '全民健身动起来'
 			recommend_user['avatar'] = user_info['avatar']
 			recommend_user['post_id'] = str(recommend_user['_id'])
 			del recommend_user['_id']
