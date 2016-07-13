@@ -1623,11 +1623,19 @@ class NotePubHandler(BaseHandler):
                 a_d_m = self.get_multi_argument(['page'])
                 note_list = NoteModel.get_instance().get_note_list(a_d_m['page'])
                 return self.return_param(1,0,note_list,'success')
+
             elif a_d['action'] == 'get_user_note': #获取我的帖子
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['page'])
                     note_list = NoteController().get_user_note(a_d['uid'],a_d_m['page'])
                     return self.return_param(1,0,note_list,'success')
+                    
+            elif a_d['action'] == 'get_pic_list':
+                if a_d['version'] >= '3.2':
+                    pic_list = ['http://101.200.214.68/Uploads/group.jpg','http://101.200.214.68/Uploads/group.jpg','http://101.200.214.68/Uploads/group.jpg']
+                    pic_num = len(pic_list)
+                    data_return = {'pic_num':pic_num,'pic_list':pic_list}
+                    return self.return_param(1,0,data_return,'success')
 
         except Exception,e:
             self.treat_except(e)
