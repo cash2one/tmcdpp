@@ -46,6 +46,7 @@ from Models.scoremodel import ScoreModel
 from Models.gamemodel import GameModel
 from Models.runcommunitymodel import RunCommunityModel
 from Models.mongotestmodel import MongoTestModel
+from Models.musermodel import MUserModel
 from Controller.notecontroller import NoteController
 from Controller.fcircontroller import FCirController
 from Controller.sharecontroller import ShareController
@@ -1546,7 +1547,11 @@ class UserHandler(BaseHandler):
                     person_center = UserController().person_center(a_d['uid'])
                     self.return_param(1,0,person_center,'success')
             except Exception,e:
+                raise
                 self.treat_except(e)
+
+        elif action == 'm_t_m':
+            print FCirController().just_just()
 
 
     def post(self):
@@ -2141,6 +2146,7 @@ class LoginHandler(BaseHandler):
                 user_info = UserController().login(a_d['tel'],a_d['password'])
                 if user_info == 0: return self.return_param(0,200,{},'用户还没有注册')
                 if user_info == 1: return self.return_param(0,200,{},'密码错误')
+                MUserModel().add_info_mongo(user_info[1])
                 return self.return_param(1,0,{'token':user_info[0],'uid':user_info[1],'bind_layer_show':user_info[2]},'登录成功')
             except Exception,e:
                 self.treat_except(e)

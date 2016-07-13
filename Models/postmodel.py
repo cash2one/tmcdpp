@@ -134,7 +134,7 @@ class PostModel(MongoBase):
 		init_num = 0
 		recommend_user_info = []
 		while True:
-			post_list = self.m_c.find({'status':0},{'_id':0,'uid':1,'pic_num':1,'pic_list':1}).skip(init_num).limit(2)
+			post_list = self.m_c.find({'status':0},{'uid':1,'pic_num':1,'pic_list':1}).skip(init_num).limit(2)
 			init_num += 2
 			if len(recommend_user_info) >= 2 :break
 			for post in post_list:

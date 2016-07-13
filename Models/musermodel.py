@@ -195,6 +195,19 @@ class MUserModel(MongoBase):
 		uid = int(uid)
 		return self.m_c.update({"uid":uid},{'$set':{'cir_back':pic_path}},True)
 
+	#just not use 
+	def judge_user_exist(self,uid):
+		uid = int(uid)
+		count = self.m_c.find({'uid':uid}).count()
+		return count
+
+	def add_info_mongo(self,uid):
+		uid = int(uid)
+		# self.m_c.insert()
+		if not self.judge_user_exist(uid):
+			self.m_c.insert({'uid':uid,'following_num':0,'following_list':[],'status':0,'follower_num':0,'follower_list':[],'note_num':0,'note_list':[]})
+
+
 
 
 

@@ -248,6 +248,9 @@ class UsersModel(DbBase):
     def get_double_user_info(self):
         rn = random.randint(0,3000)
         return self.find_data(['nickname','avatar','uid'],status=0,get_some=(rn,2))
+
+    def get_uid(self):
+        return self.find_data(['uid'],status=0)
         
 
 

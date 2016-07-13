@@ -59,7 +59,7 @@ class FollowController:
 		elif result == 'cancel_success':
 			# print 'start cancel'
 			MUserModel().cancel_following(uid,fuid) #取消自己所关注的人
-			# MUserModel().cancel_follower(uid,fuid) #自己不再是别人的粉丝了 ####################################################################################################
+			MUserModel().cancel_follower(uid,fuid) #自己不再是别人的粉丝了
 			return '关注'
 
 

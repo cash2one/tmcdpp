@@ -118,6 +118,8 @@ class FCirController:
 			recommend_user['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 			recommend_user['run'] = '我运动了333 米哦'
 			recommend_user['avatar'] = user_info['avatar']
+			recommend_user['post_id'] = str(recommend_user['_id'])
+			del recommend_user['_id']
 			del recommend_user['pic_num']
 			recommend_user['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in recommend_user['pic_list']]
 			if int(uid):
@@ -209,6 +211,13 @@ class FCirController:
 		return post_list
 
 
+	def just_just(self):
+		uid_list = UsersModel().get_uid()
+		uid_list = uid_list[2700:]
+		for uid_info in uid_list:
+			print str(uid_info['uid']) + 'finish'
+			if not MUserModel().judge_user_exist(uid_info['uid']):
+				MUserModel().add_info_mongo(uid_info['uid'])
 
 
 
