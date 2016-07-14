@@ -41,7 +41,7 @@ class RunDataModel(DbBase):
     		if not user_run_list: break
     		jump += show_num
     		for user_run in user_run_list:
-    			user_info = UsersModel.get_instance().get_import_user_info(user_run['uid'],['avatar','username'])
+    			user_info = UsersModel.get_instance().get_import_user_info(user_run['uid'],['avatar','username','nickname'])
     			user_run['nickname'] = user_info['nickname'] if user_info['nickname'] else '小跑男'
     			user_run['avatar'] = user_info['avatar']
     			recent_man_list.append(user_run)
