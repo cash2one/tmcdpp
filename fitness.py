@@ -2084,7 +2084,6 @@ class ThirdHandler(BaseHandler):
             a_d = self.get_multi_argument([{'nickname':False},{'sex':False},{'province':False},{'city':False},{'country':False},{'avatar':False},'unionid'])
             try:
                 user_info = self.wechausermodel.wecha_user_get(a_d)
-                return self.out(user_info)
                 if user_info[0] == 'exist':
                     uid = user_info[1]
                 elif user_info[0] == 'create': 
@@ -2094,7 +2093,6 @@ class ThirdHandler(BaseHandler):
                 bind_layer_show = 1 if self.usersmodel.judge_show_bind_layer(uid) else 0
                 self.return_param(1,0,{'uid':uid,'token':token,'bind_layer_show':bind_layer_show},'success')
             except Exception,e: 
-                raise
                 self.treat_except(e)    
         else: pass
 
