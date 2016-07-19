@@ -74,4 +74,20 @@ class UserEventModel(DbBase):
     def get_all_attend_man(self,eid):
         return self.find_data(['uid'],eid=eid,status=0)
 
+    def check_attend_type(self,uid,eid):
+        """
+        判断用户报名方式，是团队报名还是个人报名
+          this method used as (1)judge if user has attend the event (2)if user has attend the event,then judge the attend type(group or personal)
+        if the user has not attend,then return false, if the user has attend and the attend type is group,then return the group_id else return 0 
+        """
+        attend_info = self.find_data(['group_id'],get_some=False,status=0,uid=uid,eid=eid)
+        if attend_info is None: return False
+        return attend_info['group_id']
 
+
+    # def judge_attend_type(self,uid,eid):
+    #     """
+    #     this method used as (1)judge if user has attend the event (2)if user has attend the event,then judge the attend type(group or personal)
+    #     if the user has not attend,then return false, if the user has attend and the attend type is group,then return the group_id else return 0 
+    #     """
+    #     return int(self.find_one('fs_user_event',['group_id'],uid=uid,status=0,eid=eid)['group_id'])

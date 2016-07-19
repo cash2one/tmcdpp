@@ -277,13 +277,6 @@ class BaseHandler(tornado.web.RequestHandler):
         m.update(token_str)
         return m.hexdigest()
 
-    def judge_attend_type(self,uid,eid):
-        """
-        this method used as (1)judge if user has attend the event (2)if user has attend the event,then judge the attend type(group or personal)
-        if the user has not attend,then return false, if the user has attend and the attend type is group,then return the group_id else return 0 
-        """
-        return int(self.find_one('fs_user_event',['group_id'],uid=uid,status=0,eid=eid)['group_id'])
-
     def get_random(self,num):
         """get num random str"""
         return  ''.join(sample('abcdefghijklmnopqrstuvwxyz1234567890!',8))
@@ -1269,8 +1262,8 @@ class RankHandler(BaseHandler):
             self.render('msp_run_rank' + gid + '.html')
         elif action == 'get_jbz_person_group_rank':#jianbuzou group/personal run rank
             """one man can only attend one event either group or person, and the man can not change it except for new reposite"""
-            attend_type_get = self.get_argument('attend_type','个人') #param from url
-            attend_type = -1 if uid == '0' else self.judge_attend_type(uid,eid)
+            attend_type_get = self.get_argument('attend_type','个人') #param from url 
+            attend_type = -1 if uid == '0' else UserEventModel().check_attend_type(uid,eid)
             if attend_type_get == '个人':
                 have_attend = True if attend_type == 0 else False
                 my_rank =  self.my_rank(uid,eid,rank_param) if attend_type == 0 else ''
