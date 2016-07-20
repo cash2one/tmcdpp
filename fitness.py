@@ -1518,11 +1518,15 @@ class UserHandler(BaseHandler):
             self.return_param(1,0,user_info,'success')
 
         elif action == 'submit_user_info':
-            a_d = self.get_multi_argument(['token','uid'])
-            # self.check_token_available(a_d['uid'],a_d['token'])
-            change_param = self.get_multi_argument(['nickname','sex','height','assoc','weight','birthday','aposition','username','blood','idcard','email','tel_address','zipcode','area','emer_name','emer_tel'])
-            self.update_db('fs_users',change_param,{'uid':a_d['uid']})
-            self.return_param(1,0,{},'success')
+            try:
+                a_d = self.get_multi_argument(['token','uid'])
+                # self.check_token_available(a_d['uid'],a_d['token'])
+                change_param = self.get_multi_argument(['nickname','sex','height','assoc','weight','birthday','aposition',
+                    'username','blood','idcard','email',{'tel_address':False},{'zipcode':False},'area',{'emer_name':False},{'emer_tel':False}])
+                self.update_db('fs_users',change_param,{'uid':a_d['uid']})
+                self.return_param(1,0,{},'success')
+            except Exception,e:
+                print e
 
         elif action == 'change_password':
             a_d = self.get_multi_argument(['uid','ori_password','new_password',{'token':False,'version':False}])
