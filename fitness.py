@@ -1236,6 +1236,7 @@ class RankHandler(BaseHandler):
         uid = self.get_argument('uid')
         gid = self.get_argument('gid')
         eid = eval(self.get_game_only_level_event(gid))[0]
+        
         if action == 'get_person_jbz_run_rank':#runing man online jianbuzou sport
             have_attend = self.check_have_attend_by_uid(uid,eid)
             person_popular_list = self.get_person_popular_list(eid,rank_param)
@@ -1518,7 +1519,7 @@ class UserHandler(BaseHandler):
 
         elif action == 'submit_user_info':
             a_d = self.get_multi_argument(['token','uid'])
-            self.check_token_available(uid,a_d['token'])
+            # self.check_token_available(a_d['uid'],a_d['token'])
             change_param = self.get_multi_argument(['nickname','sex','height','assoc','weight','birthday','aposition','username','blood','idcard','email','tel_address','zipcode','area','emer_name','emer_tel'])
             self.update_db('fs_users',change_param,{'uid':a_d['uid']})
             self.return_param(1,0,{},'success')
