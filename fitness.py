@@ -1521,10 +1521,10 @@ class UserHandler(BaseHandler):
             try:
                 a_d = self.get_multi_argument(['token','uid'])
                 # self.check_token_available(a_d['uid'],a_d['token'])
-                change_param = self.get_multi_argument(['nickname','sex','height','assoc','weight','birthday','aposition',
-                    'username','blood','idcard','email',{'tel_address':False},{'zipcode':False},'area',{'emer_name':False},{'emer_tel':False}])
+                change_param = self.get_multi_argument([{'nickname':False},{'sex':False},{'height':False},{'assoc':False},{'weight':False},{'birthday':False},{'aposition':False},
+                    {'username':False},{'blood':False},{'idcard':False},{'email':False},{'tel_address':False},{'zipcode':False},{'area':False},{'emer_name':False},{'emer_tel':False}])
                 self.update_db('fs_users',change_param,{'uid':a_d['uid']})
-                self.return_param(1,0,{},'success')
+                self.return_param(1,0,{},'提交成功')
             except Exception,e:
                 print e
 
