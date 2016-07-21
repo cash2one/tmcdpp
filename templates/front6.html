@@ -48,17 +48,19 @@ a, area {blr:expression(this.onFocus=this.blur())}
 .zt_text1 h2 img{ display:block; margin:8px auto}
 .zt_text1 p{ text-align:center; font-size:14px; color:#898989}
 .zt_text1 { padding-bottom:8px; padding-top:2px}
-.zt_listUl{ padding:4% 0;}
-.zt_listUl .zt_img{ width:18%; padding:0 2%}
+.zt_listUl{ padding:4% 0;height:80px;overflow:hidden;}
+.zt_listUl .zt_img{ width:80px;height:80px;margin:0 10px 0 5px;float:left;}
 .zt_listUl .zt_img img{ display:block;-moz-border-radius:100px;/* Gecko browsers */webkit-border-radius: 100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */}
-.zt_listUl .zt_text{ width:78%}
+.zt_listUl .zt_text{float:left;width:75%;margin-top:5px;}
 .zt_listUl .zt_text p{ font-size:13px}
-.zt_listUl h2 .tit_a{ color:#c9cfd0; float:left; margin:8px 0 0 6px}
-.zt_listUl h2 .tit_over{ color:#5BB926; float:left;font-size: 13px; margin:8px 0 0 6px}
+.zt_listUl h2 .tit_a{ color:#c9cfd0; float:left; margin-top:8px}
+/* 这里是 查看 图标 */
+.zt_listUl h2 .tit_over{display:block;float:right;overflow:hidden;margin:8px 16px 0 0;width:52px;height:16px;background:url(http://101.200.214.68/Uploads/show_score.gif) no-repeat;-moz-background-size:52px 16px;background-size:52px 16px;}
 .zt_listUl h2 { height:26px; display:block; overflow:hidden; margin-bottom:4px}
-.zt_listUl h2 img{ display:block; float:left; color:#898989}
+.zt_listUl h2 img{ display:block; float:left; color:#898989;overflow:hidden;}
 .zt_listUl p{ display:block; color:#898989; background:url(http://101.200.214.68/Uploads/gameInfoPic//icon4.png) no-repeat left center; padding-left:20px; line-height:160% }
-.zt_listUl .base_a{ display:block; background:url(http://101.200.214.68/Uploads/gameInfoPic//jtBg.png) no-repeat right center;}
+/* 这里是 箭头 图标 */
+.zt_listUl .base_a{display:block;overflow:hidden;width:95%;height:80px;background:url(http://101.200.214.68/Uploads/right_arrow.gif) no-repeat right center;}
 
 
 .zt_listUl.alt{ background:#eef8fa url(http://101.200.214.68/Uploads/gameInfoPic//lineBg.jpg) repeat-x top; border-bottom:1px #e5e5e5 solid }
@@ -154,33 +156,31 @@ $(".zt_listUl:odd").addClass("alt");
 </div>
 <div class="zt_he10 bg_eeeeee"></div>
 
+
 <div class="zt_listUl">
 	<div class="left base_a">
-		<div class="left zt_img"><img src="http://101.200.214.68/qyh/sdyy.jpg" width="100%" ></div>
-        <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text5.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="
-            http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63c0edd4a73e5aaf9a2c8e72fe1&scene=1&srcid=07129A8EZa6v57KngLvXhrqU#wechat_redirect
-            " class="tit_over">成绩</a></h2>
-     	<a href="http://101.200.214.68/qyh/shandiyueye.html">
-            <p>比赛时间: 2016年7月12日</p>
-            <p>比赛地点: 河北镇东港村</p>
+		<div class="left zt_img"><img src="http://101.200.214.68/qyh/pingpang.jpg" width="100%" ></div>
+		<div class="left zt_text">
+			<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text2.png" height="20"/>
+				<a href="
+				http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483661&idx=1&sn=2b06f06639859905f01a6e0cba864473&scene=23&srcid=07207y1rR3MdyIFRbrLRRD8l#rd
+				" class="tit_over"></a></h2>
+     	<a href="http://101.200.214.68/qyh/pingpangqiu.html">
+				<p>比赛时间: 2016年7月15日—17日</p>
+				<p>比赛地点: 房山区良乡体育中心综合馆</p>
 			</a>
 		</div>
 	</div>
+	<!-- <a href="#">新闻动态</a>-<a href="#">成绩</a> -->
 	<div class="clear"></div>
 </div>
-
 
 
 <div class="zt_listUl">
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/ws.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text8.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="
-http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342697&idx=1&sn=9624b33fab3cac2d91982ccb90aee95a&scene=23&srcid=0712CCFErNh3vXdwYUVEiicJ#rd
-
-            	
-            	" class="tit_over">成绩</a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text8.png" height="20"/><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342697&idx=1&sn=9624b33fab3cac2d91982ccb90aee95a&scene=23&srcid=0712CCFErNh3vXdwYUVEiicJ#rd" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/ws.html">
             <p>比赛时间: 2016年7月11日—12日</p>
             <p>比赛地点:房山区良乡体育中心体育馆</p>
@@ -196,9 +196,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342697&idx=1&sn=9624b33
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/bh.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text10.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="
-http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342685&idx=1&sn=0044c17692aee1fa39d1ac81a5dfd7ef&scene=23&srcid=0711PXU6Fy8ibZMuqorytvcC#rd
-" class="tit_over">成绩</a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text10.png" height="20"/><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342685&idx=1&sn=0044c17692aee1fa39d1ac81a5dfd7ef&scene=23&srcid=0711PXU6Fy8ibZMuqorytvcC#rd" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/bh.html">
             <p>比赛时间: 2016年7月11日-12日</p>
             <p>比赛地点:良乡体育中心体育场外</p>
@@ -215,10 +213,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342685&idx=1&sn=0044c17
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/tjxm.jpg" width="100%" ></div>
         <div class="left zt_text">
             <h2>
-            	<img src="http://101.200.214.68/Uploads/gameInfoPic/text6.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span>
-            	<a href="
-http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&tempkey=VpuGzQk3hgMBWnyiimx02olbQpA%2BiS8aSR276X4JL9N4d8kd8eIwShrcN15pm0Xz3qNJMG%2B7PVF53HrqimFQjGcJ4mjmTbpze%2F%2FYf%2BnKVg4enEryPnXu7xk5yqjD9Ko6l1PngSGHUHSc1ROHruOTyw%3D%3D&&scene=1&srcid=0711yPC1RfjJr1grHDHxB40z#rd
-" class="tit_over">成绩</a>
+            	<img src="http://101.200.214.68/Uploads/gameInfoPic/text6.png" height="20"/><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&tempkey=VpuGzQk3hgMBWnyiimx02olbQpA%2BiS8aSR276X4JL9N4d8kd8eIwShrcN15pm0Xz3qNJMG%2B7PVF53HrqimFQjGcJ4mjmTbpze%2F%2FYf%2BnKVg4enEryPnXu7xk5yqjD9Ko6l1PngSGHUHSc1ROHruOTyw%3D%3D&&scene=1&srcid=0711yPC1RfjJr1grHDHxB40z#rd" class="tit_over"></a>
             </h2>
      	<a href="http://101.200.214.68/qyh/tianjing.html">
             <p>比赛时间: 2016年7月8日—7月11日</p>
@@ -233,9 +228,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&tempkey=VpuGzQk3hgMBWnyiimx02ol
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/tsxm.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text7.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="
-http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e7591a8f55a564d7aadc25bd50a5&scene=23&srcid=0711InTjmNvmTXoTZucMZxIk#rd
-" class="tit_over">成绩</a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text7.png" height="20"/><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e7591a8f55a564d7aadc25bd50a5&scene=23&srcid=0711InTjmNvmTXoTZucMZxIk#rd" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/tiaosheng.html">
             <p>比赛时间: 2016年7月9日</p>
             <p>比赛地点: 房山区良乡体育中心门球场</p>
@@ -250,7 +243,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e75
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/lanqiu.jpg" width="100%" ></div>
 		<div class="left zt_text">
-     	<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text1.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="#" class="tit_a">成绩</a></h2>
+     	<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text1.png" height="20"/><a href="#" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/lanqiu.html">
 				<p>比赛时间: 2016年7月11日—8月3日</p>
 				<p>比赛地点: 北方温泉会议中心篮球馆</p>
@@ -263,7 +256,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e75
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/pingpang.jpg" width="100%" ></div>
 		<div class="left zt_text">
-			<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text2.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="#" class="tit_a">成绩</a></h2>
+			<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text2.png" height="20"/><a href="#" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/pingpangqiu.html">
 				<p>比赛时间: 2016年7月15日—17日</p>
 				<p>比赛地点: 房山区良乡体育中心综合馆</p>
@@ -277,7 +270,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e75
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/yumaoqiu.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text3.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="#" class="tit_a">成绩</a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text3.png" height="20"/><a href="#" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/yumaoqiu.html">
             <p>比赛时间: 2016年7月21—24日</p>
             <p>比赛地点:良乡体育中心综合馆</p>
@@ -290,7 +283,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e75
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/menqiu.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text4.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="#" class="tit_a">成绩</a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text4.png" height="20"/><a href="#" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/menqiu.html">
             <p>比赛时间: 2016年7月18日</p>
             <p>比赛地点: 良乡体育中心门球场</p>
@@ -299,14 +292,26 @@ http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e75
 	</div>
 	<div class="clear"></div>
 </div>
-
+<div class="zt_listUl">
+	<div class="left base_a">
+		<div class="left zt_img"><img src="http://101.200.214.68/qyh/sdyy.jpg" width="100%" ></div>
+        <div class="left zt_text">
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text5.png" height="20"/><a href="#" class="tit_over"></a></h2>
+     	<a href="http://101.200.214.68/qyh/shandiyueye.html">
+            <p>比赛时间: 2016年7月12日</p>
+            <p>比赛地点: 河北镇东港村</p>
+			</a>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
 
 
 <div class="zt_listUl">
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/jscw.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text9.png" height="20"/><a href="#" class="tit_a">新闻动态</a><span  class="tit_a">-</span><a href="#" class="tit_a">成绩</a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text9.png" height="20"/><a href="#" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/jscw.html">
             <p>比赛时间: 2016年8月1日至8月3日</p>
             <p>比赛地点: 良乡体育中心综合馆</p>
