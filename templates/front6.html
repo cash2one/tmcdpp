@@ -49,13 +49,16 @@ a, area {blr:expression(this.onFocus=this.blur())}
 .zt_text1 p{ text-align:center; font-size:14px; color:#898989}
 .zt_text1 { padding-bottom:8px; padding-top:2px}
 .zt_listUl{ padding:4% 0;height:80px;overflow:hidden;}
-.zt_listUl .zt_img{ width:80px;height:80px;margin:0 10px 0 5px;float:left;}
+.zt_listUl .zt_img{ width:40px;height:80px;margin:0 10px 0 5px;float:left;}
 .zt_listUl .zt_img img{ display:block;-moz-border-radius:100px;/* Gecko browsers */webkit-border-radius: 100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */}
 .zt_listUl .zt_text{float:left;width:auto;margin-top:5px;}
 .zt_listUl .zt_text p{ font-size:13px}
 .zt_listUl h2 .tit_a{ color:#c9cfd0; float:left; margin-top:8px}
 /* 这里是 查看 图标 */
 .zt_listUl h2 .tit_over{display:block;float:right;overflow:hidden;margin:8px 16px 0 0;width:52px;height:16px;background:url(http://101.200.214.68/Uploads/show_score.gif) no-repeat;-moz-background-size:52px 16px;background-size:52px 16px;}
+/*这里就是没有结束的比赛*/
+.zt_listUl h2 .tit_not_over{display:block;float:right;overflow:hidden;margin:8px 16px 0 0;width:52px;height:16px;background:url(http://101.200.214.68/Uploads/not_show_score.gif) no-repeat;-moz-background-size:52px 16px;background-size:52px 16px;}
+
 .zt_listUl h2 { height:26px; display:block; overflow:hidden; margin-bottom:4px}
 .zt_listUl h2 img{ display:block; float:left; color:#898989;overflow:hidden;}
 .zt_listUl p{ display:block; color:#898989; background:url(http://101.200.214.68/Uploads/gameInfoPic//icon4.png) no-repeat left center; padding-left:20px; line-height:160% }
@@ -242,8 +245,8 @@ $(".zt_listUl:odd").addClass("alt");
 <div class="zt_listUl">
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/lanqiu.jpg" width="100%" ></div>
-		<div class="left zt_text">
-     	<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text1.png" height="20"/><a href="#" class="tit_over"></a></h2>
+		<div class="left zt_text"> 
+     	<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text1.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/lanqiu.html">
 				<p>比赛时间: 2016年7月11日—8月3日</p>
 				<p>比赛地点: 北方温泉会议中心篮球馆</p>
@@ -256,7 +259,7 @@ $(".zt_listUl:odd").addClass("alt");
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/pingpang.jpg" width="100%" ></div>
 		<div class="left zt_text">
-			<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text2.png" height="20"/><a href="#" class="tit_over"></a></h2>
+			<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text2.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/pingpangqiu.html">
 				<p>比赛时间: 2016年7月15日—17日</p>
 				<p>比赛地点: 房山区良乡体育中心综合馆</p>
@@ -270,7 +273,7 @@ $(".zt_listUl:odd").addClass("alt");
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/yumaoqiu.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text3.png" height="20"/><a href="#" class="tit_over"></a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text3.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/yumaoqiu.html">
             <p>比赛时间: 2016年7月21—24日</p>
             <p>比赛地点:良乡体育中心综合馆</p>
@@ -283,7 +286,7 @@ $(".zt_listUl:odd").addClass("alt");
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/menqiu.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text4.png" height="20"/><a href="#" class="tit_over"></a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text4.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/menqiu.html">
             <p>比赛时间: 2016年7月18日</p>
             <p>比赛地点: 良乡体育中心门球场</p>
@@ -296,7 +299,7 @@ $(".zt_listUl:odd").addClass("alt");
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/sdyy.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text5.png" height="20"/><a href="#" class="tit_over"></a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text5.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/shandiyueye.html">
             <p>比赛时间: 2016年7月12日</p>
             <p>比赛地点: 河北镇东港村</p>
@@ -311,7 +314,7 @@ $(".zt_listUl:odd").addClass("alt");
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/jscw.jpg" width="100%" ></div>
         <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text9.png" height="20"/><a href="#" class="tit_over"></a></h2>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text9.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/jscw.html">
             <p>比赛时间: 2016年8月1日至8月3日</p>
             <p>比赛地点: 良乡体育中心综合馆</p>
