@@ -15,19 +15,19 @@
 <style>
     @charset "utf-8";
 /* 全局样式 */
-body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, textarea, form, select, fieldset, table, td, div, input {margin:0;padding:0;-webkit-text-size-adjust: none}
+body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, textarea, form, select, fieldset, table, td, div, input {margin:0;padding:0;-webkit-text-size-adjust:none}
 h1, h2, h3, h4, h5, h6{font-size:12px;font-weight:normal;}
 body>div, form>div {margin:0 auto;}
 div {text-align:left;}
 a img {border:0;}
 table{border-collapse:collapse; border-spacing:0;}
-select,textarea{font: 12px Arial,"微软雅黑";}
-body {color:#454545;text-align:center;font: 12px Arial,"微软雅黑";}
+select,textarea{font:12px Arial,"微软雅黑";}
+body {color:#454545;text-align:center;font:12px Arial,"微软雅黑";overflow:hidden;}
 ul, ol, li {list-style-type:none;vertical-align:0;}
 a {outline-style:none;color:#454545;text-decoration:none;}
 a:hover {color:#035f79;text-decoration:none;}
 a, area {blr:expression(this.onFocus=this.blur())}
-:focus {-moz-outline-style: none;}
+:focus {-moz-outline-style:none;}
 .clear {clear:both;}
 .hidden {display:none;}
 .block {display:block;}
@@ -35,33 +35,33 @@ a, area {blr:expression(this.onFocus=this.blur())}
 .right{float:right;}
 .bd{border:1px #e1e1e1 solid; background:#FFF}
 .bd3{border:1px #e1e1e1 solid; border-top:0px; background:#FFF}
-
+.clear_l{clear:both;width:100%;height:1px;}
 
 /* 首页样式 */
 .zt_bgf5f5f5{ background:#f5f5f5}
 .zt_he10{ height:10px; font-size:0;}
 .bg_eeeeee{ background:#eeeeee}
 .zt_img img{ display:block}
-.zt_img_yj{ -moz-border-radius:100px;/* Gecko browsers */webkit-border-radius: 100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */}
+.zt_img_yj{ -moz-border-radius:100px;/* Gecko browsers */webkit-border-radius:100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */}
 .bd_bt{ border-top:1px #d9d9d9 solid}
 
 .zt_text1 h2 img{ display:block; margin:8px auto}
 .zt_text1 p{ text-align:center; font-size:14px; color:#898989}
 .zt_text1 { padding-bottom:8px; padding-top:2px}
-.zt_listUl{ padding:4% 0;height:80px;overflow:hidden;}
-.zt_listUl .zt_img{ width:40px;height:80px;margin:0 10px 0 5px;float:left;}
-.zt_listUl .zt_img img{ display:block;-moz-border-radius:100px;/* Gecko browsers */webkit-border-radius: 100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */}
-.zt_listUl .zt_text{float:left;width:auto;margin-top:5px;}
+.zt_listUl{ padding:8px 0;height:80px;overflow:hidden;}
+.zt_listUl .zt_img{ width:18%;margin:8px 10px 0 5px;float:left;vertical-align:middle;}
+.zt_listUl .zt_img img{vertical-align:middle;display:block;-moz-border-radius:100%;/* Gecko browsers */webkit-border-radius:100%;   /* Webkit browsers */border-radius:100%;/* W3C syntax */}
+.zt_listUl .zt_text{float:left;width:75%;}
 .zt_listUl .zt_text p{ font-size:13px}
 .zt_listUl h2 .tit_a{ color:#c9cfd0; float:left; margin-top:8px}
 /* 这里是 查看 图标 */
-.zt_listUl h2 .tit_over{display:block;float:right;overflow:hidden;margin:8px 16px 0 0;width:52px;height:16px;background:url(http://101.200.214.68/Uploads/show_score.gif) no-repeat;-moz-background-size:52px 16px;background-size:52px 16px;}
+.zt_listUl h2 .tit_over{display:block;float:right;overflow:hidden;margin:3px 16px 0 0;width:52px;height:16px;background:url(http://101.200.214.68/Uploads/show_score.gif) no-repeat;-moz-background-size:52px 16px;background-size:52px 16px;-moz-border-radius:6px;webkit-border-radius:6px;border-radius:6px;}
 /*这里就是没有结束的比赛*/
 .zt_listUl h2 .tit_not_over{display:block;float:right;overflow:hidden;margin:8px 16px 0 0;width:52px;height:16px;background:url(http://101.200.214.68/Uploads/not_show_score.gif) no-repeat;-moz-background-size:52px 16px;background-size:52px 16px;}
 
-.zt_listUl h2 { height:26px; display:block; overflow:hidden; margin-bottom:4px}
-.zt_listUl h2 img{ display:block; float:left; color:#898989;overflow:hidden;}
-.zt_listUl p{ display:block; color:#898989; background:url(http://101.200.214.68/Uploads/gameInfoPic//icon4.png) no-repeat left center; padding-left:20px; line-height:160% }
+.zt_listUl h2 { height:26px;width:100%;display:block; overflow:hidden; margin-bottom:4px}
+.zt_listUl h2 img{ display:block;margin-left:19px;float:left; color:#898989;overflow:hidden;}
+.zt_listUl p{display:block;height:20px;width:96%;line-height:20px;padding-top:4px;overflow:hidden;color:#898989; background:url(http://101.200.214.68/Uploads/gameInfoPic//icon4.png) no-repeat left center; padding-left:19px; }
 /* 这里是 箭头 图标 */
 .zt_listUl .base_a{display:block;overflow:hidden;width:95%;height:80px;background:url(http://101.200.214.68/Uploads/right_arrow.gif) no-repeat right center;}
 
@@ -76,11 +76,11 @@ a, area {blr:expression(this.onFocus=this.blur())}
 .zt_pmBoxIcone{ width:40px; position:absolute; right:20px; top:40px; text-align:center}
 
 
-.zt_pmBox{ width:100%;background-image: url(http://101.200.214.68/Uploads/gameInfoPic//bg01.jpg);background-attachment:fixed;background-repeat:no-repeat;background-size:cover;-moz-background-size:cover;-webkit-background-size:cover; position:relative}
+.zt_pmBox{ width:100%;background-image:url(http://101.200.214.68/Uploads/gameInfoPic//bg01.jpg);background-attachment:fixed;background-repeat:no-repeat;background-size:cover;-moz-background-size:cover;-webkit-background-size:cover; position:relative}
 .zt_pmBox h2,.zt_pmBox h3{ display:block; text-align:center}
 
-.zt_pmBoxBg img{-moz-border-radius:100px;/* Gecko browsers */webkit-border-radius: 100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */ margin:0 auto; display:block;}
-.zt_pmBoxBg { width:124px; height:124px; margin:0 auto; background: url(http://101.200.214.68/Uploads/gameInfoPic//tuPic.png) no-repeat}
+.zt_pmBoxBg img{-moz-border-radius:100px;/* Gecko browsers */webkit-border-radius:100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */ margin:0 auto; display:block;}
+.zt_pmBoxBg { width:124px; height:124px; margin:0 auto; background:url(http://101.200.214.68/Uploads/gameInfoPic//tuPic.png) no-repeat}
 .zt_pmBoxText{ text-align:center; font-size:18px; line-height:50px; padding:0 10px; position:relative}
 .zt_pmBoxText span.right{ position:absolute; right:10px; top:0px;}
 .zt_pmBoxText span{ display:inline-block}
@@ -95,7 +95,7 @@ a, area {blr:expression(this.onFocus=this.blur())}
 .zt_imgListUl{ height:80px; border-bottom:1px #dddddd solid }
 .zt_imgListUl .zt_imgUl1{ margin:20px 14px 0 14px; width:20px; line-height:40px; font-size:18px; text-align:center}
 .zt_imgListUl .zt_imgUl2{ margin-top:10px}
-.zt_imgListUl .zt_imgUl2 img{-moz-border-radius:100px;/* Gecko browsers */webkit-border-radius: 100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */ margin:0 auto; display:block;} 
+.zt_imgListUl .zt_imgUl2 img{-moz-border-radius:100px;/* Gecko browsers */webkit-border-radius:100px;   /* Webkit browsers */border-radius:100px;/* W3C syntax */ margin:0 auto; display:block;} 
 .zt_imgListUl .zt_imgUl3{ line-height:80px; font-size:18px; padding-left:14px; color:#727171}
 
 .zt_imgListUl .right{padding-right:10px;}
@@ -106,23 +106,23 @@ a, area {blr:expression(this.onFocus=this.blur())}
 .zt_titleH1{ border-bottom:4px #0086a4 solid; height:30px; margin:0 10px}
 .zt_titleH1 strong{ font-size:14px; color:#FFF; padding:0 16px; background:#0086a4; display:block; height:30px; line-height:30px;}
 .zt_titleH1 a{ background:url(http://101.200.214.68/Uploads/gameInfoPic//icon8.jpg) no-repeat center right; padding-right:16px; display:block; line-height:30px; color:#898989}
-.zt_text_p{ margin:0 10px; padding:10px; border:1px #0086a4 solid;-moz-border-radius:20px;/* Gecko browsers */webkit-border-radius: 20px;   /* Webkit browsers */border-radius:20px;/* W3C syntax */ font-size:14px;}
+.zt_text_p{ margin:0 10px; padding:10px; border:1px #0086a4 solid;-moz-border-radius:20px;/* Gecko browsers */webkit-border-radius:20px;   /* Webkit browsers */border-radius:20px;/* W3C syntax */ font-size:14px;}
 .zt_text_p p,.zt_text_p a{ color:#898989;font-size:14px; line-height:22px; text-indent:30px}
 .zt_text_p p {text-align:justify;text-justify:inter-ideograph}
 
 .zt_hotHot{ margin:0 10px}
 .zt_hotHot li{ float:left; width:50%; display:block; height:60px; padding-top:10px}
-.zt_hotHot li img{-moz-border-radius:150px;/* Gecko browsers */webkit-border-radius: 150px;   /* Webkit browsers */border-radius:150px;/* W3C syntax */display:block; float:left; margin-right:10px;}
+.zt_hotHot li img{-moz-border-radius:150px;/* Gecko browsers */webkit-border-radius:150px;   /* Webkit browsers */border-radius:150px;/* W3C syntax */display:block; float:left; margin-right:10px;}
 .zt_hotHot li h2{ font-size:16px; color:#727171; display:block; padding-top:6px}
 .zt_hotHot li p{ font-size:14px; color:#727171}
 .zt_xqListUl{ padding:20px; line-height:20px; font-size:14px; color:#898989}
 
-.zt_xqTitle{ text-align: center; padding:8px 0; line-height:26px; border-bottom:4px #0086a4 solid}
+.zt_xqTitle{ text-align:center; padding:8px 0; line-height:26px; border-bottom:4px #0086a4 solid}
 .zt_xqTitle h2{ color:#898989; font-size:18px;}
 .zt_xqTitle h3{ color:#898989;font-size:18px;}
 
 .zt_xqText{ background:#f4f5f5; padding:6px 16px;}
-.zt_xpTextList h3{ display: inline-block; background:#0086a4; color:#FFF;-moz-border-radius:15px;/* Gecko browsers */webkit-border-radius: 15px;   /* Webkit browsers */border-radius:15px;/* W3C syntax */ line-height:24px; padding:2px 16px; margin:10px 0; font-size:14px}
+.zt_xpTextList h3{ display:inline-block; background:#0086a4; color:#FFF;-moz-border-radius:15px;/* Gecko browsers */webkit-border-radius:15px;   /* Webkit browsers */border-radius:15px;/* W3C syntax */ line-height:24px; padding:2px 16px; margin:10px 0; font-size:14px}
 .zt_xpTextList_p{ background:#FFF; color:#898989;-moz-border-radius:4px;/* Gecko browsers */webkit-border-radius:4px;   /* Webkit browsers */border-radius:4px;/* W3C syntax */ padding:10px; font-size:14px; line-height:22px;}
 
 
@@ -160,10 +160,32 @@ $(".zt_listUl:odd").addClass("alt");
 <div class="zt_he10 bg_eeeeee"></div>
 
 
+
+<div class="zt_listUl">
+	<div class="left base_a">
+		<div class="left zt_img"><img src="http://101.200.214.68/qyh/menqiu.jpg" width="100%" ></div>
+        <div class="left zt_text">
+			<div class="clear_l"></div>
+            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text4.png" height="20"/><a href="
+http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483804&idx=1&sn=10168913b17c5e8dd283e83d1d0e2706&scene=23&srcid=0724qsioEWgpCkLdw4o3ooKH#rd
+            " class="tit_over"></a></h2>
+     	<a href="http://101.200.214.68/qyh/menqiu.html">
+            <p>比赛时间: 2016年7月18日</p>
+            <p>比赛地点: 良乡体育中心门球场</p>
+			</a>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+
+
+
 <div class="zt_listUl">
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/pingpang.jpg" width="100%" ></div>
 		<div class="left zt_text">
+			<div class="clear_l"></div>
 			<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text2.png" height="20"/>
 				<a href="
 				http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483661&idx=1&sn=2b06f06639859905f01a6e0cba864473&scene=23&srcid=07207y1rR3MdyIFRbrLRRD8l#rd
@@ -183,10 +205,11 @@ $(".zt_listUl:odd").addClass("alt");
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/ws.jpg" width="100%" ></div>
         <div class="left zt_text">
+			<div class="clear_l"></div>
             <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text8.png" height="20"/><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342697&idx=1&sn=9624b33fab3cac2d91982ccb90aee95a&scene=23&srcid=0712CCFErNh3vXdwYUVEiicJ#rd" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/ws.html">
             <p>比赛时间: 2016年7月11日—12日</p>
-            <p>比赛地点:房山区良乡体育中心体育馆</p>
+            <p>比赛地点: 房山区良乡体育中心体育馆</p>
 			</a>
 		</div>
 	</div>
@@ -197,6 +220,7 @@ $(".zt_listUl:odd").addClass("alt");
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/sdyy.jpg" width="100%" ></div>
         <div class="left zt_text">
+			<div class="clear_l"></div>
             <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text5.png" height="20"/><a href="
 http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63c0edd4a73e5aaf9a2c8e72fe1&scene=23&srcid=07129A8EZa6v57KngLvXhrqU#rd
             " class="tit_over"></a></h2>
@@ -219,10 +243,11 @@ http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/bh.jpg" width="100%" ></div>
         <div class="left zt_text">
+			<div class="clear_l"></div>
             <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text10.png" height="20"/><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342685&idx=1&sn=0044c17692aee1fa39d1ac81a5dfd7ef&scene=23&srcid=0711PXU6Fy8ibZMuqorytvcC#rd" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/bh.html">
             <p>比赛时间: 2016年7月11日-12日</p>
-            <p>比赛地点:良乡体育中心体育场外</p>
+            <p>比赛地点: 良乡体育中心体育场外</p>
 			</a>
 		</div>
 	</div>
@@ -235,6 +260,7 @@ http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/tjxm.jpg" width="100%" ></div>
         <div class="left zt_text">
+			<div class="clear_l"></div>
             <h2>
             	<img src="http://101.200.214.68/Uploads/gameInfoPic/text6.png" height="20"/><a href="
 
@@ -254,6 +280,7 @@ http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/tsxm.jpg" width="100%" ></div>
         <div class="left zt_text">
+			<div class="clear_l"></div>
             <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text7.png" height="20"/><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTk0MzE4MA==&mid=2650342641&idx=1&sn=dfe8e7591a8f55a564d7aadc25bd50a5&scene=23&srcid=0711InTjmNvmTXoTZucMZxIk#rd" class="tit_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/tiaosheng.html">
             <p>比赛时间: 2016年7月9日</p>
@@ -269,6 +296,7 @@ http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/lanqiu.jpg" width="100%" ></div>
 		<div class="left zt_text"> 
+			<div class="clear_l"></div>
      	<h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text1.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/lanqiu.html">
 				<p>比赛时间: 2016年7月11日—8月3日</p>
@@ -284,23 +312,11 @@ http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/yumaoqiu.jpg" width="100%" ></div>
         <div class="left zt_text">
+			<div class="clear_l"></div>
             <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text3.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/yumaoqiu.html">
             <p>比赛时间: 2016年7月21—24日</p>
-            <p>比赛地点:良乡体育中心综合馆</p>
-			</a>
-		</div>
-	</div>
-	<div class="clear"></div>
-</div>
-<div class="zt_listUl">
-	<div class="left base_a">
-		<div class="left zt_img"><img src="http://101.200.214.68/qyh/menqiu.jpg" width="100%" ></div>
-        <div class="left zt_text">
-            <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text4.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
-     	<a href="http://101.200.214.68/qyh/menqiu.html">
-            <p>比赛时间: 2016年7月18日</p>
-            <p>比赛地点: 良乡体育中心门球场</p>
+            <p>比赛地点: 良乡体育中心综合馆</p>
 			</a>
 		</div>
 	</div>
@@ -312,6 +328,7 @@ http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483655&idx=1&sn=92c0c63
 	<div class="left base_a">
 		<div class="left zt_img"><img src="http://101.200.214.68/qyh/jscw.jpg" width="100%" ></div>
         <div class="left zt_text">
+			<div class="clear_l"></div>
             <h2><img src="http://101.200.214.68/Uploads/gameInfoPic/text9.png" height="20"/><a href="#" class="tit_not_over"></a></h2>
      	<a href="http://101.200.214.68/qyh/jscw.html">
             <p>比赛时间: 2016年8月1日至8月3日</p>
