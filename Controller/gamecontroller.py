@@ -50,6 +50,9 @@ class GameController:
 			if game_info['gid'] == 7:
 				game_info['gintro'] = options.ipnet + '/bjjbz/intro.html?uid=' + str(uid)
 				game_info['gintro_wecha'] = options.ipnet + '/bjjbz/intro.html?uid=' + str(uid)
+			if game_info['gid'] == 9:
+				game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'
+				game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'
 			else:
 				game_info['gintro'] = options.ipnet + '/py/game?action=get_intro&id=' + str(game_info['gid']) + \
             	'&uid=' + str(uid) + '&gtype=' + str(game_info['gtype_id'])
