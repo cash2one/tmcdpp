@@ -43,7 +43,7 @@ class GameController:
 		game_list = self.gamemodel.get_game_list()
 		for game_info in game_list:
 			game_info['gacceptstartdate'] = PublicFunc.stamp_to_Ymd(game_info['gacceptstart'])
-		game_info['gacceptenddate'] = PublicFunc.stamp_to_Ymd(game_info['gacceptend'])
+			game_info['gacceptenddate'] = PublicFunc.stamp_to_Ymd(game_info['gacceptend'])
 			game_info['gfrontpage'] = options.ipnet + game_info['gfrontpage']
 			game_info['agreement'] = options.ipnet + '/py/game?action=get_agreement&id=' + str(game_info['gid'])
 			game_info['gstatusid'],game_info['gstatus'] = self.get_status_name(game_info['gstarttime'],game_info['gendtime'],game_info['gacceptstart'],game_info['gacceptend'])
