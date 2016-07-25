@@ -77,7 +77,10 @@ class GroupMemModel(DbBase):
     def __get_group_user_info_via_uid_list(self,uid_list):
     	info_return = [] 
     	for uid in uid_list:
-    		info_return.append(UsersModel.get_instance().get_import_user_info(uid,['username','point','uid','avatar'])) 
+            user_info = UsersModel.get_instance().get_import_user_info(uid,['nickname','point','uid','avatar'])
+    		# info_return.append(UsersModel.get_instance().get_import_user_info(uid,['username','point','uid','avatar'])) 
+            user_info['username'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
+            info_return.append(user_info)
     	return info_return
 
     def get_my_group_list(self,uid):
