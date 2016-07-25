@@ -43,7 +43,7 @@ class GameController:
 		game_list = self.gamemodel.get_game_list()
 		for game_info in game_list:
 			game_info['gacceptstartdate'] = PublicFunc.stamp_to_Ymd(game_info['gacceptstart'])
-			game_info['gacceptenddate'] = PublicFunc.stamp_to_Ymd(game_info['gacceptend'])
+		game_info['gacceptenddate'] = PublicFunc.stamp_to_Ymd(game_info['gacceptend'])
 			game_info['gfrontpage'] = options.ipnet + game_info['gfrontpage']
 			game_info['agreement'] = options.ipnet + '/py/game?action=get_agreement&id=' + str(game_info['gid'])
 			game_info['gstatusid'],game_info['gstatus'] = self.get_status_name(game_info['gstarttime'],game_info['gendtime'],game_info['gacceptstart'],game_info['gacceptend'])
@@ -51,8 +51,10 @@ class GameController:
 				game_info['gintro'] = options.ipnet + '/bjjbz/intro.html?uid=' + str(uid)
 				game_info['gintro_wecha'] = options.ipnet + '/bjjbz/intro.html?uid=' + str(uid)
 			if game_info['gid'] == 9:
-				game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'
-				game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'
+				# game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'
+				# game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'
+				game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483830&idx=1&sn=a5e8ba2a262f3a1da7b65a5c18037315&scene=1&srcid=0725YTSd96e9sFKnqkH9AQZt#rd'
+				game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483830&idx=1&sn=a5e8ba2a262f3a1da7b65a5c18037315&scene=1&srcid=0725YTSd96e9sFKnqkH9AQZt#rd'
 			else:
 				game_info['gintro'] = options.ipnet + '/py/game?action=get_intro&id=' + str(game_info['gid']) + \
             	'&uid=' + str(uid) + '&gtype=' + str(game_info['gtype_id'])
