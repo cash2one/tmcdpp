@@ -85,8 +85,9 @@ class GroupMemModel(DbBase):
         my_group_leader = []
         my_group_not_leader = []
         for info in group_id_list_db:
-            if int(info['is_leader']): my_group_leader.append(GroupModel.get_instance().get_group_info(info['group_id']))
-            else: my_group_not_leader.append(GroupModel.get_instance().get_group_info(info['group_id'])) 
+            if GroupModel.get_instance().judge_group_exist(info['group_id']):
+                if int(info['is_leader']): my_group_leader.append(GroupModel.get_instance().get_group_info(info['group_id']))
+                else: my_group_not_leader.append(GroupModel.get_instance().get_group_info(info['group_id'])) 
         return my_group_leader,my_group_not_leader
 
     def truncate_group_mem(self,group_id):
