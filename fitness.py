@@ -215,7 +215,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return dict(dict_temp,**other_param)
 
     def get_attend_info(self,id):
-        return self.db_ins.find_one("fs_user_event",['*'],ueid=id)
+        return self.db.find_one("fs_user_event",['*'],ueid=id)
     
     def get_group_attend_mem(self,id):
         """the func will return all ueid of the same attendtime """
