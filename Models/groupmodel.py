@@ -32,7 +32,7 @@ class GroupModel(DbBase):
 
     def cache_group_info(self,group_id):
     	group_id = str(group_id)
-    	if not self.cache.exists('group:id:' + group_id):
+    	if not self.cache.exists('group:id:' + group_id) and self.judge_group_exist(group_id):
     		group_info = self.find_data(['*'],get_some=False,id=group_id)
     		group_info['createtime'] = PublicFunc.stamp_to_YmdHM(group_info['createtime'])
     		group_info['tag_name'] = TagModel.get_instance().get_tag_name(group_info['tag_id'])
@@ -106,6 +106,8 @@ class GroupModel(DbBase):
         """
         return self.find_data(['group_name','avatar','id as group_id'],get_some=get_num,order=' createtime desc ',leader_id=uid,status=0)
 
+    def judge_group_exist(self,group_id):
+        return self.find_db_sum(id=group_id,status=0)
 
 
 

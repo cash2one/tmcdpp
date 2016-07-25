@@ -337,7 +337,8 @@ class BaseHandler(tornado.web.RequestHandler):
         value_str = ' (' +  value_str[:-1] + ') '
         sql = "INSERT INTO %s %s VALUES %s" % (table,key_str,value_str)
         try: result = self.db.execute(sql)
-        except Exception,e: self.treat_except(e)
+        except Exception,e: 
+            raise
         return result
 
     def get_game_only_level_event(self,gid):
@@ -1875,13 +1876,14 @@ class GroupHandler(BaseHandler):
             try:
                 uid = self.get_argument('uid')
                 my_group_list = self.groupmemmodel.get_my_group_list(uid)
-                return self.out(my_group_list)
                 leader_group_info_return = my_group_list[0]
                 group_info_return = my_group_list[1] #获取我所加入的团队
                 invite_list_return = self.invitemodel.get_group_invite_list(uid)
                 return_dict = {'group_info_return':group_info_return,'leader_group_info_return':leader_group_info_return,'invite_list_return':invite_list_return}
                 self.return_param(1,0,return_dict,'成功')
-            except Exception,e: self.treat_except(e)
+            except Exception,e: 
+                raise
+                self.treat_except(e)
        
         elif action == 'get_group_list': 
             a_d = self.get_multi_argument([{'version':False,'page':False}])
