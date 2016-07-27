@@ -728,7 +728,9 @@ class TestHandler(BaseHandler):
         # self.runcommunitymodel.update_run_data('5767d121e13823130724f086',3698,500,600)
         # print PublicFunc.get_date_info(1525896369,['year','month','day'])
         #check_token_avaiable 
-        print UsersModel().check_token_available(7,'dd')
+        # print UsersModel().check_token_available(7,'dd')
+        argu = self.get_argument('yin')
+        self.write(argu)
 
 
 
