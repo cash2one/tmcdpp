@@ -56,8 +56,8 @@ class GameController:
 				game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483830&idx=1&sn=a5e8ba2a262f3a1da7b65a5c18037315&scene=1&srcid=0725YTSd96e9sFKnqkH9AQZt#rd'
 				game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483830&idx=1&sn=a5e8ba2a262f3a1da7b65a5c18037315&scene=1&srcid=0725YTSd96e9sFKnqkH9AQZt#rd'
 			if game_info['gid'] == 10:
-				game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483855&idx=1&sn=b41b59cc243ab6026ad2de7284fb3fe4&scene=23&srcid=0727FraIkV4BUhsVAIBCV2kK#rd'
-				game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483855&idx=1&sn=b41b59cc243ab6026ad2de7284fb3fe4&scene=23&srcid=0727FraIkV4BUhsVAIBCV2kK#rd'
+				game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483873&idx=1&sn=e5cb5e5421960408d355ab1d77c75eec&scene=23&srcid=0728zwYFsbvoWZxYma6CFidS#rd'
+				game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&mid=2247483873&idx=1&sn=e5cb5e5421960408d355ab1d77c75eec&scene=23&srcid=0728zwYFsbvoWZxYma6CFidS#rd'
 			else:
 				game_info['gintro'] = options.ipnet + '/py/game?action=get_intro&id=' + str(game_info['gid']) + \
             	'&uid=' + str(uid) + '&gtype=' + str(game_info['gtype_id'])

@@ -25,8 +25,9 @@ class Connection:
             host=options.mysql_host, database=options.mysql_database,
             user=options.mysql_user, password=options.mysql_password)
         self.cache = redis.Redis(host=options.redis_host,port=options.redis_port,db=options.redis_db)
-    connection_instance = None
+    # connection_instance = None
     @classmethod
     def get_connection_instance(cls):
-        if not cls.connection_instance: cls.connection_instance = Connection()
+        if not hasattr(cls,"connection_instance"):
+            cls.connection_instance = cls()
         return cls.connection_instance
