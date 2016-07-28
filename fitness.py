@@ -992,7 +992,10 @@ class AttendHandler(BaseHandler):
             pri_id = self.insert_into_db('fs_user_event',data_write)
             self.incr_game_attend_num(a_d['eid'],1)
             #send sms 
-            send_content = "%s,恭喜您成功报名 %s 赛事项目" % (a_d['eusername'],ename)
+            if int(a_d['eid']) == 202:
+                send_content = '%s,您好!恭喜您成功报名8月7日(周日)上午8:30在良乡体育中心举办的青创动力2016年科学健身运动项目推广活动，请您于8月5日下午两点到良乡体育中心综合馆领取服装。' % a_d['eusername']
+            else:
+                send_content = "%s,恭喜您成功报名 %s 赛事项目" % (a_d['eusername'],ename)
             # print send_content
             PublicFunc.send_sms(a_d['etel'],send_content)
             return self.return_param(1,0,{'id':pri_id},'成功')
