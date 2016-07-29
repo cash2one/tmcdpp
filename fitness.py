@@ -385,7 +385,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_check_status_name(self,checkstatus,is_group):
         checkstatus = str(checkstatus)
-        status_name_dict = {'1':'审核中','2':'attend 成功','3':'attend fail'}
+        status_name_dict = {'1':'审核中','2':'报名成功','3':'attend fail'}
         status_name_dict['0'] = '支付' if is_group  else '未支付'
         return status_name_dict[checkstatus]
         
