@@ -48,8 +48,8 @@ class GameController:
 			game_info['agreement'] = options.ipnet + '/py/game?action=get_agreement&id=' + str(game_info['gid'])
 			game_info['gstatusid'],game_info['gstatus'] = self.get_status_name(game_info['gstarttime'],game_info['gendtime'],game_info['gacceptstart'],game_info['gacceptend'])
 			if game_info['gid'] == 7:
-				game_info['gintro'] = options.ipnet + '/bjjbz/intro.html?uid=' + str(uid)
-				game_info['gintro_wecha'] = options.ipnet + '/bjjbz/intro.html?uid=' + str(uid)
+				game_info['gintro'] = options.ipnet + '/bjjbz/intro.bak.html?uid=' + str(uid)
+				game_info['gintro_wecha'] = options.ipnet + '/bjjbz/intro.bak.html?uid=' + str(uid)
 			if game_info['gid'] == 9:
 				# game_info['gintro'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'
 				# game_info['gintro_wecha'] = 'http://mp.weixin.qq.com/s?__biz=MzI4MzM4MDM5MQ==&tempkey=6TdVDeLTjka%2FMedRgXr1jw5%2FEhRKAIdReyd2gYGoWvwCSJzZcVIQlw8ahYcN%2BhuSTga1LrgOwZ4xABg1O%2BbrtOuAdiWuSbVezSlYfihfUS3PSw1YoiJG8DhKWPiejoTWzHRVFZZrRPYejqkYKPGd1A%3D%3D&scene=1&srcid=0725qMCq5oIglvAmfbrXsUvp#wechat_redirect'

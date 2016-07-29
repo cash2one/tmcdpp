@@ -20,13 +20,13 @@ def createJz():
 	jz = jz_head + str(jz_first) + str(jz_second)
 	return jz
 
-init_time = int(time.time())
-print init_time
-def createTime():
-	random_time = random.randint(0,100)
-	init_time += random_time
-	return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(init_time)) 
-
+	
+# def createTime():
+# 	random_time = random.randint(0,100)
+# 	init_time += random_time
+ 
+def stamp_to_date(stamp):
+	return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(stamp))
 
 
 def createUrl():
@@ -39,22 +39,28 @@ def createUrl():
 # dataline = 
 
 
+# 位置数据  duanxin  haishi 通话通信 还是其他通信 卡机   基站 通信时间 
+# 			小区（基站）   基站         通信时间
+# 0000000000	0054775807	2  00000054		2015-04-26 04:20:27
 
-tel = createTel()
-jz = createJz()
-url = createUrl()
-print url
-print tel
-print jz
-da = createTime()
-print da
+sb_num = '0000000000'
 
-sys.exit(0)
-
-
-
-
-fr = open("net.txt",'a')
-fr.write('heheda\n')
-fr.write('caonimei')
-fr.close()
+fr_net = open("net.txt",'a')#open the file
+fr_tel = open("tel.txt",'a')
+init_time = int(time.time())
+for _ in range(100000):	
+	tel = createTel()
+	jz = createJz()
+	url = createUrl()
+	time_incr = random.randint(0,3600)
+	init_time += time_incr
+	date_net = stamp_to_date(init_time)
+	net_line = sb_num + '\t' + tel + '\t' + jz + '\t' + date_net + '\t' + url + '\n'
+	init_time += time_incr
+	date_tel = stamp_to_date(init_time)
+	tel_type = random.randint(0,3)
+	tel_line = sb_num + '\t' + tel + '\t' + str(tel_type) + '\t' + jz + '\t' + date_tel + '\n'
+	fr_net.write(net_line)
+	fr_tel.write(tel_line)
+ 
+fr_net.close()
