@@ -987,6 +987,7 @@ class AttendHandler(BaseHandler):
             gtype_id = int(game_info['gtype_id'])
             #if the game type if person not need payfee then we set the checkstatus 2 
             if not float(epayfee): data_write['checkstatus'] = 1 # the event is free
+            if int(a_d['eid']) == 202: data_write['checkstatus'] = 2 # check pass,dont need checkout 
             else: data_write['out_trade_no'] = self.create_out_trade_num()
             if gtype_id in self.run_game_not_need_check_type: data_write['checkstatus'] = 2 #the type of the game dont need pay and dont need check
             pri_id = self.insert_into_db('fs_user_event',data_write)
