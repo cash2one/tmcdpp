@@ -107,7 +107,9 @@ class Application(tornado.web.Application):
             (r"/[pk]y/share",ShareHandler),
             (r"/[pk]y/followpri",FollowPriHandler),
             (r"/[pk]y/followpub",FollowPubHandler),
-            (r"/[pk]y/userevent",UserEventHandler)
+            (r"/[pk]y/userevent",UserEventHandler),
+            (r"/[pk]y/adver",AdverHandler)
+
 
         ]
         settings = dict(
@@ -1613,6 +1615,20 @@ class PointHandler(BaseHandler):
             uid = self.get_argument('uid')
 
 
+
+class AdverHandler(BaseHandler):
+    def get(self):
+        try:
+            a_d = self.get_multi_argument(['action'])
+            if a_d['action'] == 'get_adver':
+                return_data = {'url':"http://www.baidu.com"}
+                self.return_param(1,0,return_data,'success');
+        except Exception,e:
+            self.treat_except(e)
+
+
+
+
 class NotePubHandler(BaseHandler):
     def get(self):
         try:
@@ -1748,7 +1764,7 @@ class PostPriHandler(BaseHandler):
             if not UsersModel().check_token_available(a_d['uid'],a_d['token']): return self.return_param(0,200,{},'您已经注销登录或者在其他地方登录，请重新登录')
             if a_d['action'] == 'release_post':
                 if a_d['version'] >= '3.2':
-                    a_d_m = self.get_multi_argument(['pic_str','content','address','longitude','latitude'])
+                    a_d_m = self.get_multi_argument(['pic_str',{'content':False},'address','longitude','latitude'])
                     post_id = FCirController().release_post(a_d['uid'],a_d_m['pic_str'],a_d_m['content'],a_d_m['address'],a_d_m['longitude'],a_d_m['latitude'])
                     self.return_param(1,0,post_id,'发布成功')
 

@@ -72,7 +72,8 @@ class UserController:
 		"""
 		uid = int(uid)
 		other_uid = int(other_uid)
-		person_center = self.musermodel.person_center(uid)
+		# person_center = self.musermodel.person_center(uid)
+		person_center = self.musermodel.person_center(other_uid)
 		for following in person_center['following_list']:
 			user_info = self.usersmodel.get_import_user_info(following['uid'],['avatar','nickname'])
 			following['avatar'] = user_info['avatar']
@@ -81,7 +82,7 @@ class UserController:
 			user_info = self.usersmodel.get_import_user_info(follower['uid'],['avatar','nickname'])
 			follower['avatar'] = user_info['avatar']
 			follower['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
-		user_info = self.usersmodel.get_import_user_info(uid,['avatar','nickname'])
+		user_info = self.usersmodel.get_import_user_info(other_uid,['avatar','nickname'])
 		person_center['avatar'] = user_info['avatar']
 		person_center['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		person_center['ready_id'] = '100' + str(uid)
@@ -92,11 +93,8 @@ class UserController:
 		else:
 			person_center['run_duration'] = 0
 			person_center['run_distance'] = 0
-
 		if not uid == other_uid:
 			person_center['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,other_uid) else '关注'
-
-
 		person_center['interest'] = [iname['iname'] for iname in InterestModel().get_user_interest(uid)]
 		person_center['group_num'] =  GroupModel().get_group_num(uid) 
 		group_list = GroupModel().get_some_group(uid,options.group_get_num)
