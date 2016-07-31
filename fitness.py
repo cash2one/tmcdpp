@@ -1764,7 +1764,10 @@ class PostPriHandler(BaseHandler):
             if not UsersModel().check_token_available(a_d['uid'],a_d['token']): return self.return_param(0,200,{},'您已经注销登录或者在其他地方登录，请重新登录')
             if a_d['action'] == 'release_post':
                 if a_d['version'] >= '3.2':
-                    a_d_m = self.get_multi_argument(['pic_str',{'content':False},'address','longitude','latitude'])
+                    a_d_m = self.get_multi_argument(['pic_str',{'content':False},{'address':False},{'longitude':False},{'latitude':False}])
+                    dont_param = ['content','address','longitude','latitude']
+                    for param in dont_param:
+                        if not hasattr(a_d_m,param): a_d_m[param] = ""
                     post_id = FCirController().release_post(a_d['uid'],a_d_m['pic_str'],a_d_m['content'],a_d_m['address'],a_d_m['longitude'],a_d_m['latitude'])
                     self.return_param(1,0,post_id,'发布成功')
 
