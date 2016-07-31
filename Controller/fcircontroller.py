@@ -49,9 +49,10 @@ class FCirController:
 	def release_post(self,uid,pic_str,content,address,longitude,latitude):
 		"""发布朋友圈说说"""
 		pic_list = []
-		for pic in pic_str.split(','):
-			pic_path = pic[pic.index('/Uploads'):]
-			pic_list.append(pic_path)
+		if pic_str:
+			for pic in pic_str.split(','):
+				pic_path = pic[pic.index('/Uploads'):]
+				pic_list.append(pic_path)
 		pic_num = len(pic_list)
 		post_id = PostModel().release_post(uid,pic_list,content,address,pic_num,longitude,latitude)
 		return post_id
