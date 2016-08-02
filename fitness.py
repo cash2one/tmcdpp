@@ -1767,7 +1767,7 @@ class PostPriHandler(BaseHandler):
                     a_d_m = self.get_multi_argument([{'pic_str':False},{'content':False},{'address':False},{'longitude':False},{'latitude':False}])
                     dont_param = ['content','address','longitude','latitude','pic_str']
                     for param in dont_param:
-                        if not hasattr(a_d_m,param): a_d_m[param] = ""
+                        if param not in a_d_m: a_d_m[param] = ""
                     post_id = FCirController().release_post(a_d['uid'],a_d_m['pic_str'],a_d_m['content'],a_d_m['address'],a_d_m['longitude'],a_d_m['latitude'])
                     self.return_param(1,0,post_id,'发布成功')
 
