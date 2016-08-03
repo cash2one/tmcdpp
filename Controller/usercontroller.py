@@ -101,7 +101,7 @@ class UserController:
 		for group in group_list:
 			group['avatar'] = options.ipnet + group['avatar']
 		person_center['group_list'] = group_list
-		if 'cir_back' in person_center:
+		if 'cir_back' in person_center and person_center['cir_back']:
 			person_center['cir_back'] = options.ipnet + person_center['cir_back']
 		else:
 			person_center['cir_back'] = options.ipnet + '/Uploads/back.jpg'
