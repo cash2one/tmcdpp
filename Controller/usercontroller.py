@@ -104,7 +104,7 @@ class UserController:
 		if 'cir_back' in person_center:
 			person_center['cir_back'] = options.ipnet + person_center['cir_back']
 		else:
-			person_center['cir_back'] = options.ipnet + '/Uploads/head.png'
+			person_center['cir_back'] = options.ipnet + '/Uploads/back.jpg'
 		return person_center
 
 	def update_cir_back(self,uid,pic_path):
