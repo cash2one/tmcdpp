@@ -106,7 +106,8 @@ class FCirController:
 		post_info['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post_info['pic_list']]
 		#man has love? 
 		post_info['has_love'] = 1 if PostLoveModel().judge_post_love(uid,post_info['post_id']) else 0
-		post_info['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post_info['uid']) else '关注'
+		if int(post_info['uid']) == int(uid): post_info['has_follow'] = ''
+		else:post_info['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post_info['uid']) else '关注'
 		# post['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
 		return post_info
 
