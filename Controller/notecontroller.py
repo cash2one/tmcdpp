@@ -113,7 +113,7 @@ class NoteController:
 	def agree_comment(self,uid,comm_id):
 		"""为帖子的评论点赞"""
 		result = NoteComModel().agree_comment(uid,comm_id)
-		return 'has_agree' if result else 'agree'
+		return 'has_agree' if not result else 'agree'
 
 	def update_see_num(self,note_id):
 		"""更新帖子查看数"""

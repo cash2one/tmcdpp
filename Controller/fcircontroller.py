@@ -139,7 +139,8 @@ class FCirController:
 
 	def get_post_list(self,uid,page):
 		"""
-		function: 获取说说列表
+		function: 获取互动列表
+
 		"""
 		post_list = PostModel().get_post_list(page)
 		current_time = PublicFunc.get_current_stamp()
@@ -153,7 +154,8 @@ class FCirController:
 			user_info = UsersModel().get_import_user_info(post['uid'],['avatar','nickname'])
 			post['avatar'] = user_info['avatar']
 			post['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
-			post['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
+			if post['uid'] == int(uid): post['has_follow'] = ''
+			else: post['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
 		return post_list
 
 	def get_lover_list(self,post_id,page):

@@ -51,6 +51,8 @@ class FollowController:
 			return 'uid为' + uid + '的用户不存在'
 		if not self.usersmodel.judge_uid_exist(fuid):
 			return 'uid为' + fuid + '的用户不存在'
+		if int(uid) == int(fuid):
+			return '您不能关注自己'
 		result = self.followmodel.following_man(uid,fuid)
 		if result == 'follow_success':
 			MUserModel().add_following(uid,fuid) #修改自己的关注列表
@@ -72,6 +74,8 @@ class FollowController:
 			return 'uid为' + uid + '的用户不存在'
 		if not self.usersmodel.judge_uid_exist(fuid):
 			return 'uid为' + fuid + '的用户不存在'
+		if int(uid) == int(fuid):
+			return '您不能关注自己'
 		if self.followmodel.follow_other(uid,fuid):
 			MUserModel().add_following(uid,fuid) #修改自己的关注列表
 			MUserModel().add_follower(fuid,uid) #修改被关注用户的的粉丝列表

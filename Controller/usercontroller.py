@@ -95,7 +95,7 @@ class UserController:
 			person_center['run_distance'] = 0
 		if not uid == other_uid:
 			person_center['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,other_uid) else '关注'
-		person_center['interest'] = [iname['iname'] for iname in InterestModel().get_user_interest(uid)]
+		person_center['interest'] = [iname['iname'] for iname in InterestModel().get_user_interest(other_uid)]
 		person_center['group_num'] =  GroupModel().get_group_num(uid) 
 		group_list = GroupModel().get_some_group(uid,options.group_get_num)
 		for group in group_list:
