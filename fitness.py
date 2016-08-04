@@ -1748,9 +1748,9 @@ class PostPubHandler(BaseHandler):
 
             elif a_d['action'] == 'find_friends':
                 if a_d['version'] >= '3.2':
-                    a_d_m = self.get_multi_argument(['nick_find','page'])
+                    a_d_m = self.get_multi_argument(['nick_find','page','uid'])
                     # self.write(a_d_m)
-                    friends_list = FCirController().find_friends(a_d_m['nick_find'],a_d_m['page'])
+                    friends_list = FCirController().find_friends(a_d_m['nick_find'],a_d_m['page'],a_d_m['uid'])
                     self.return_param(1,0,friends_list,'success')
 
 

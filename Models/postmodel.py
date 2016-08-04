@@ -127,14 +127,15 @@ class PostModel(MongoBase):
 		"""判断说说是否存在"""
 		return self.m_c.find({"_id":ObjectId(post_id)},{'status':0}).count()
 
-	def recommend_user(self):
+	def recommend_user(self,uid):
 		"""
 		推荐两个用户 有帖子的用户哦亲
 		"""
 		init_num = 0
+		uid = int(uid)
 		recommend_user_info = []
 		while True:
-			post_list = self.m_c.find({'status':0},{'uid':1,'pic_num':1,'pic_list':1}).skip(init_num).limit(2)
+			post_list = self.m_c.find({'status':0,'uid':{'$ne':uid}},{'uid':1,'pic_num':1,'pic_list':1}).skip(init_num).limit(2)
 			init_num += 2
 			if len(recommend_user_info) >= 2 :break
 			for post in post_list:

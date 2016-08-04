@@ -115,7 +115,7 @@ class FCirController:
 		"""
 		获取推荐的关注列表
 		"""
-		recommend_user_list  =  PostModel().recommend_user()
+		recommend_user_list  =  PostModel().recommend_user(uid)
 		for recommend_user in recommend_user_list:
 			user_info = UsersModel().get_import_user_info(recommend_user['uid'],['avatar','nickname'])
 			recommend_user['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
@@ -172,19 +172,21 @@ class FCirController:
 			lover['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		return lover_list
 
-	def find_friends(self,nick_find,page):
+	def find_friends(self,nick_find,page,uid):
 		"""
 		 根据昵称找好友
 		"""
 		friends_list = UsersModel().find_friends(nick_find,page)
+		friends_list_return = []
 		for friend in friends_list:
+			if int(friend['uid']) == int(uid):
+				continue
 			friend['avatar'] = options.ipnet + friend['avatar']
 			friend['nickname'] = friend['nickname'] if friend['nickname'] else options.default_nick_name 
 			user_interest = InterestModel().get_user_interest(friend['uid'])
 			friend['interest'] = [iname['iname'] for iname in user_interest]
-		return friends_list
-
-
+			friends_list_return.append(friend)
+		return friends_list_return
 
 	def get_comm_list(self,post_id,page):
 		"""
