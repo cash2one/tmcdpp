@@ -42,7 +42,7 @@ class ShareController:
 
 	def share_post(self,post_id):
 		post_info = PostModel().get_post_info(post_id)
-		share_url = 'http://101.200.214.68/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/hudongxiangqing/57a2a21eea766f2a3fa43b33'
+		share_url = 'http://101.200.214.68/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/hudongxiangqing/' + str(post_id)
 		token_pos = share_url.find('token')
 		share_url = share_url[:token_pos] + share_url[token_pos + 39:]
 		share_dict = {'title':self.share_title,'content':post_info['content'],'image':options.ipnet + post_info['pic_list'][0],'url':share_url}
@@ -50,7 +50,7 @@ class ShareController:
 
 	def share_note(self,note_id):
 		note_info = NoteModel().get_note_info(note_id)
-		share_url = 'http://101.200.214.68/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/tiezixiangqing/577d0baeea766f096a0a611b'
+		share_url = 'http://101.200.214.68/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/tiezixiangqing/' + str(note_id)
 		token_pos = share_url.find('token')
 		share_url = share_url[:token_pos] + share_url[token_pos + 39:]
 		share_dict = {'title':self.share_title,'content':note_info['title'],'image':'not have','url':share_url}
