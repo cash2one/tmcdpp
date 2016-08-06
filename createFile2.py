@@ -3,6 +3,12 @@ import sys
 import random
 import time
 
+"""
+create the only date file !!!
+"""
+
+
+
 url_list  = ['www.baidu.com','www.sina.com','www.iqiyi.com','www.2233.com','www.a.com','www.b.com','www.c.com','www.d.com','www.e.com',
 			   'www.mi.com','www.shit.com','www.lenove.com','www.huawei.com','www.ping.com','bbs.byr.cn','tv.byr.cn','bt.byr.cn']
 
@@ -48,11 +54,11 @@ sb_num = '0000000000'
 fr_net = open("net.txt",'a')#open the file
 fr_tel = open("tel.txt",'a')
 init_time = int(time.time())
-for _ in range(20000):	
+for _ in range(20):	
 	tel = createTel()
 	jz = createJz()
 	url = createUrl()
-	time_incr = random.randint(0,3600)
+	time_incr = random.randint(1,600)
 	init_time += time_incr
 	date_net = stamp_to_date(init_time)
 	net_line = sb_num + '\t' + tel + '\t' + jz + '\t' + date_net + '\t' + url + '\n'

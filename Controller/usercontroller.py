@@ -74,6 +74,7 @@ class UserController:
 		other_uid = int(other_uid)
 		# person_center = self.musermodel.person_center(uid)
 		person_center = self.musermodel.person_center(other_uid)
+		print person_center
 		for following in person_center['following_list']:
 			user_info = self.usersmodel.get_import_user_info(following['uid'],['avatar','nickname'])
 			following['avatar'] = user_info['avatar']
