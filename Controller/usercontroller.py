@@ -87,7 +87,7 @@ class UserController:
 		person_center['avatar'] = user_info['avatar']
 		person_center['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 		person_center['ready_id'] = '100' + str(uid)
-		sum_run_info = RunDataModel().get_user_sum_run(uid)
+		sum_run_info = RunDataModel().get_user_sum_run(other_uid)
 		if sum_run_info:
 			person_center['run_duration'] = round(sum_run_info['duration']/3600.0,1)
 			person_center['run_distance'] = round(sum_run_info['distance']/1000.0,1)
