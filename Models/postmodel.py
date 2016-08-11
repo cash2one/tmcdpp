@@ -125,7 +125,7 @@ class PostModel(MongoBase):
 
 	def get_post_num(self,post_id):
 		"""判断说说是否存在"""
-		return self.m_c.find({"_id":ObjectId(post_id)},{'status':0}).count()
+		return self.m_c.find({"_id":ObjectId(post_id),"status":0}).count()
 
 	def recommend_user(self,uid):
 		"""
@@ -154,6 +154,14 @@ class PostModel(MongoBase):
 		post_list = list(self.m_c.find({'status':0,'uid':uid},{'comm_list':0,'latitude':0,'longitude':0,'love_list':0,'pic_list':{"$slice":[0,3]}}).sort([('time',-1)]).skip(page*post_per_page).limit(post_per_page)) 
 		return post_list
 
+
+	def get_uid(self,post_id):
+		return self.m_c.find_one({'status':0,'_id':ObjectId(post_id)},{'uid':1,'_id':0})['uid']
+
+
+	def delete_post(self,post_id):
+		self.m_c.update({'_id':ObjectId(post_id)},{"$set":{'status':1}})
+		return 
 
 
 

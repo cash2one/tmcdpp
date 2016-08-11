@@ -79,6 +79,9 @@ class FCirController:
 		return False #已经发送过了
 
 
+
+
+
 	def get_post_info(self,uid,post_id):
 		"""
 		获取说说详情
@@ -146,7 +149,6 @@ class FCirController:
 		post_list = PostModel().get_post_list(page)
 		current_time = PublicFunc.get_current_stamp()
 		for post in post_list:
-			# print post
 			post['post_id'] = str(post['_id'])
 			post['have_love'] = 1 if PostLoveModel().judge_post_love(uid,post['_id']) else 0 
 			del post['_id']
@@ -155,7 +157,10 @@ class FCirController:
 			user_info = UsersModel().get_import_user_info(post['uid'],['avatar','nickname'])
 			post['avatar'] = user_info['avatar']
 			post['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
-			if post['uid'] == int(uid): post['has_follow'] = ''
+			post['self_post'] = 0
+			if post['uid'] == int(uid): 
+				post['has_follow'] = ''
+				post['self_post'] = 1
 			else: post['has_follow'] = '已关注' if FollowModel().get_follow_status(uid,post['uid']) else '关注'
 		return post_list
 
@@ -206,6 +211,7 @@ class FCirController:
 		"""判断是否存在该帖子"""
 		result = PostModel().get_post_num(post_id)
 		return True if result else False
+
 
 	def get_user_post(self,uid,page):
 		"""获取用户的朋友圈"""
