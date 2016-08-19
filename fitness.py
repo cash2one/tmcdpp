@@ -1655,7 +1655,7 @@ class NotePubHandler(BaseHandler):
                     
             elif a_d['action'] == 'get_pic_list':
                 if a_d['version'] >= '3.2':
-                    pic_list = ['http://101.200.214.68/Uploads/group.jpg','http://101.200.214.68/Uploads/group.jpg','http://101.200.214.68/Uploads/group.jpg']
+                    pic_list = ['http://101.200.214.68/Uploads/add1.jpg','http://101.200.214.68/Uploads/add1.jpg','http://101.200.214.68/Uploads/add1.jpg']
                     pic_num = len(pic_list)
                     data_return = {'pic_num':pic_num,'pic_list':pic_list}
                     return self.return_param(1,0,data_return,'success')
