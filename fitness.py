@@ -1622,8 +1622,8 @@ class AdverHandler(BaseHandler):
             a_d = self.get_multi_argument(['action'])
             return_data = {}
             if a_d['action'] == 'get_adver':
-                return_data['pic_url'] =  "https://img3.doubanio.com/view/dale-online/dale_ad/public/ecb52bbfb3ed800.jpg"
-                return_data['html_url'] = "http://www.baidu.com"
+                return_data['pic_url'] =  "http://101.200.214.68"
+                return_data['html_url'] = "http://101.200.214.68/Uploads/adver/front.jpg"
                 self.return_param(1,0,return_data,'success');
         except Exception,e:
             self.treat_except(e)
