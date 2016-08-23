@@ -28,6 +28,10 @@ class PublicFunc:
 		return int(time.time())
 
     @staticmethod
+    def get_current_datetime():
+        return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(int(time.time()))) 
+
+    @staticmethod
     def create_token(uid):
         """ the access_token is 10 random str + uid + current time and then do md5 secret"""
         token_str = PublicFunc.get_random(5) + str(uid) + str(int(time.time()))

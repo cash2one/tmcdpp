@@ -45,6 +45,8 @@ from Models.livemodel import LiveModel
 from Models.scoremodel import ScoreModel
 from Models.gamemodel import GameModel
 from Models.runcommunitymodel import RunCommunityModel
+from Models.organizationinfomodel import OrganizationInfoModel
+from Models.organizationapplymodel import OrganizationApplyModel
 from Models.mongotestmodel import MongoTestModel
 from Models.musermodel import MUserModel
 from Controller.notecontroller import NoteController
@@ -54,6 +56,7 @@ from Controller.followcontroller import FollowController
 from Controller.usercontroller import UserController
 from Controller.rcomcontroller import RCommController
 from Controller.gamecontroller import GameController
+from Controller.orgclubcontroller import OrgClubController
 from Models.notemodel import NoteModel
 from Models.notecommodel import NoteComModel
 from Func.publicfunc import PublicFunc
@@ -105,7 +108,8 @@ class Application(tornado.web.Application):
             (r"/[pk]y/postlovepub",PostLovePubHandler),
             (r"/[pk]y/postlovepri",PostLovePriHandler),
             (r"/[pk]y/share",ShareHandler),
-            (r"/[pk]y/followpri",FollowPriHandler),
+            (r"/[pk]y/orgpri",OrgPriHandler),
+            (r"/[pk]y/orgpub",OrgPubHandler),
             (r"/[pk]y/followpub",FollowPubHandler),
             (r"/[pk]y/userevent",UserEventHandler),
             (r"/[pk]y/adver",AdverHandler)
@@ -1829,6 +1833,7 @@ class PostLovePriHandler(BaseHandler):
                 pass
         except Exception,e:self.treat_except(e)
 
+
 class ShareHandler(BaseHandler):
     def get(self):
         try:
@@ -1867,6 +1872,52 @@ class FollowPubHandler(BaseHandler):
                     return self.return_param(1,0,f_list,'success')
         except Exception,e:
             self.treat_except(e)
+
+class OrgPriHandler(BaseHandler):
+    def get(self):
+        try:
+            a_d = self.get_multi_argument(['uid','version','action','token'])
+            if not UsersModel().check_token_available(a_d['uid'],a_d['token']):
+                return self.return_param(0,200,{},options.wrong_login_tip)
+            if a_d['action'] >= 'apply_club_org':#
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['contacts','contact_phone','address','name','type','athletics',{'qq':False,'email':False}])
+                    if int(a_d_m['type']) not in set([1,2]): return self.return_param(0,200,{},"类型只能为１或者２　")
+                    a_d_m['user_id'] = a_d['uid']
+                    a_d_m['create_time'] = PublicFunc.get_current_datetime()
+                    OrganizationApplyModel().save_apply_info(a_d_m)
+                    return self.return_param(1,0,{},"谢谢申请，审核中")
+            elif a_d['action'] == 'get_my_org':
+                pass
+
+        except Exception,e:
+            raise
+            self.treat_except(e)
+
+
+class OrgPubHandler(BaseHandler):
+    def get(self):
+        try:
+            a_d = self.get_multi_argument(['version','uid','action'])
+            if a_d['action'] == 'get_org_club_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['type','page'])
+                    info = OrgClubController().get_org_club_list(a_d_m['type'],a_d_m['page'])
+                    return self.return_param(1,0,info,'success')
+
+            elif a_d['action'] == 'get_my_org_club':
+                pass
+            elif a_d['action'] == 'search_by_id_name':
+                pass
+            elif a_d['action'] == 'f':
+                pass
+        except Exception,e:
+            raise
+            self.treat_except(e)
+
+
+
+
 
 class FollowPriHandler(BaseHandler):
     def get(self):
