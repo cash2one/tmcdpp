@@ -1937,6 +1937,12 @@ class ActPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id','page'])
                     act_list = ActController().get_act_list(a_d_m['id'],a_d_m['page'])
                     self.return_param(1,0,act_list,'success')
+            elif a_d['action'] == 'get_agree_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id','page'])
+                    agree_list = ActController().get_agree_list(a_d_m['id'],a_d_m['page'])
+                    self.return_param(1,0,agree_list,'success')
+
 
         except Exception,e:
             raise
@@ -1944,8 +1950,19 @@ class ActPubHandler(BaseHandler):
 
 class ActPriHandler(BaseHandler):
     def get(self):
-        pass
-
+        try:
+            a_d = self.get_multi_argument(['uid','version','action','token'])
+            if not UsersModel().check_token_available(a_d['uid'],a_d['token']):
+                return self.return_param(0,200,{},options.wrong_login_tip)
+            if a_d['action'] == 'agree_act':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id'])
+                    result = ActController().agree_act(a_d_m['id'],a_d['uid'])
+                    if not result is True: return self.return_param(0,200,{},result)
+                    self.return_param(1,0,{},'操作成功')
+        except Exception,e:
+            raise
+            self.treat_except(e)
 
 
 

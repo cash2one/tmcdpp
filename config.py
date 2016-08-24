@@ -79,6 +79,7 @@ define('org_per_page',default="5")
 define('club_per_page',default="5")
 
 define('act_per_page',default="5")
+define('act_agree_per_page',default="10")
 
 define('classify_num_show',default="3")
 

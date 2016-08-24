@@ -66,3 +66,31 @@ class ActController:
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
 			act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
 		return act_list
+
+	def agree_act(self,id,uid):
+		"""
+		给喜欢的活动点赞
+		"""
+		like_list_str= '|' + ActivityInfoModel().get_agree_list(id) + '|'
+		search_str = '|' + str(uid) + '|'
+		if search_str in like_list_str :return '您已经点赞了'
+		new_like_list_str = like_list_str + str(uid)
+		ActivityInfoModel().set_agree_list(id,new_like_list_str)
+		return True
+
+		# ).get_agree_list(self,a_d_m['id'],a_d_m['page'])
+
+	def get_agree_list(self,id,page):
+		per_page = int(options.act_agree_per_page)
+		page = int(page)
+		agree_uid_list = ActivityInfoModel().get_agree_list(id).split('|')[per_page*page:per_page*(page+1)]
+		agree_user_list = []
+		for uid in agree_uid_list:
+			user_info = UsersModel().get_import_user_info(uid,['avatar','nickname','uid'])
+			if not user_info['nickname']: user_info['nickname'] = options.default_nick_name
+			agree_user_list.append(user_info)
+		return_list = {}
+		return_list['per_page'] = per_page
+		return_list['agree_num'] = 5256#####################################################################################=======================================================================
+		return_list['agree_list'] = agree_user_list
+		return return_list
