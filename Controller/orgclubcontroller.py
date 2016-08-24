@@ -61,7 +61,26 @@ class OrgClubController:
 	def get_star_pic(self,score):
 		star = self.get_star(score)
 		return options.ipnet + '/staticPic/stars/' + str(star) + '.jpg' 
-		
+
+		# get_brief_info(a_d_m['id'])
+	def get_brief_info(self,id):
+		"""
+		获取机构/俱乐部详细信息
+		"""
+		info = OrganizationInfoModel().get_brief_info(id)
+		info['create_time'] = info['create_time'][:9]
+		info['img_path'] = options.ipnet  + info['img_path']
+		info['notice'] = info['notice'].split("||")
+		info['athletics'] = info['athletics'].split('|')[:3]
+		info['stars'] = self.get_star_pic(info['score'])
+		return info 
+
+	def search_by_id_name(self,search,page):
+		"""
+		"""
+		info = OrganizationInfoModel().search_by_id_name(search,page)
+		return info
+
 
 
 

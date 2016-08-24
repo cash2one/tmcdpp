@@ -39,3 +39,19 @@ class OrganizationInfoModel(DbBase):
 		org_per_page = options.org_per_page
 		jump = int(page) * int(org_per_page)
 		return self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',type=type)
+
+	def get_brief_info(self,id):
+		return self.find_data(['intro','`desc`','athletics','name','score','create_time','img_path','notice','members','id'],get_some=False,id=id)
+
+	def set_field(self,id):
+		"""
+
+		"""
+		pass
+
+	def search_by_id_name(self,search,page):
+		org_per_page = options.org_per_page
+		jump = int(page) * int(org_per_page)
+		return self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',)
+
+

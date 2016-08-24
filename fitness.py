@@ -1908,11 +1908,17 @@ class OrgPubHandler(BaseHandler):
             elif a_d['action'] == 'get_my_org_club':
                 pass
             elif a_d['action'] == 'search_by_id_name':
-                pass
-            elif a_d['action'] == 'f':
-                pass
+                if a_d['action'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['search','page'])
+                    info = OrgClubController().search_by_id_name(a_d_m['search'],a_d_m['page'])
+                    self.return_param(1,0,info,'success')
+            elif a_d['action'] == 'get_brief':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id'])
+                    info = OrgClubController().get_brief_info(a_d_m['id'])
+                    self.return_param(1,0,info,'success')
         except Exception,e:
-            raise
+            # raise
             self.treat_except(e)
 
 
