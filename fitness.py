@@ -57,6 +57,7 @@ from Controller.usercontroller import UserController
 from Controller.rcomcontroller import RCommController
 from Controller.gamecontroller import GameController
 from Controller.orgclubcontroller import OrgClubController
+from Controller.actcontroller import ActController
 from Models.notemodel import NoteModel
 from Models.notecommodel import NoteComModel
 from Func.publicfunc import PublicFunc
@@ -107,6 +108,8 @@ class Application(tornado.web.Application):
             (r"/[pk]y/postpub",PostPubHandler),
             (r"/[pk]y/postlovepub",PostLovePubHandler),
             (r"/[pk]y/postlovepri",PostLovePriHandler),
+            (r"/[pk]y/actpub",ActPubHandler),
+            (r"/[pk]y/actpri",ActPriHandler),
             (r"/[pk]y/share",ShareHandler),
             (r"/[pk]y/orgpri",OrgPriHandler),
             (r"/[pk]y/orgpub",OrgPubHandler),
@@ -1879,7 +1882,7 @@ class OrgPriHandler(BaseHandler):
             a_d = self.get_multi_argument(['uid','version','action','token'])
             if not UsersModel().check_token_available(a_d['uid'],a_d['token']):
                 return self.return_param(0,200,{},options.wrong_login_tip)
-            if a_d['action'] >= 'apply_club_org':#
+            if a_d['action'] == 'apply_club_org':#
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['contacts','contact_phone','address','name','type','athletics',{'qq':False,'email':False}])
                     if int(a_d_m['type']) not in set([1,2]): return self.return_param(0,200,{},"类型只能为１或者２　")
@@ -1887,8 +1890,12 @@ class OrgPriHandler(BaseHandler):
                     a_d_m['create_time'] = PublicFunc.get_current_datetime()
                     OrganizationApplyModel().save_apply_info(a_d_m)
                     return self.return_param(1,0,{},"谢谢申请，审核中")
-            elif a_d['action'] == 'get_my_org':
-                pass
+            elif a_d['action'] == 'set_field':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['field','new_value','id'])
+                    result = OrgClubController().set_field(a_d_m['id'],a_d['uid'],a_d_m['field'],a_d_m['new_value'])
+                    if not result is True: return self.return_param(0,200,{},result)
+                    return self.return_param(1,0,{},'修改成功')
 
         except Exception,e:
             raise
@@ -1918,8 +1925,26 @@ class OrgPubHandler(BaseHandler):
                     info = OrgClubController().get_brief_info(a_d_m['id'])
                     self.return_param(1,0,info,'success')
         except Exception,e:
-            # raise
+            raise
             self.treat_except(e)
+
+class ActPubHandler(BaseHandler):
+    def get(self):
+        try:
+            a_d = self.get_multi_argument(['version','uid','action'])
+            if a_d['action'] == 'get_act_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id','page'])
+                    act_list = ActController().get_act_list(a_d_m['id'],a_d_m['page'])
+                    self.return_param(1,0,act_list,'success')
+
+        except Exception,e:
+            raise
+            self.treat_except(e)
+
+class ActPriHandler(BaseHandler):
+    def get(self):
+        pass
 
 
 

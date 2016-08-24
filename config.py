@@ -72,11 +72,15 @@ define('group_save_num',default="3",help="团队最大保存数")
 define('post_not_exist',default="不存在该条互动信息",help="")
 define('note_not_exist',default="不存在该条帖子",help="")
 define('post_thumb_save_path',default="/Uploads/PostPic/")
-define('scores_config',default="[0,1000,3000,8000,20000]")
+
 
 
 define('org_per_page',default="5")
 define('club_per_page',default="5")
+
+define('act_per_page',default="5")
+
+define('classify_num_show',default="3")
 
 define('share_title',default="下载全民健身Ready Go,享受运动乐趣",help="")
 define('bind_tel_expires',default="300",help="the expire of the bind tel")

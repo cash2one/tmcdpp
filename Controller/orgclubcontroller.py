@@ -32,6 +32,7 @@ from Models.musermodel import MUserModel
 from Models.followmodel import FollowModel
 from Models.organizationinfomodel import OrganizationInfoModel
 from Models.organizationapplymodel import OrganizationApplyModel
+from Models.organizationusermodel import OrganizationUserModel
 from Func.publicfunc import PublicFunc
 
 class OrgClubController:
@@ -60,7 +61,7 @@ class OrgClubController:
 
 	def get_star_pic(self,score):
 		star = self.get_star(score)
-		return options.ipnet + '/staticPic/stars/' + str(star) + '.jpg' 
+		return options.ipnet + '/staticPic/stars/' + str(star) + '.png' 
 
 		# get_brief_info(a_d_m['id'])
 	def get_brief_info(self,id):
@@ -79,7 +80,23 @@ class OrgClubController:
 		"""
 		"""
 		info = OrganizationInfoModel().search_by_id_name(search,page)
+		for ele in info:
+			ele['create_time'] = ele['create_time'][:10]
+			ele['img_path'] = options.ipnet + ele['img_path']
+			ele['athletics'] = ele['athletics'].split("|")[:3]
+			star = self.get_star(ele['score'])
+			ele['star_pic'] = self.get_star_pic(ele['score'])
 		return info
+
+
+	def set_field(self,id,uid,field,new_value):
+		is_admin = OrganizationUserModel().judge_is_admin(id,uid)
+		if not is_admin: return "只有管理员可以更改机构/俱乐部信息"
+		if field == 'join_type' and new_value not in set([0,1]):
+			 return "join_type应该是0或者1"
+		OrganizationInfoModel().set_field(id,field,new_value)
+		return True
+
 
 
 

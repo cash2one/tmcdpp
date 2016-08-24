@@ -38,20 +38,23 @@ class OrganizationInfoModel(DbBase):
 		"""
 		org_per_page = options.org_per_page
 		jump = int(page) * int(org_per_page)
-		return self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',type=type)
+		return self.find_data(['members','create_time','img_path','athletics','score','name','`desc`'],get_some=(jump,org_per_page),order=' score desc ',type=type)
 
 	def get_brief_info(self,id):
 		return self.find_data(['intro','`desc`','athletics','name','score','create_time','img_path','notice','members','id'],get_some=False,id=id)
 
-	def set_field(self,id):
+	def set_field(self,id,field,new_value):
 		"""
-
+		只可以修改宣言和加入方式
 		"""
-		pass
+		if field  == 'desc': field = '`desc`'
+		return self.update_db({field:new_value},id=id)
 
 	def search_by_id_name(self,search,page):
 		org_per_page = options.org_per_page
 		jump = int(page) * int(org_per_page)
-		return self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',)
+		part1 = self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',id={'rule':'like','value':str(search)})
+		part2 = self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',name={'rule':'like','value':str(search)})
+		return part2 + part1
 
 
