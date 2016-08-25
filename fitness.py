@@ -1896,6 +1896,17 @@ class OrgPriHandler(BaseHandler):
                     result = OrgClubController().set_field(a_d_m['id'],a_d['uid'],a_d_m['field'],a_d_m['new_value'])
                     if not result is True: return self.return_param(0,200,{},result)
                     return self.return_param(1,0,{},'修改成功')
+            elif a_d['action'] == 'focus_org_oper':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id'])
+                    result = OrgClubController().focus_org_oper(a_d['uid'],a_d_m['id'])
+                    self.return_param(1,0,result,'success')
+            elif a_d['action'] == 'attend_org':
+                if a_d['version'] >=  options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id',{"excuse":False}])
+                    if not 'excuse' in a_d_m: a_d_m['excuse'] = ''
+                    result = OrgClubController().attend_org(a_d['uid'],a_d_m['id'],a_d_m['excuse'])
+                    self.return_param(1,0,{},result)
 
         except Exception,e:
             raise
@@ -1924,6 +1935,9 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id'])
                     info = OrgClubController().get_brief_info(a_d_m['id'])
                     self.return_param(1,0,info,'success')
+
+
+
         except Exception,e:
             raise
             self.treat_except(e)
@@ -1942,6 +1956,17 @@ class ActPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id','page'])
                     agree_list = ActController().get_agree_list(a_d_m['id'],a_d_m['page'])
                     self.return_param(1,0,agree_list,'success')
+            elif a_d['action'] == 'get_attend_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id','page'])#id is activity_id
+                    attend_list = ActController().get_attend_list(a_d_m['id'],a_d_m['page'])
+                    self.return_param(1,0,attend_list,'success')
+            elif a_d['action'] == 'get_act_info':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['activity_id'])
+                    act_info = ActController().get_act_info(a_d['uid'],a_d_m['activity_id'])
+                    self.return_param(1,0,act_info,'success')
+
 
 
         except Exception,e:
@@ -1960,6 +1985,14 @@ class ActPriHandler(BaseHandler):
                     result = ActController().agree_act(a_d_m['id'],a_d['uid'])
                     if not result is True: return self.return_param(0,200,{},result)
                     self.return_param(1,0,{},'操作成功')
+            elif a_d['action'] == 'attend_act':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['truename','sex','tel','activity_id'])
+                    # if a_d_m['sex'] not in set(['1,','2']): 
+                    result = ActController().attend_act(a_d_m['activity_id'],a_d['uid'],a_d_m['truename'],a_d_m['sex'],a_d_m['tel'])
+                    if not result is True: return self.return_param(0,200,{},result)
+                    self.return_param(1,0,{},'success')
+
         except Exception,e:
             raise
             self.treat_except(e)

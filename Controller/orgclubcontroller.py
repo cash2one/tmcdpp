@@ -74,6 +74,8 @@ class OrgClubController:
 		info['notice'] = info['notice'].split("||")
 		info['athletics'] = info['athletics'].split('|')[:3]
 		info['stars'] = self.get_star_pic(info['score'])
+		info['need_check'] = 1 
+		print info['join_type']
 		return info 
 
 	def search_by_id_name(self,search,page):
@@ -96,6 +98,25 @@ class OrgClubController:
 			 return "join_type应该是0或者1"
 		OrganizationInfoModel().set_field(id,field,new_value)
 		return True
+
+	def focus_org_oper(self,user_id,organization_id):
+		focus_status = OrganizationUserModel().judge_has_focus(organization_id,user_id)
+		if not focus_status:
+			pass
+			return ""
+		else:
+			pass
+			return ""
+
+	def attend_org(self,uid,id,excuse):
+		need_check =OrganizationInfoModel().judge_need_check(id)
+		is_member = OrganizationUserModel().judge_is_member(id,uid)
+		if is_member: return "您已经在该机构中"
+		OrganizationUserModel().set_user_member(id,uid)
+		return "加入成功" if not int(need_check) else "审核中"
+
+
+
 
 
 

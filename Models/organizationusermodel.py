@@ -25,12 +25,41 @@ class OrganizationUserModel(DbBase):
 	def __init__(self):
 		DbBase.__init__(self)
 		self.table = 'organization_user'
-		self.is_admin = 4 
+		self.is_admin = 4 #是否是管理员 
+		self.has_focus = 1# 是否已经关注
+		self.is_ord_memeber = 2 #是否是普通成员
+
 
 	def judge_is_admin(self,organization_id,user_id):
 		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
 		if not info: return False
 		return True if int(info['type']) & self.is_admin  else False 
+
+	def judge_has_focus(self,organization_id,user_id):
+		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
+		if not info:return False
+		return True if int(info['type']) & self.has_focus else False 
+
+	def change_focus_status(self,organization_id,user_id,new_status):
+		return self.update_db({'type':new_status},organization_id=organization_id,user_id=user_id)
+		
+
+	def judge_is_member(self,organization_id,user_id):
+		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
+		if not info:return False
+		return True if int(info['type']) & (self.is_admin | self.is_ord_memeber)  else False
+
+	def set_user_member(self,organization_id,user_id):
+		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
+		if not info:
+			info = {}
+			info['type'] = 0
+		new_type = info['type'] | self.is_ord_memeber
+		return self.update_db({'type':new_type},organization_id=organization_id,user_id=user_id)
+
+
+
+
 
 	# def search_by_name_or_id(self,search_item,page):
 	# 	"""

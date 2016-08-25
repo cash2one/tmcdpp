@@ -41,7 +41,7 @@ class OrganizationInfoModel(DbBase):
 		return self.find_data(['members','create_time','img_path','athletics','score','name','`desc`'],get_some=(jump,org_per_page),order=' score desc ',type=type)
 
 	def get_brief_info(self,id):
-		return self.find_data(['intro','`desc`','athletics','name','score','create_time','img_path','notice','members','id'],get_some=False,id=id)
+		return self.find_data(['intro','`desc`','athletics','name','score','create_time','img_path','notice','members','id','join_type'],get_some=False,id=id)
 
 	def set_field(self,id,field,new_value):
 		"""
@@ -56,5 +56,9 @@ class OrganizationInfoModel(DbBase):
 		part1 = self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',id={'rule':'like','value':str(search)})
 		part2 = self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',name={'rule':'like','value':str(search)})
 		return part2 + part1
+
+
+	def judge_need_check(self,organization_id):
+		return self.find_data(['join_type'],get_some=False,id=organization_id)['join_type']
 
 

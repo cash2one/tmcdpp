@@ -34,6 +34,7 @@ from Models.organizationinfomodel import OrganizationInfoModel
 from Models.organizationapplymodel import OrganizationApplyModel
 from Models.organizationusermodel import OrganizationUserModel
 from Models.activityinfomodel import ActivityInfoModel
+from Models.activitysignupmodel import ActivitySignUpModel
 from Func.publicfunc import PublicFunc
 
 class ActController:
@@ -49,7 +50,7 @@ class ActController:
 		current_datatime = PublicFunc.get_current_datetime()
 		if current_datatime < regis_start_time: return '预告'
 		if current_datatime < regis_end_time: return '报名中'
-		if current_datatime < start_time: return '未开始' 
+		if current_datatime < start_time: return '马上开始' 
 		if current_datatime < end_time: return '进行中'    
 		return '结束' 
 
@@ -94,3 +95,43 @@ class ActController:
 		return_list['agree_num'] = 5256#####################################################################################=======================================================================
 		return_list['agree_list'] = agree_user_list
 		return return_list
+
+	# def attend_act(a_d_m['activity_id'],a_d_m['truename'],a_d_m['sex'],a_d_m['tel'])
+	def attend_act(self,uid,activity_id,truename,sex,tel):
+		has_attend = ActivitySignUpModel().judge_have_attend(uid,activity_id)
+		if int(has_attend): return "您已经报过名了"
+		else:
+			ActivitySignUpModel().attend_activity(activity_id,uid,truename,tel,sex)
+			avatar = UsersModel().get_import_user_info(uid,['avatar'])['avatar']
+			# content = truename
+			# save_message_info(self,type,target_id,title,,avatar,""):
+
+	def get_act_info(self,uid,activity_id):
+		act_info = ActivityInfoModel().get_act_info(activity_id)
+		act_info['time_scope'] = act_info['start_time'][5:-2] + " "  + act_info['end_time'][5:-2]
+		act_info['activity_status'] = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
+		act_info['regist_avail'] = act_info['regis_max'] - act_info['regist_member'] 
+		act_info['has_attend'] = '已报名' if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else '报名'
+		return act_info
+
+	def get_attend_list(self,activity_id,page):
+		per_page = options.act_attend_per_page# 8 
+		# return_list = [] 
+		# return_list['per_page'] = per_page
+		attend_uid_list = ActivitySignUpModel().get_attend_list(activity_id,page)
+		attend_list_return = {}
+		attend_list_return['per_page'] = per_page
+		attend_user_info = []
+		for user in attend_uid_list:
+			user_info = UsersModel().get_import_user_info(user['user_id'],['avatar'])
+			user_info['uid'] = user['user_id']
+			user_info['truename'] = user['truename']
+			attend_user_info.append(user_info)
+		attend_list_return['attend_list'] = attend_user_info
+		return attend_list_return
+
+
+
+
+
+
