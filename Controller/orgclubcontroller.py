@@ -94,7 +94,7 @@ class OrgClubController:
 	def set_field(self,id,uid,field,new_value):
 		is_admin = OrganizationUserModel().judge_is_admin(id,uid)
 		if not is_admin: return "只有管理员可以更改机构/俱乐部信息"
-		if field == 'join_type' and new_value not in set([0,1]):
+		if field == 'join_type' and int(new_value) not in set([0,1]):
 			 return "join_type应该是0或者1"
 		OrganizationInfoModel().set_field(id,field,new_value)
 		return True
