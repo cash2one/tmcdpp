@@ -65,6 +65,8 @@ class OrganizationUserModel(DbBase):
 		判断用户角色
 		"""
 		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
+		if info is None:
+			return False#not this data row 
 		type = int(info['type'])
 		if type & self.is_admin: return 0 ## is admin 
 		if type & self.is_ord_memeber: return 1 ##ord_member 

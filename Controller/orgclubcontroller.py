@@ -36,6 +36,15 @@ from Models.organizationusermodel import OrganizationUserModel
 from Models.organizationstatusmessagemodel import OrganizationStatusMessageModel
 from Func.publicfunc import PublicFunc
 
+TYPE_NEW_MEMBER = 1 
+TYPE_MEMBER_ATTEND =2 
+TYPE_NOT_MEMBER_ATTEND = 3 
+TYPE_NEW_ACT_STORE = 11 
+TYPE_ACT_START = 11 
+TYPE_ACT_END = 13
+
+
+
 class OrgClubController:
 	def __init__(self):
 		pass
@@ -80,10 +89,10 @@ class OrgClubController:
 		role = OrganizationUserModel().judge_user_role(id,uid)
 		info['can_attend'] = 0 
 		info['status_name'] = ""
-		if role == 0 or role == 1:#如果用户角色是管理员或者普通成员，则显示已经加入
+		if role is 0 or role is 1:#如果用户角色是管理员或者普通成员，则显示已经加入
 			info['can_attend'] = 0 
 			info['status_name'] = "已经加入"
-		elif role == 2:
+		elif role is 2 or role is False :
 			info['can_attend'] = 1
 			info['status_name'] = "加入机构"
 
@@ -129,7 +138,12 @@ class OrgClubController:
 		OrganizationUserModel().pass_apply(apply_id)
 
 	def get_dy_list(self,organization_id,page):
+		"""
+		获取动态列表，根据不同的type有不同的显示范式  type为1表示这种谁谁加入，谁谁报名活动了
+		type为2表示发布了什么活动等
+		"""
 		dy_list = OrganizationStatusMessageModel().get_dy_list(organization_id,page)
+
 		return dy_list
 
 

@@ -51,7 +51,8 @@ class ActController:
 		if current_datatime < regis_start_time: return {'flag':0,'name':'预告'}
 		if current_datatime < regis_end_time: return {'flag':1,'name':'报名中'}
 		if current_datatime < start_time: return {'flag':2,'name':'马上开始'} 
-		if current_datatime < end_time: return {'flag':3,'name':'进行中'}    
+		if current_datatime < end_time: return {'flag':3,'name':'进行中'}   
+		else: return {'flag':4,'name':'已结束'} 
 		return '结束' 
 
 

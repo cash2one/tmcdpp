@@ -21,6 +21,14 @@ from Func.publicfunc import PublicFunc
 from usersmodel import UsersModel
 from  pdatabase import DbBase
 
+
+TYPE_NEW_MEMBER = 1 
+TYPE_MEMBER_ATTEND =2 
+TYPE_NOT_MEMBER_ATTEND = 3 
+TYPE_NEW_ACT_STORE = 11 
+TYPE_ACT_START = 11 
+TYPE_ACT_END = 13
+
 class OrganizationStatusMessageModel(DbBase):
 	def __init__(self):
 		DbBase.__init__(self)
@@ -29,8 +37,16 @@ class OrganizationStatusMessageModel(DbBase):
 
 
 	def get_dy_list(self,organization_id,page):
-		return 33
-		
+		"""
+		获取动态列表
+		"""
+		per_page = int(options.dy_per_page)
+		jump = per_page * int(page)
+		dy_list = self.find_data(['*'],get_some=(jump,per_page),organization_id=organization_id)
+		return dy_list
+
+
+
 
 
 
