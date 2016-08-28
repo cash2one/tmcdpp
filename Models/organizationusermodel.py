@@ -46,6 +46,13 @@ class OrganizationUserModel(DbBase):
 		if not info:return False
 		return True if int(info['type']) &  self.has_focus else False 
 
+	def get_my_org_club_list(self,uid,page):
+		per_page = options.org_per_page
+		jump = int(page) * int(per_page)
+		is_mem = str(self.is_admin + self.is_ord_memeber)
+		sql = 'select organization_id from ' + self.table + ' where user_id=' + str(uid) + ' and type ^ ' + is_mem  + " >0   order by id desc limit " + str(jump) + ',' + str(per_page)
+		return self.sql_select(sql)
+
 
 	def add_focus(self,organization_id,user_id):
 		sql = "update %s set type = type | %s where organization_id=%s and user_id=%s" % (self.table, self.has_focus,organization_id,user_id)

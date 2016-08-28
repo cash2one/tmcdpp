@@ -1942,7 +1942,11 @@ class OrgPubHandler(BaseHandler):
                     return self.return_param(1,0,info,'success')
 
             elif a_d['action'] == 'get_my_org_club':
-                pass
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['page'])
+                    info = OrgClubController().get_my_org_club_list(a_d['uid'],a_d_m['page'])
+                    return self.return_param(1,0,info,'success')
+                
             elif a_d['action'] == 'search_by_id_name':
                 if a_d['action'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['search','page'])
@@ -1958,6 +1962,20 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['organization_id','page'])
                     dy_list = OrgClubController().get_dy_list(a_d_m['organization_id'],a_d_m['page'])
                     return self.return_param(1,0,dy_list,'success')
+            elif a_d['action'] == 'get_album_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['organization_id','page'])
+                    dy_list = OrgClubController().get_album_list(a_d_m['organization_id'],a_d_m['page'])
+                    return self.return_param(1,0,dy_list,'success')
+
+#                     主要是原生显示，后端的数据
+# 1、一次数据，最多给出6行图片（当前是一行4张图片）
+# 2、一次最多显示两天的数据，及当前所在日期，与下一套图片的日期
+# 3、如果当天数据剩余>=6行，仅增加当天数据
+# 4、如果当天数据剩余<6行，则还会附加下一套的剩余行数的数据
+# 5、基于4，如果下一套数据>=剩余行数，则直接获得所需数据
+# 6、基于4，如果下一套数据<剩余行数，则仅显示剩余行数数据，不会继续同时增加，第三套数据
+# 7、如果已经没有数据了，需要提示，“已经到达相册最后”
 
 
 

@@ -34,6 +34,7 @@ from Models.organizationinfomodel import OrganizationInfoModel
 from Models.organizationapplymodel import OrganizationApplyModel
 from Models.organizationusermodel import OrganizationUserModel
 from Models.organizationstatusmessagemodel import OrganizationStatusMessageModel
+from Models.organizationalbummodel import OrganizationAlbumModel
 from Func.publicfunc import PublicFunc
 
 TYPE_NEW_MEMBER = 1 
@@ -58,6 +59,20 @@ class OrgClubController:
 			star = self.get_star(ele['score'])
 			ele['star_pic'] = self.get_star_pic(ele['score'])
 		return info 
+
+	def get_my_org_club_list(self,uid,page):
+		info = OrganizationUserModel().get_my_org_club_list(uid,page)
+		list_return =[]
+		for org_ele in info:
+			org_id = org_ele['organization_id']
+			org_info = OrganizationInfoModel().get_brief_info(org_id)
+			org_info['create_time'] = org_info['create_time'][:10]
+			org_info['img_path'] = options.ipnet + org_info['img_path']
+			org_info['athletics'] = org_info['athletics'].split("|")[:3]
+			org_info['star_pic'] = self.get_star_pic(org_info['score']) 
+			list_return.append(org_info)
+		return list_return 
+
 
 	def get_star(self,score):
 		"""
@@ -151,6 +166,18 @@ class OrgClubController:
 		return_info['per_page'] = options.dy_per_page
 		return_info['dy_list'] = dy_list
 		return return_info
+
+	def get_album_list(self,organization_id,page):
+		return_list = {}
+		return_list['per_page'] = 5 ##
+		album_list =  OrganizationAlbumModel().get_album_list(organization_id,page)
+		for album in album_list:
+			album['pic'] = options.ipnet + '/Uploads/back.jpg'
+		return_list['album_list'] = album_list
+		return return_list
+
+
+
 
 
 
