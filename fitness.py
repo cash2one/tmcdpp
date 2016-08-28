@@ -1896,6 +1896,24 @@ class OrgPriHandler(BaseHandler):
                     result = OrgClubController().set_field(a_d_m['id'],a_d['uid'],a_d_m['field'],a_d_m['new_value'])
                     if not result is True: return self.return_param(0,200,{},result)
                     return self.return_param(1,0,{},'修改成功')
+            elif a_d['action'] == 'get_apply_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id','page'])
+                    result = OrgClubController().get_apply_list(a_d_m['id'],a_d['uid'],a_d_m['page'])
+                    if result['flag'] == 0: return self.return_param(0,200,{},result)
+                    else:
+                        info_return = {}
+                        info_return['per_page'] = 8
+                        info_return['apply_list'] = result['ret']
+                    return self.return_param(1,0,info_return,'success')
+            elif a_d['action'] == 'pass_apply':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['apply_id'])
+                    OrgClubController().pass_apply(a_d['uid'],a_d_m['apply_id'])
+                    pass
+
+
+
             elif a_d['action'] == 'focus_org_oper':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['id'])
@@ -1933,7 +1951,7 @@ class OrgPubHandler(BaseHandler):
             elif a_d['action'] == 'get_brief':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['id'])
-                    info = OrgClubController().get_brief_info(a_d_m['id'])
+                    info = OrgClubController().get_brief_info(a_d_m['id'],a_d['uid'])
                     self.return_param(1,0,info,'success')
 
 

@@ -53,8 +53,8 @@ class OrganizationInfoModel(DbBase):
 	def search_by_id_name(self,search,page):
 		org_per_page = options.org_per_page
 		jump = int(page) * int(org_per_page)
-		part1 = self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',id={'rule':'like','value':str(search)})
-		part2 = self.find_data(['members','create_time','img_path','athletics','score','name'],get_some=(jump,org_per_page),order=' score desc ',name={'rule':'like','value':str(search)})
+		part1 = self.find_data(['members','create_time','img_path','athletics','score','name','id'],get_some=(jump,org_per_page),order=' score desc ',id={'rule':'like','value':str(search)})
+		part2 = self.find_data(['members','create_time','img_path','athletics','score','name','id'],get_some=(jump,org_per_page),order=' score desc ',name={'rule':'like','value':str(search)})
 		return part2 + part1
 
 

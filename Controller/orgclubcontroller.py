@@ -64,7 +64,7 @@ class OrgClubController:
 		return options.ipnet + '/staticPic/stars/' + str(star) + '.png' 
 
 		# get_brief_info(a_d_m['id'])
-	def get_brief_info(self,id):
+	def get_brief_info(self,id,uid):
 		"""
 		获取机构/俱乐部详细信息
 		"""
@@ -75,7 +75,19 @@ class OrgClubController:
 		info['athletics'] = info['athletics'].split('|')[:3]
 		info['stars'] = self.get_star_pic(info['score'])
 		info['need_check'] = 1 
-		print info['join_type']
+		###check if the user has attend the club 
+		role = OrganizationUserModel().judge_user_role(id,uid)
+		info['can_attend'] = 0 
+		info['status_name'] = ""
+		if role == 0 or role == 1:#如果用户角色是管理员或者普通成员，则显示已经加入
+			info['can_attend'] = 0 
+			info['status_name'] = "已经加入"
+		elif role == 2:
+			info['can_attend'] = 1
+			info['status_name'] = "加入机构"
+
+		####get the focus status 
+		info['has_focus'] = 1 if  OrganizationUserModel().judge_has_focus(id,uid) else 0 
 		return info 
 
 	def search_by_id_name(self,search,page):
@@ -99,20 +111,40 @@ class OrgClubController:
 		OrganizationInfoModel().set_field(id,field,new_value)
 		return True
 
+	def get_apply_list(self,id,uid,page):
+		is_admin = OrganizationUserModel().judge_is_admin(id,uid)
+		if not is_admin: return {"flag":0,'ret':"只有管理员可以更改机构/俱乐部信息"}
+		apply_list_return = OrganizationUserModel().get_apply_list(id,page)
+		for ele in apply_list_return:
+			uid = ele['user_id']
+			user_info = UsersModel().get_import_user_info(uid,['avatar','nickname'])
+			ele['nickname']  =  user_info['nickname']  if user_info['nickname'] else options.default_nick_name
+			ele['avatar'] = user_info['avatar']
+			ele['change_date'] = ele['change_date'][:16]
+		return {'flag':1,'ret':apply_list_return}
+
+	def pass_apply(self,uid,apply_id):
+		is_admin = OrganizationUserModel().judge_is_admin(id,uid)
+		if not is_admin: return {"flag":0,'ret':"只有管理员可以更改机构/俱乐部信息"}
+		OrganizationUserModel().pass_apply(uid,apply_id)
+
+
+
 	def focus_org_oper(self,user_id,organization_id):
 		focus_status = OrganizationUserModel().judge_has_focus(organization_id,user_id)
-		if not focus_status:
-			pass
-			return ""
+		if not focus_status:#if not has focus 
+		 	OrganizationUserModel().add_focus(organization_id,user_id)
+			return "已关注"
 		else:
-			pass
-			return ""
+			OrganizationUserModel().cancel_focus(organization_id,user_id)
+			return "关注"
+
 
 	def attend_org(self,uid,id,excuse):
 		need_check =OrganizationInfoModel().judge_need_check(id)
 		is_member = OrganizationUserModel().judge_is_member(id,uid)
 		if is_member: return "您已经在该机构中"
-		OrganizationUserModel().set_user_member(id,uid)
+		OrganizationUserModel().set_user_member(id,uid,excuse)
 		return "加入成功" if not int(need_check) else "审核中"
 
 

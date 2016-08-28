@@ -28,6 +28,8 @@ class OrganizationUserModel(DbBase):
 		self.is_admin = 4 #是否是管理员 
 		self.has_focus = 1# 是否已经关注
 		self.is_ord_memeber = 2 #是否是普通成员
+		self.is_applying = 32# 
+
 
 
 	def judge_is_admin(self,organization_id,user_id):
@@ -36,26 +38,64 @@ class OrganizationUserModel(DbBase):
 		return True if int(info['type']) & self.is_admin  else False 
 
 	def judge_has_focus(self,organization_id,user_id):
+		"""
+		return True if has focus else False 
+		"""
 		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
+		print info
 		if not info:return False
-		return True if int(info['type']) & self.has_focus else False 
+		return True if int(info['type']) &  self.has_focus else False 
 
-	def change_focus_status(self,organization_id,user_id,new_status):
-		return self.update_db({'type':new_status},organization_id=organization_id,user_id=user_id)
-		
+
+	def add_focus(self,organization_id,user_id):
+		sql = "update %s set type = type | %s where organization_id=%s and user_id=%s" % (self.table, self.has_focus,organization_id,user_id)
+		return self.sql_update(sql)
+
+	def cancel_focus(self,organization_id,user_id):
+		sql = "update %s set type = type ^ %s where organization_id=%s and user_id=%s" % (self.table, self.has_focus,organization_id,user_id)
+		return self.sql_update(sql)
 
 	def judge_is_member(self,organization_id,user_id):
 		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
 		if not info:return False
 		return True if int(info['type']) & (self.is_admin | self.is_ord_memeber)  else False
 
-	def set_user_member(self,organization_id,user_id):
+	def judge_user_role(self,organization_id,user_id):
+		"""
+		判断用户角色
+		"""
 		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
-		if not info:
+		type = int(info['type'])
+		if type & self.is_admin: return 0 ## is admin 
+		if type & self.is_ord_memeber: return 1 ##ord_member 
+		if type & self.is_applying: return 2 ##applying 
+
+	def set_user_member(self,organization_id,user_id,excuse):
+		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
+		if not info:#如果没有该条数据
 			info = {}
 			info['type'] = 0
+			self.insert_into_db({"organization_id":organization_id,"user_id":user_id,"type":self.is_ord_memeber,"msg":excuse,"change_date":PublicFunc.get_current_datetime()})
+			return
 		new_type = info['type'] | self.is_ord_memeber
-		return self.update_db({'type':new_type},organization_id=organization_id,user_id=user_id)
+		return self.update_db({'type':new_type},organization_id=organization_id,user_id=user_id,msg=excuse,change_date=PublicFunc.get_current_datetime())
+
+	def get_apply_list(self,id,page):
+		"""
+		"""
+		per_page = int(options.apply_per_page)###3 
+		jump = per_page * int(page)
+		sql = 'select user_id,change_date,msg,id from %s where organization_id = %s and type & %s = %s limit %s,%s' % (self.table,id,self.is_applying,self.is_applying,jump,per_page)
+		return self.sql_select(sql)
+
+	def pass_apply(self,apply_id):
+		sql = 'update %s set type = type ^ %s where apply_id = %s' % (self.table,self.is_ord_memeber + self.is_applying,apply_id)
+		print sql 
+		return self.sql_update(sql)
+
+
+
+
 
 
 

@@ -125,5 +125,15 @@ class DbBase:
             raise
 
 
+    def sql_update(self,sql):
+        """
+        you can update using your custom sql 
+        """
+        self.db.execute(sql)
+
+    def sql_select(self,sql):
+        return self.db.query(sql)
+
+
 
 
