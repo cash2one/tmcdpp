@@ -31,14 +31,14 @@ class ActivityInfoModel(DbBase):
 		"""
 		act_per_page = int(options.act_per_page)
 		jump = int(page) * act_per_page
-		act_per_page = self.find_data(['regis_start_time','regis_end_time','start_time','end_time','name','organization_id','logo_img','regist_member','regis_cost','classify','regist_member','address_address'],get_some=(jump,act_per_page),organization_id=id)
+		act_per_page = self.find_data(['id','regis_start_time','regis_end_time','start_time','end_time','name','organization_id','logo_img','regist_member','regis_cost','classify','regist_member','address_address'],get_some=(jump,act_per_page),organization_id=id)
 		return act_per_page	
 
 	def get_agree_list(self,id):
 		"""
 		get the likelist of the activity
 		"""
-		return self.find_data(['like_list'],get_some=False,organization_id=id)['like_list']
+		return self.find_data(['like_list'],get_some=False,id=id)['like_list']
 
 	def set_agree_list(self,id,like_list):
 		return self.update_db({'like_list':like_list},organization_id=id)
