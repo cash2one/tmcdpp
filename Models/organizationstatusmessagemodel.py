@@ -22,12 +22,6 @@ from usersmodel import UsersModel
 from  pdatabase import DbBase
 
 
-TYPE_NEW_MEMBER = 1 
-TYPE_MEMBER_ATTEND =2 
-TYPE_NOT_MEMBER_ATTEND = 3 
-TYPE_NEW_ACT_STORE = 11 
-TYPE_ACT_START = 11 
-TYPE_ACT_END = 13
 
 class OrganizationStatusMessageModel(DbBase):
 	def __init__(self):
@@ -42,7 +36,7 @@ class OrganizationStatusMessageModel(DbBase):
 		"""
 		per_page = int(options.dy_per_page)
 		jump = per_page * int(page)
-		dy_list = self.find_data(['*'],get_some=(jump,per_page),organization_id=organization_id)
+		dy_list = self.find_data(['*'],get_some=(jump,per_page),organization_id=organization_id,order=' create_time desc ')
 		return dy_list
 
 

@@ -105,6 +105,14 @@ class PublicFunc:
         pass
 
     @staticmethod
+    def date_to_stamp(date_str):
+        return int(time.mktime(time.strptime(date_str,'%Y-%m-%d %H:%M:%S')))
+
+
+
+
+
+    @staticmethod
     def get_date_info(timestamp,param):
         reflect_dict = {"year":0,'month':1,'day':2}
         date_tuple = time.localtime(timestamp)

@@ -143,8 +143,14 @@ class OrgClubController:
 		type为2表示发布了什么活动等
 		"""
 		dy_list = OrganizationStatusMessageModel().get_dy_list(organization_id,page)
-
-		return dy_list
+		for dy in dy_list:
+			dy['target_img'] = options.ipnet + dy['target_img']
+			stamp = PublicFunc.date_to_stamp(dy['create_time'])
+			dy['create_time'] = PublicFunc.time_format_span(stamp,int(time.time()))
+		return_info = {}
+		return_info['per_page'] = options.dy_per_page
+		return_info['dy_list'] = dy_list
+		return return_info
 
 
 
