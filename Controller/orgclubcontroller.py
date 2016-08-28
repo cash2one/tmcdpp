@@ -33,6 +33,7 @@ from Models.followmodel import FollowModel
 from Models.organizationinfomodel import OrganizationInfoModel
 from Models.organizationapplymodel import OrganizationApplyModel
 from Models.organizationusermodel import OrganizationUserModel
+from Models.organizationstatusmessagemodel import OrganizationStatusMessageModel
 from Func.publicfunc import PublicFunc
 
 class OrgClubController:
@@ -123,10 +124,13 @@ class OrgClubController:
 			ele['change_date'] = ele['change_date'][:16]
 		return {'flag':1,'ret':apply_list_return}
 
-	def pass_apply(self,uid,apply_id):
-		is_admin = OrganizationUserModel().judge_is_admin(id,uid)
-		if not is_admin: return {"flag":0,'ret':"只有管理员可以更改机构/俱乐部信息"}
-		OrganizationUserModel().pass_apply(uid,apply_id)
+	def pass_apply(self,apply_id):
+		#get the apply info 
+		OrganizationUserModel().pass_apply(apply_id)
+
+	def get_dy_list(self,organization_id,page):
+		dy_list = OrganizationStatusMessageModel().get_dy_list(organization_id,page)
+		return dy_list
 
 
 

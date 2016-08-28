@@ -48,10 +48,10 @@ class ActController:
   # `end_time` varchar
 	def get_act_status(self,regis_start_time,regis_end_time,start_time,end_time):
 		current_datatime = PublicFunc.get_current_datetime()
-		if current_datatime < regis_start_time: return '预告'
-		if current_datatime < regis_end_time: return '报名中'
-		if current_datatime < start_time: return '马上开始' 
-		if current_datatime < end_time: return '进行中'    
+		if current_datatime < regis_start_time: return {'flag':0,'name':'预告'}
+		if current_datatime < regis_end_time: return {'flag':1,'name':'报名中'}
+		if current_datatime < start_time: return {'flag':2,'name':'马上开始'} 
+		if current_datatime < end_time: return {'flag':3,'name':'进行中'}    
 		return '结束' 
 
 
@@ -61,7 +61,9 @@ class ActController:
 		"""
 		act_list =  ActivityInfoModel().get_act_list(id,page)
 		for act in act_list:
-			act['act_statuc'] = self.get_act_status(act['regis_start_time'],act['regis_end_time'],act['start_time'],act['end_time'])
+			act_info_status = self.get_act_status(act['regis_start_time'],act['regis_end_time'],act['start_time'],act['end_time'])
+			act['act_status'] = act_info_status['name']
+			act['act_status_id'] = act_info_status['flag'] 
 			act['time_scope'] = act['start_time'][5:16] + ' - ' + act['end_time'][5:16]
 			act['logo_img'] = options.ipnet + act['logo_img']
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
@@ -109,7 +111,9 @@ class ActController:
 	def get_act_info(self,uid,activity_id):
 		act_info = ActivityInfoModel().get_act_info(activity_id)
 		act_info['time_scope'] = act_info['start_time'][5:-2] + " "  + act_info['end_time'][5:-2]
-		act_info['activity_status'] = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
+		act_info_status = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
+		act_info['activity_status'] = act_info_status['name']
+		act_info['activity_status_id'] = act_info_status['flag']
 		act_info['regist_avail'] = act_info['regis_max'] - act_info['regist_member'] 
 		act_info['has_attend'] = '已报名' if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else '报名'
 		return act_info
@@ -126,6 +130,7 @@ class ActController:
 			user_info = UsersModel().get_import_user_info(user['user_id'],['avatar'])
 			user_info['uid'] = user['user_id']
 			user_info['truename'] = user['truename']
+			user_info['create_time'] = user['create_time'][:16]
 			attend_user_info.append(user_info)
 		attend_list_return['attend_list'] = attend_user_info
 		return attend_list_return

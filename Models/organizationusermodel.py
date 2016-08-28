@@ -85,12 +85,11 @@ class OrganizationUserModel(DbBase):
 		"""
 		per_page = int(options.apply_per_page)###3 
 		jump = per_page * int(page)
-		sql = 'select user_id,change_date,msg,id from %s where organization_id = %s and type & %s = %s limit %s,%s' % (self.table,id,self.is_applying,self.is_applying,jump,per_page)
+		sql = 'select user_id,change_date,msg,id from %s where organization_id = %s and type & %s = %s  order by change_date desc  limit %s,%s' % (self.table,id,self.is_applying,self.is_applying,jump,per_page)
 		return self.sql_select(sql)
 
 	def pass_apply(self,apply_id):
-		sql = 'update %s set type = type ^ %s where apply_id = %s' % (self.table,self.is_ord_memeber + self.is_applying,apply_id)
-		print sql 
+		sql = 'update %s set type = type ^ %s where id = %s' % (self.table,self.is_ord_memeber + self.is_applying,apply_id)
 		return self.sql_update(sql)
 
 

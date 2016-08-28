@@ -1899,8 +1899,8 @@ class OrgPriHandler(BaseHandler):
             elif a_d['action'] == 'get_apply_list':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['id','page'])
-                    result = OrgClubController().get_apply_list(a_d_m['id'],a_d['uid'],a_d_m['page'])
-                    if result['flag'] == 0: return self.return_param(0,200,{},result)
+                    result = OrgClubController().get_apply_list(a_d_m['id'],a_d['uid'],a_d_m['page'])#the id is organization_id 
+                    if result['flag'] == 0: return self.return_param(0,200,{},result['ret'])
                     else:
                         info_return = {}
                         info_return['per_page'] = 8
@@ -1909,8 +1909,8 @@ class OrgPriHandler(BaseHandler):
             elif a_d['action'] == 'pass_apply':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['apply_id'])
-                    OrgClubController().pass_apply(a_d['uid'],a_d_m['apply_id'])
-                    pass
+                    OrgClubController().pass_apply(a_d_m['apply_id'])
+                    return self.return_param(1,0,{},"操作成功")
 
 
 
@@ -1953,6 +1953,11 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id'])
                     info = OrgClubController().get_brief_info(a_d_m['id'],a_d['uid'])
                     self.return_param(1,0,info,'success')
+            elif a_d['action'] == 'get_dy_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['organization_id','page'])
+                    dy_list = OrgClubController().get_dy_list(a_d_m['organization_id'],a_d_m['page'])
+                    return self.return_param(1,0,dy_list,'success')
 
 
 
