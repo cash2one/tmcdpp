@@ -934,7 +934,7 @@ class AttendHandler(BaseHandler):
                 info = dict(write_data,**mem_info_write)
                 result = self.insert_into_db('fs_user_event',info)
                 if int(a_d['eid']) in set([203,204,205,206]):
-                    send_content = "你已成功报名#2016中国·房山世界地质公园京津冀越野障碍跑挑战赛#，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与！"
+                    send_content = "你已成功报名#2016中国·房山世界地质公园京津冀越野障碍跑挑战赛#,请你仔细阅读竞赛办法,关注赛事动态,准时参与赛事.感谢你的参与!"
                     PublicFunc.send_sms(mem_info['tel'],send_content)
             self.incr_game_attend_num(a_d['eid'],len(mem_list))
             self.return_param(1,0,{'id':result},'成功')
