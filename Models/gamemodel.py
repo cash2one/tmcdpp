@@ -46,5 +46,5 @@ class GameModel(DbBase):
 		return self.find_data(['gstarttime','gendtime','gacceptstart','gacceptend','startmap','sport_type'],get_some=False,gid=gid,status=0)
 
 	def get_game_list(self):
-		return self.find_data(['*'],status=0,order=' gendtime desc ')
+		return self.find_data(['*'],status=0,order=' sx desc ')
 

@@ -914,7 +914,7 @@ class AttendHandler(BaseHandler):
 
         elif action == 'group_attend':
             a_d = self.get_multi_argument(['id','eid','gid','leader_name','leader_tel','leader_email','org_name','mem_str',{'version':False,'token':False,'uid':False}])
-            if a_d.has_key('token') and a_d['version'] == options.token_request_more_version: self.check_token_available(a_d['uid'],a_d['token']) # for that there is no  uid 
+            # if a_d.has_key('token') and a_d['version'] == options.token_request_more_version: self.check_token_available(a_d['uid'],a_d['token']) # for that there is no  uid 
             mem_list = a_d['mem_str'].split(',')
             available_sign = self.check_event_available(a_d['eid'],len(mem_list))
             if available_sign is 1: return self.return_param(0,201,{},'报名已经结束')
@@ -933,6 +933,9 @@ class AttendHandler(BaseHandler):
                 mem_info_write = {'eusername':mem_info['username'],'etel':mem_info['tel'],'picPath':picPath,'eidcard':mem_info['idcard'],'esex':mem_info['sex'],'eage':age,'uid':uid}
                 info = dict(write_data,**mem_info_write)
                 result = self.insert_into_db('fs_user_event',info)
+                if int(a_d['eid']) in set([203,204,205,206]):
+                    send_content = "你已成功报名#2016中国·房山世界地质公园京津冀越野障碍跑挑战赛#，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与！"
+                    PublicFunc.send_sms(mem_info['tel'],send_content)
             self.incr_game_attend_num(a_d['eid'],len(mem_list))
             self.return_param(1,0,{'id':result},'成功')
 
@@ -980,7 +983,7 @@ class AttendHandler(BaseHandler):
 
         elif action == 'person_attend':
             a_d = self.get_multi_argument(['uid','eid','gid','eidcard','eusername','esex','etel','org_name',{'version':False,'token':False}])
-            if a_d.has_key('token') and a_d['version'] == options.token_request_more_version: self.check_token_available(a_d['uid'],a_d['token'])
+            # if a_d.has_key('token') and a_d['version'] == options.token_request_more_version: return self.check_token_available(a_d['uid'],a_d['token'])
             age = self.get_age_via_idcard(a_d['eidcard'])
             if self.justify_user_attend(a_d['eid'],a_d['eidcard']): return self.return_param(0,200,{},'你已经报名了该项目')
             available_sign = self.check_event_available(a_d['eid'],1)
@@ -1004,6 +1007,8 @@ class AttendHandler(BaseHandler):
             #send sms 
             if int(a_d['eid']) == 202:
                 send_content = '%s,您好!恭喜您成功报名8月7日(周日)上午8:30在良乡体育中心举办的青创动力2016年科学健身运动项目推广活动，请您于8月5日下午两点到良乡体育中心综合馆领取服装。' % a_d['eusername']
+            elif int(a_d['eid']) in set([203,204,205,206]):
+                send_content = "你已成功报名#2016中国·房山世界地质公园京津冀越野障碍跑挑战赛#，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与！"
             else:
                 send_content = "%s,恭喜您成功报名 %s 赛事项目" % (a_d['eusername'],ename)
             # print send_content
