@@ -599,7 +599,8 @@ class BaseHandler(tornado.web.RequestHandler):
     #get the userinfo of input param  the search_param may like username user_password etc or a list or a tuple 
     def get_userinfo_via_search_param(self,search_param,uid):
         uid = str(uid)
-        if not self.cacheRedis.exists('users:uid:' + uid):# if this user info is not exist then read from mysql and write to cache
+        # if not self.cacheRedis.exists('users:uid:' + uid):# if this user info is not exist then read from mysql and write to cache
+        if False:
             path = options.ipnet
             userinfo = self.db.get("SELECT username,password,tel,token,idcard,login_times,sex,nickname,last_login,CONCAT(%s,avatar) AS avatar,point FROM fs_users WHERE uid = %s",path,uid)
             self.cacheRedis.hmset('users:uid:' + uid,userinfo)
@@ -1010,7 +1011,7 @@ class AttendHandler(BaseHandler):
                 send_content = "%s,恭喜您成功报名 %s 赛事项目" % (a_d['eusername'],ename)
             # print send_content
             
-            return self.return_param(1,0,{'id':pri_id},'成功')
+            return self.return_param(1,0,{'id':pri_id},'报名表提交成功')
 
 class MapHandler(BaseHandler):
 
