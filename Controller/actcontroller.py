@@ -117,6 +117,7 @@ class ActController:
 		act_info['activity_status_id'] = act_info_status['flag']
 		act_info['regist_avail'] = act_info['regis_max'] - act_info['regist_member'] 
 		act_info['has_attend'] = '已报名' if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else '报名'
+		act_info['has_attend_status'] = 1 if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else 0
 		return act_info
 
 	def get_attend_list(self,activity_id,page):
