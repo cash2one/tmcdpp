@@ -961,7 +961,7 @@ class AttendHandler(BaseHandler):
                 if userInfo[info] == '':
                     warn_str = '用户 ' + e2cdict[info] + ' 没有完善，请提示该用户完善信息' 
                     break;
-            if warn_str: self.return_param(0,200,{},warn_str)
+            if warn_str: return self.return_param(0,200,{},warn_str)
             have_attend = self.justify_user_attend(eid,userInfo['idcard'])
             if have_attend: return self.return_param(0,201,{},'用户已经报名了该项目')
             self.return_param(1,0,{},'允许')
@@ -2256,16 +2256,19 @@ class NotifyHandler(BaseHandler):
             event_info = self.get_event_info(attend_info['eid'])
             if int(attend_info['group_id']):#group_attend
                 mem_num = self.find_db_sum('fs_user_event',out_trade_no=attend_info['out_trade_no'])
-                self.return_param(1,0,{'ename':event_info['ename'],'epayfee':event_info['epayfee']*mem_num,'out_trade_no':attend_info['out_trade_no']},'success')
+                self.return_param(1,0,{'ename':event_info['ename'],'epayfee':float(event_info['epayfee'])*mem_num,'out_trade_no':attend_info['out_trade_no']},'success')
             else:#person attend
-                self.return_param(1,0,{'ename':event_info['ename'],'epayfee':event_info['epayfee'],'out_trade_no':attend_info['out_trade_no']},'success')
+                self.return_param(1,0,{'ename':event_info['ename'],'epayfee':float(event_info['epayfee']),'out_trade_no':attend_info['out_trade_no']},'success')
+
 
         elif action == 'weipay_notify':
             out_trade_no = self.get_argument('out_trade_no')
             if out_trade_no[0:1] == 'a': self.update_db('fs_user_assoc',{'checkstatus':1},{'out_trade_no':out_trade_no})
             else: 
+                order_info = self.db.get("select checkstatus from fs_user_event where out_trade_no = %s limit 1 ",out_trade_no)
+                if int(order_info['checkstatus']):
+                    return 'success'
                 self.update_db('fs_user_event',{'checkstatus':1},{'out_trade_no':out_trade_no})
-                order_info = self.db.query("select uid,eid,etel from fs_user_event where out_trade_no = %s",out_trade_no)
                 for ele in order_info:
                     eid = int(ele['eid'])
                     etel = ele['etel']
@@ -2276,8 +2279,9 @@ class NotifyHandler(BaseHandler):
 
         elif action == 'pay_success_send_msg':
             a_d_m = self.get_multi_argument(['out_trade_no'])
-            order_info = self.db.query("select uid,eid,etel from fs_user_event where out_trade_no = %s",a_d_m['out_trade_no'])
-            # eid = int(order_info['eid'])
+            order_info = self.db.get("select  checkstatus  from fs_user_event where out_trade_no = %s limit 1",a_d_m['out_trade_no'])
+            if int(order_info['checkstatus']):
+                return 'success'
             for ele in order_info:
                 eid = int(ele['eid'])
                 etel = ele['etel']
