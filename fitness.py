@@ -603,6 +603,7 @@ class BaseHandler(tornado.web.RequestHandler):
         if True:
             path = options.ipnet
             userinfo = self.db.get("SELECT username,password,tel,token,idcard,login_times,sex,nickname,last_login,CONCAT(%s,avatar) AS avatar,point FROM fs_users WHERE uid = %s",path,uid)
+            self.cacheRedis.delete('users:uid:' + uid)
             self.cacheRedis.hmset('users:uid:' + uid,userinfo)
             self.cacheRedis.expire('users:uid:' + uid,options.user_info_expires)
         if isinstance(search_param,str):#if only search one 
@@ -2275,7 +2276,7 @@ class NotifyHandler(BaseHandler):
                     send_content = "你已成功报名2016中国·房山世界地质公园京津冀越野障碍跑挑战赛，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与"
                     PublicFunc.send_sms(etel,send_content)
         elif action == 'test_msg':
-            etel = "18811399881"
+            etel = "15010568383"
             send_content = "你已成功报名2016中国·房山世界地质公园京津冀越野障碍跑挑战赛，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与"
             # send_content = "您好!恭喜您成功报名8月7日(周日)上午8:30在良乡体育中心举办的青创动力2016年科学健身运动项目推广活动,请您于8月5日下午两点到良乡体育中心综合馆领取服装"
             # send_content = "您好!恭喜您成功报名8月7日(周日)上午8:30在良乡体育中心举办的青创动力2016年科学健身运动项目推广活动,请您于8月5日下午两点到良乡体育中心综合馆领取服装"
