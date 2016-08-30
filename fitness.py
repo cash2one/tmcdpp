@@ -963,7 +963,7 @@ class AttendHandler(BaseHandler):
                     break;
             if warn_str: self.return_param(0,200,{},warn_str)
             have_attend = self.justify_user_attend(eid,userInfo['idcard'])
-            if have_attend: self.return_param(0,201,{},'用户已经报名了该项目')
+            if have_attend: return self.return_param(0,201,{},'用户已经报名了该项目')
             self.return_param(1,0,{},'允许')
 
         elif action == 'get_all_attend':
