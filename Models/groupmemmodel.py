@@ -80,6 +80,7 @@ class GroupMemModel(DbBase):
             user_info = UsersModel.get_instance().get_import_user_info(uid,['nickname','point','uid','avatar'])
     		# info_return.append(UsersModel.get_instance().get_import_user_info(uid,['username','point','uid','avatar'])) 
             user_info['username'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
+            user_info['uid'] = uid
             info_return.append(user_info)
     	return info_return
 
