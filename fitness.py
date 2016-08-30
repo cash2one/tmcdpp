@@ -1895,7 +1895,8 @@ class OrgPriHandler(BaseHandler):
         try:
             a_d = self.get_multi_argument(['uid','version','action','token'])
             if not UsersModel().check_token_available(a_d['uid'],a_d['token']):
-                return self.return_param(0,200,{},options.wrong_login_tip)
+                pass
+                # return self.return_param(0,200,{},options.wrong_login_tip)
             if a_d['action'] == 'apply_club_org':#
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['contacts','contact_phone','address','name','type','athletics',{'qq':False,'email':False}])
@@ -2030,7 +2031,8 @@ class ActPriHandler(BaseHandler):
         try:
             a_d = self.get_multi_argument(['uid','version','action','token'])
             if not UsersModel().check_token_available(a_d['uid'],a_d['token']):
-                return self.return_param(0,200,{},options.wrong_login_tip)
+                pass
+                # return self.return_param(0,200,{},options.wrong_login_tip)
             if a_d['action'] == 'agree_act':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['id'])
