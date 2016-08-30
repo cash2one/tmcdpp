@@ -600,7 +600,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_userinfo_via_search_param(self,search_param,uid):
         uid = str(uid)
         # if not self.cacheRedis.exists('users:uid:' + uid):# if this user info is not exist then read from mysql and write to cache
-        if False:
+        if True:
             path = options.ipnet
             userinfo = self.db.get("SELECT username,password,tel,token,idcard,login_times,sex,nickname,last_login,CONCAT(%s,avatar) AS avatar,point FROM fs_users WHERE uid = %s",path,uid)
             self.cacheRedis.hmset('users:uid:' + uid,userinfo)
