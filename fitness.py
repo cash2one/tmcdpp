@@ -2257,7 +2257,7 @@ class NotifyHandler(BaseHandler):
                     eid = int(ele['eid'])
                     etel = ele['etel']
                     if eid in set([203,204,205,206]):
-                        send_content = "你已成功报名#2016中国·房山世界地质公园京津冀越野障碍跑挑战赛#，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与！"
+                        send_content = "你已成功报名2016中国·房山世界地质公园京津冀越野障碍跑挑战赛，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与"
                         PublicFunc.send_sms(etel,send_content)
 
 
@@ -2268,9 +2268,20 @@ class NotifyHandler(BaseHandler):
             for ele in order_info:
                 eid = int(ele['eid'])
                 etel = ele['etel']
+                etel = "18811399881"
                 if eid in set([203,204,205,206]):
-                    send_content = "【全民健身动起来】你已成功报名#2016中国·房山世界地质公园京津冀越野障碍跑挑战赛#，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与！"
+                    # send_content = "你已成功报名#2016中国·房山世界地质公园京津冀越野障碍跑挑战赛#，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与！"
+                    send_content = "你已成功报名2016中国·房山世界地质公园京津冀越野障碍跑挑战赛，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与"
                     PublicFunc.send_sms(etel,send_content)
+        elif action == 'test_msg':
+            etel = "18811399881"
+            send_content = "你已成功报名2016中国·房山世界地质公园京津冀越野障碍跑挑战赛，请你仔细阅读竞赛办法，关注赛事动态，准时参与赛事。感谢你的参与"
+            # send_content = "您好!恭喜您成功报名8月7日(周日)上午8:30在良乡体育中心举办的青创动力2016年科学健身运动项目推广活动,请您于8月5日下午两点到良乡体育中心综合馆领取服装"
+            # send_content = "您好!恭喜您成功报名8月7日(周日)上午8:30在良乡体育中心举办的青创动力2016年科学健身运动项目推广活动,请您于8月5日下午两点到良乡体育中心综合馆领取服装"
+            print send_content
+            print etel
+            PublicFunc.send_sms(etel,send_content)
+
 
       
 class ScienceHandler(RankHandler):
