@@ -1820,7 +1820,6 @@ class PostPriHandler(BaseHandler):
                     PostModel().delete_post(a_d_m['post_id'])
                     return self.return_param(1,0,{},'删除成功')
         except Exception,e:
-            raise
             self.treat_except(e)
 
 class PostLovePubHandler(BaseHandler):
@@ -1942,7 +1941,6 @@ class OrgPriHandler(BaseHandler):
                     self.return_param(1,0,{},result)
 
         except Exception,e:
-            raise
             self.treat_except(e)
 
 
@@ -1995,7 +1993,6 @@ class OrgPubHandler(BaseHandler):
 
 
         except Exception,e:
-            raise
             self.treat_except(e)
 
 class ActPubHandler(BaseHandler):
@@ -2026,7 +2023,6 @@ class ActPubHandler(BaseHandler):
 
 
         except Exception,e:
-            raise
             self.treat_except(e)
 
 class ActPriHandler(BaseHandler):
@@ -2054,7 +2050,6 @@ class ActPriHandler(BaseHandler):
                     return self.return_param(1,0,user_info,'success')
 
         except Exception,e:
-            raise
             self.treat_except(e)
 
 
