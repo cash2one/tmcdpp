@@ -136,6 +136,12 @@ class OrgClubController:
 		OrganizationInfoModel().set_field(id,field,new_value)
 		return True
 
+	def judge_is_admin(self,uid,organization_id):
+		"""
+		"""
+		is_admin = OrganizationUserModel().judge_is_admin(organization_id,uid)
+		return 1 if is_admin else 0
+
 	def get_apply_list(self,id,uid,page):
 		is_admin = OrganizationUserModel().judge_is_admin(id,uid)
 		if not is_admin: return {"flag":0,'ret':"只有管理员可以更改机构/俱乐部信息"}

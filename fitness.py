@@ -1982,6 +1982,12 @@ class OrgPubHandler(BaseHandler):
                     dy_list = OrgClubController().get_album_list(a_d_m['organization_id'],a_d_m['page'])
                     return self.return_param(1,0,dy_list,'success')
 
+            elif a_d['action'] == 'judge_is_admin':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['id'])#organize_id
+                    result = OrgClubController().judge_is_admin(a_d['uid'],a_d_m['id'])
+                    return self.return_param(1,0,result,'success')
+
 #                     主要是原生显示，后端的数据
 # 1、一次数据，最多给出6行图片（当前是一行4张图片）
 # 2、一次最多显示两天的数据，及当前所在日期，与下一套图片的日期
@@ -1994,6 +2000,7 @@ class OrgPubHandler(BaseHandler):
 
 
         except Exception,e:
+            raise
             self.treat_except(e)
 
 class ActPubHandler(BaseHandler):
