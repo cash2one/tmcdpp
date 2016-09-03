@@ -27,6 +27,8 @@ class PhotoModel(DbBase):
 		self.table = 'photo'
 		self.org_pic = 1101
 		self.file_path = "/var/www/html/Uploads/AlbumPic/"
+
+
 	def add_pic(self,uid,album_id,file_name,org_id):
 		create_time = int(time.time())
 		type = self.org_pic
@@ -35,3 +37,12 @@ class PhotoModel(DbBase):
 							'file_name':file_name,'file_path':self.file_path,'file_old_name':'','old_width':0,'old_height':0,'old_size':0,
 							'msg':''})
 		return 
+
+	def get_album_pic_list(self,organization_id,album_id,last_id,max_get):
+		if not last_id:
+			last_id = self.db.get("select max(id) as max from photo")['max']
+		pic_list = self.find_data(['create_time','file_name','id'],type_id=organization_id,target_id=album_id,id={'rule':'<','value':last_id},get_some=(0,max_get),order=" id desc ")
+		return pic_list
+
+
+

@@ -1944,6 +1944,13 @@ class OrgPriHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['album_id','pic_str','org_id'])
                     result = OrgClubController().release_album(a_d['uid'],a_d_m['album_id'],a_d_m['pic_str'],a_d_m['org_id'])
                     self.return_param(1,0,{},'success')
+            elif a_d['action'] == 'create_album':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['org_id','album_name'])
+                    result = OrgClubController().create_album(a_d['uid'],a_d_m['org_id'],a_d_m['album_name'])
+                    if not result is True:
+                        return self.return_param(0,200,{},result)
+                    return self.return_param(1,0,{},'success')
 
         except Exception,e:
             self.treat_except(e)
@@ -1985,6 +1992,13 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['organization_id','page'])
                     dy_list = OrgClubController().get_album_list(a_d_m['organization_id'],a_d_m['page'])
                     return self.return_param(1,0,dy_list,'success')
+
+            elif a_d['action'] == 'get_album_pic_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['org_id','album_id','last_id'])
+                    if 'current_date' not in a_d_m: a_d_m['current_date'] = None 
+                    pic_list = OrgClubController().get_album_pic_list(a_d_m['org_id'],a_d_m['album_id'],a_d_m['last_id'],a_d_m['current_date'])
+                    self.return_param(1,0,pic_list,'success')
 
             elif a_d['action'] == 'judge_is_admin':
                 if a_d['version'] >= options.add_org_version:

@@ -44,6 +44,9 @@ TYPE_NOT_MEMBER_ATTEND = 3
 TYPE_NEW_ACT_STORE = 11 
 TYPE_ACT_START = 11 
 TYPE_ACT_END = 13
+PIC_PER_ROW = 4 
+PIC_ROW_MAX = 6 
+DATE_MAX =2 
 
 
 
@@ -73,6 +76,14 @@ class OrgClubController:
 			org_info['star_pic'] = self.get_star_pic(org_info['score']) 
 			list_return.append(org_info)
 		return list_return 
+
+# create_album(a_d['uid'],a_d_m['org_id'],a_d_m['album_name'])
+
+	def create_album(self,uid,org_id,album_name):
+		is_admin = OrganizationUserModel().judge_is_admin(org_id,uid)
+		if not is_admin: return "只有管理员可以更改机构/俱乐部信息"
+		result = OrganizationAlbumModel().create_album(uid,org_id,album_name)
+		return True
 
 
 	def get_star(self,score):
@@ -155,9 +166,6 @@ class OrgClubController:
 			PhotoModel().add_pic(uid,album_id,file_name,org_id)
 		return 
 
-
-
-
 	def get_apply_list(self,id,uid,page):
 		is_admin = OrganizationUserModel().judge_is_admin(id,uid)
 		if not is_admin: return {"flag":0,'ret':"只有管理员可以更改机构/俱乐部信息"}
@@ -190,6 +198,9 @@ class OrgClubController:
 		return return_info
 
 	def get_album_list(self,organization_id,page):
+		"""
+		仅仅获取相册和封面  
+		"""
 		return_list = {}
 		return_list['per_page'] = 5 ##
 		album_list =  OrganizationAlbumModel().get_album_list(organization_id,page)
@@ -198,10 +209,64 @@ class OrgClubController:
 		return_list['album_list'] = album_list
 		return return_list
 
+	def get_album_pic_list(self,organization_id,album_id,last_id,current_date):
+		"""
+		获取相册图片列表
+		input param:
+			last_stamp: 最后一张图片的时间戳
+			current_date 当前相册日期
 
-
-
-
+			PIC_PER_ROW = 4 
+			PIC_ROW_MAX = 6 
+			DATE_MAX =2 
+		"""
+		max_get = PIC_PER_ROW * PIC_ROW_MAX# 24 
+		if not int(last_id):#if the value of the latest_id is 0 ,then it request the data at the first time 
+			last_id = 0 #如果是从第最开始取的话
+		#if not fetch 24 pic means 
+		pic_list = PhotoModel().get_album_pic_list(organization_id,album_id,last_id,max_get)
+		if len(pic_list) == 0: return []
+		info_return = []
+		date_pic_list = {}
+		date_pic_list_2 = {}
+		first_pic_stamp = pic_list[0]['create_time']
+		first_date = PublicFunc.stamp_to_Ymd(first_pic_stamp)
+		first_date_stamp = PublicFunc.date_to_stamp(first_date + " 00:00:00")
+		calc_once = 0#只计算一次新日期  
+		next_date = ''# init the next_date
+		lenth_of_current_date = 0 #当前date的数据量。 
+		pic_max_next_date = 24 #init the max rows of the nextdate data 
+		pic_max_num_next_date = 0#
+		for pic_info in pic_list:
+			if  pic_info['create_time'] > first_date_stamp:#如果照片是第一批的照片
+				date_pic_list['date'] = first_date
+				date_pic_list.setdefault('pic_list',[])
+				pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
+				pic_info['pic_thumb_path'] = options.ipnet + '/Uploads/AlbumPic/' + 't' + pic_info['file_name']
+				del pic_info['file_name']
+				date_pic_list['pic_list'].append(pic_info) 
+				lenth_of_current_date += 1 ####auto add 1
+				if len(date_pic_list['pic_list']) == max_get: break;
+			else:#这个是更早日期的
+				#计算新的日期, 通过新的一行数据
+				if not calc_once:
+					new_date_late_stamp = pic_info['create_time']
+					next_date = PublicFunc.stamp_to_Ymd(new_date_late_stamp)
+					calc_once += 1  
+					pic_num_left = 24 - lenth_of_current_date
+					if pic_num_left < 4:break
+					pic_max_next_date = pic_num_left - pic_num_left%4
+				date_pic_list_2['date'] = next_date
+				date_pic_list_2.setdefault('pic_list',[])
+				if len(date_pic_list_2['pic_list']) < pic_max_next_date:
+					pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
+					pic_info['pic_thumb_path'] = options.ipnet + '/Uploads/AlbumPic/' + 't' + pic_info['file_name']
+					del pic_info['file_name']
+					date_pic_list_2['pic_list'].append(pic_info)
+				else:break
+		info_return.append(date_pic_list)
+		if date_pic_list_2:info_return.append(date_pic_list_2)
+		return info_return
 
 	def focus_org_oper(self,user_id,organization_id):
 		focus_status = OrganizationUserModel().judge_has_focus(organization_id,user_id)
