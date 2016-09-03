@@ -87,7 +87,8 @@ class ActController:
 	def get_agree_list(self,id,page):
 		per_page = int(options.act_agree_per_page)
 		page = int(page)
-		agree_uid_list = ActivityInfoModel().get_agree_list(id).split('|')[per_page*page:per_page*(page+1)]
+		agree_uid_list_all = ActivityInfoModel().get_agree_list(id).split('|')
+		agree_uid_list = agree_uid_list_all[per_page*page:per_page*(page+1)]
 		agree_user_list = []
 		for uid in agree_uid_list:
 			user_info = UsersModel().get_import_user_info(uid,['avatar','nickname','uid'])
@@ -95,7 +96,7 @@ class ActController:
 			agree_user_list.append(user_info)
 		return_list = {}
 		return_list['per_page'] = per_page
-		return_list['agree_num'] = 5256#####################################################################################=======================================================================
+		return_list['agree_num'] = len(agree_uid_list_all)
 		return_list['agree_list'] = agree_user_list
 		return return_list
 
@@ -111,6 +112,7 @@ class ActController:
 
 	def get_act_info(self,uid,activity_id):
 		act_info = ActivityInfoModel().get_act_info(activity_id)
+
 		act_info['time_scope'] = act_info['start_time'][5:-2] + " "  + act_info['end_time'][5:-2]
 		act_info_status = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
 		act_info['activity_status'] = act_info_status['name']
@@ -118,6 +120,8 @@ class ActController:
 		act_info['regist_avail'] = act_info['regis_max'] - act_info['regist_member'] 
 		act_info['has_attend'] = '已报名' if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else '报名'
 		act_info['has_attend_status'] = 1 if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else 0
+		##if the man has agree the activity???
+		act_info['have_zan'] = 1 if '|' + str(uid) + "|" in act_info['like_list'] else 0
 		return act_info
 
 	def get_attend_list(self,activity_id,page):

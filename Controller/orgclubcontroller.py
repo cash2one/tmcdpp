@@ -35,6 +35,7 @@ from Models.organizationapplymodel import OrganizationApplyModel
 from Models.organizationusermodel import OrganizationUserModel
 from Models.organizationstatusmessagemodel import OrganizationStatusMessageModel
 from Models.organizationalbummodel import OrganizationAlbumModel
+from Models.photomodel import PhotoModel
 from Func.publicfunc import PublicFunc
 
 TYPE_NEW_MEMBER = 1 
@@ -141,6 +142,21 @@ class OrgClubController:
 		"""
 		is_admin = OrganizationUserModel().judge_is_admin(organization_id,uid)
 		return 1 if is_admin else 0
+
+
+		# release_album(a_d['uid'],a_d_m['album_id'],a_d_m['pic_str'])
+
+	def release_album(self,uid,album_id,pic_str,org_id):
+		"""
+		"""
+		pic_list = []
+		for pic in pic_str.split(','):
+			file_name = pic[-17:]
+			PhotoModel().add_pic(uid,album_id,file_name,org_id)
+		return 
+
+
+
 
 	def get_apply_list(self,id,uid,page):
 		is_admin = OrganizationUserModel().judge_is_admin(id,uid)

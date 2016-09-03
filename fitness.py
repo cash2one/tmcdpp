@@ -1928,7 +1928,6 @@ class OrgPriHandler(BaseHandler):
                     return self.return_param(1,0,{},"操作成功")
 
 
-
             elif a_d['action'] == 'focus_org_oper':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['id'])
@@ -1939,7 +1938,12 @@ class OrgPriHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id',{"excuse":False}])
                     if not 'excuse' in a_d_m: a_d_m['excuse'] = ''
                     result = OrgClubController().attend_org(a_d['uid'],a_d_m['id'],a_d_m['excuse'])
-                    self.return_param(1,0,{},result)
+                    return self.return_param(1,0,{},result)
+            elif a_d['action'] == 'release_album':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['album_id','pic_str','org_id'])
+                    result = OrgClubController().release_album(a_d['uid'],a_d_m['album_id'],a_d_m['pic_str'],a_d_m['org_id'])
+                    self.return_param(1,0,{},'success')
 
         except Exception,e:
             self.treat_except(e)
@@ -1987,6 +1991,7 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id'])#organize_id
                     result = OrgClubController().judge_is_admin(a_d['uid'],a_d_m['id'])
                     return self.return_param(1,0,result,'success')
+
 
 #                     主要是原生显示，后端的数据
 # 1、一次数据，最多给出6行图片（当前是一行4张图片）

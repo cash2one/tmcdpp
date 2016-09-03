@@ -44,7 +44,7 @@ class ActivityInfoModel(DbBase):
 		return self.update_db({'like_list':like_list},organization_id=id)
 
 	def get_act_info(self,activity_id):
-		act_info = self.find_data(['sponsor_sponsor','start_time','end_time','name','introduce_introduce','regist_notice','activity_rule','address_address','regis_start_time','regis_end_time','regist_member','regis_max'],get_some=False,id=activity_id)
+		act_info = self.find_data(['sponsor_sponsor','like_list','start_time','end_time','name','introduce_introduce','regist_notice','activity_rule','address_address','regis_start_time','regis_end_time','regist_member','regis_max'],get_some=False,id=activity_id)
 		return act_info
 
 
