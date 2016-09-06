@@ -104,6 +104,13 @@ class OrgClubController:
 		star = self.get_star(score)
 		return options.ipnet + '/staticPic/stars/' + str(star) + '.png' 
 
+
+	def get_user_role(self,uid,organ_id):
+		role = OrganizationUserModel().get_user_role(uid,organ_id)
+		return role
+
+
+
 		# get_brief_info(a_d_m['id'])
 	def get_brief_info(self,id,uid):
 		"""

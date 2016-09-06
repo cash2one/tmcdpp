@@ -28,6 +28,7 @@ class ActivityInfoModel(DbBase):
 
 	def get_act_list(self,id,page):
 		"""
+		get the act list of the specify organization_id 
 		"""
 		act_per_page = int(options.act_per_page)
 		jump = int(page) * act_per_page
@@ -46,6 +47,15 @@ class ActivityInfoModel(DbBase):
 	def get_act_info(self,activity_id):
 		act_info = self.find_data(['sponsor_sponsor','like_list','start_time','end_time','name','introduce_introduce','regist_notice','activity_rule','address_address','regis_start_time','regis_end_time','regist_member','regis_max'],get_some=False,id=activity_id)
 		return act_info
+
+	def get_activity_list(self,page):
+		"""
+		get the activity list of all organization
+		"""
+		act_per_page = int(options.act_per_page) ### 5 
+		jump = int(page) * act_per_page
+		act_per_page = self.find_data(['id','regis_start_time','regis_end_time','start_time','end_time','name','organization_id','logo_img','regist_member','regis_cost','classify','regist_member','address_address'],get_some=(jump,act_per_page))
+		return act_per_page
 
 
 

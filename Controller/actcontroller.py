@@ -124,6 +124,18 @@ class ActController:
 		act_info['have_zan'] = 1 if '|' + str(uid) + "|" in act_info['like_list'] else 0
 		return act_info
 
+	def get_activity_list(self,page):
+		act_list = ActivityInfoModel().get_activity_list(page)
+		for act in act_list:
+			act_info_status = self.get_act_status(act['regis_start_time'],act['regis_end_time'],act['start_time'],act['end_time'])
+			act['act_status'] = act_info_status['name']
+			act['act_status_id'] = act_info_status['flag'] 
+			act['time_scope'] = act['start_time'][5:16] + ' - ' + act['end_time'][5:16]
+			act['logo_img'] = options.ipnet + act['logo_img']
+			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
+			act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
+		return act_list
+
 	def get_attend_list(self,activity_id,page):
 		per_page = options.act_attend_per_page# 8 
 		# return_list = [] 

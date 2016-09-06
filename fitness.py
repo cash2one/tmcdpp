@@ -1691,7 +1691,22 @@ class NotePriHandler(BaseHandler):
         try:
             a_d = self.get_multi_argument(['uid','token','version','action'])
             if not UsersModel.get_instance().check_token_available(a_d['uid'],a_d['token']):
-                return self.return_param(0,200,{},options.wrong_login_tip)
+                pass
+                # return self.return_param(0,200,{},options.wrong_login_tip)
+            if a_d['action'] == 'release_note':
+                if a_d['version'] >= '3.2':
+                    a_d_m = self.get_multi_argument(['title','content'])
+                    note_id = NoteController().release_note(a_d['uid'],a_d_m['title'],a_d_m['content'])
+                    return self.return_param(1,0,{"note_id":note_id},'发布成功')
+        except Exception,e:
+            self.treat_except(e)
+
+    def post(self):
+        try:
+            a_d = self.get_multi_argument(['uid','token','version','action'])
+            if not UsersModel.get_instance().check_token_available(a_d['uid'],a_d['token']):
+                pass
+                # return self.return_param(0,200,{},options.wrong_login_tip)
             if a_d['action'] == 'release_note':
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['title','content'])
@@ -2006,6 +2021,11 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id'])#organize_id
                     result = OrgClubController().judge_is_admin(a_d['uid'],a_d_m['id'])
                     return self.return_param(1,0,result,'success')
+            elif a_d['action'] == 'get_user_role':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['organ_id'])
+                    role = OrgClubController().get_user_role(a_d['uid'],a_d_m['organ_id'])
+                    self.return_param(1,0,{'role_id':role},'success')
 
             elif a_d['action'] == 'get_album_info':
                 if a_d['version'] >= options.add_org_version:
@@ -2054,6 +2074,18 @@ class ActPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['activity_id'])
                     act_info = ActController().get_act_info(a_d['uid'],a_d_m['activity_id'])
                     self.return_param(1,0,act_info,'success')
+            elif a_d['action'] == 'get_activity_list':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['page'])
+                    act_list = ActController().get_activity_list(a_d_m['page'])
+                    return self.return_param(1,0,act_list,'success')
+
+
+                    # 1、进行中的（活动结束时间正序），
+                    # 2、报名中的（报名结束时间正序），
+                    # 3、等待进行中的（已经报名结束，但还未开始，活动开始时间正序），
+                    # 4、还未开始报名的（报名开始时间正序），
+                    # 5、已经结束的（活动结束时间倒序）
 
 
 
