@@ -40,5 +40,8 @@ class OrganizationAlbumModel(DbBase):
 	def create_album(self,uid,org_id,album_name):
 		data_dict = {'organization_id':org_id,'name':album_name,'create_time':PublicFunc.get_current_datetime(),'count':0,'show_times':0,'msg':'','create_user':uid}
 		va = self.insert_into_db(data_dict)
-		return va  
+		return va 
+
+	def get_album_info(self,album_id):
+		return self.find_data(['*'],get_some=False,id=album_id) 
 

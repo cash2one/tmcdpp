@@ -86,6 +86,10 @@ class OrgClubController:
 		return result
 
 
+	def get_album_info(self,album_id):
+		info = OrganizationAlbumModel().get_album_info(album_id)
+		return info
+
 	def get_star(self,score):
 		"""
 		根据积分获取星级(共5级)

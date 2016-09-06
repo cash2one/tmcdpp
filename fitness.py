@@ -1987,6 +1987,7 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['organization_id','page'])
                     dy_list = OrgClubController().get_dy_list(a_d_m['organization_id'],a_d_m['page'])
                     return self.return_param(1,0,dy_list,'success')
+
             elif a_d['action'] == 'get_album_list':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['organization_id','page'])
@@ -2005,6 +2006,13 @@ class OrgPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['id'])#organize_id
                     result = OrgClubController().judge_is_admin(a_d['uid'],a_d_m['id'])
                     return self.return_param(1,0,result,'success')
+
+            elif a_d['action'] == 'get_album_info':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['album_id'])
+                    album_info = OrgClubController().get_album_info(a_d_m['album_id'])
+                    return self.return_param(1,0,album_info,'success')
+
 
 
 #                     主要是原生显示，后端的数据
