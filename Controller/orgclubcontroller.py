@@ -189,9 +189,17 @@ class OrgClubController:
 			ele['change_date'] = ele['change_date'][:16]
 		return {'flag':1,'ret':apply_list_return}
 
-	def pass_apply(self,apply_id):
+	def apply_oper(self,apply_id,oper):
+		"""
 		#get the apply info 
-		OrganizationUserModel().pass_apply(apply_id)
+		when the oper is 1 means pass the user request 
+		when the oper is 0 means ignore the user request 
+		"""
+		if not int(oper):
+			OrganizationUserModel().ignore_apply(apply_id)
+		else:
+			OrganizationUserModel().pass_apply(apply_id)
+		return True
 
 	def get_dy_list(self,organization_id,page):
 		"""

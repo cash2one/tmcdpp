@@ -111,7 +111,13 @@ class OrganizationUserModel(DbBase):
 		return self.sql_select(sql)
 
 	def pass_apply(self,apply_id):
+		"""
+		"""
 		sql = 'update %s set type = type ^ %s where id = %s' % (self.table,self.is_ord_memeber + self.is_applying,apply_id)
+		return self.sql_update(sql)
+
+	def ignore_apply(self,apply_id):
+		sql = 'update %s set type = type & %s where id = %s' % (self.table,self.is_applying,apply_id)
 		return self.sql_update(sql)
 
 

@@ -1647,11 +1647,16 @@ class AdverHandler(BaseHandler):
                 return_data['html_url'] =  "http://101.200.214.68"
                 return_data['pic_url'] = "http://101.200.214.68/Uploads/adver/front.jpg"
                 self.return_param(1,0,return_data,'success');
+            elif a_d['action'] == 'get_act_adver':
+                return_list = []
+                for i in xrange(3):
+                    info = {}
+                    info['html_url'] = "http://www.baidu.com"
+                    info['pic_path'] = "http://101.200.214.68/Uploads/adver/front.jpg"
+                    return_list.append(info)
+                self.return_param(1,0,return_list,'success')
         except Exception,e:
             self.treat_except(e)
-
-
-
 
 class NotePubHandler(BaseHandler):
     def get(self):
@@ -1938,8 +1943,9 @@ class OrgPriHandler(BaseHandler):
                     return self.return_param(1,0,info_return,'success')
             elif a_d['action'] == 'pass_apply':
                 if a_d['version'] >= options.add_org_version:
-                    a_d_m = self.get_multi_argument(['apply_id'])
-                    OrgClubController().pass_apply(a_d_m['apply_id'])
+                    a_d_m = self.get_multi_argument(['apply_id',{'oper':False}])
+                    if 'oper' not in a_d_m: a_d_m['oper'] = 1 #pass the apply of the users 
+                    OrgClubController().apply_oper(a_d_m['apply_id'],a_d_m['oper'])
                     return self.return_param(1,0,{},"操作成功")
 
 
