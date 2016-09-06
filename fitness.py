@@ -1950,7 +1950,7 @@ class OrgPriHandler(BaseHandler):
                     result = OrgClubController().create_album(a_d['uid'],a_d_m['org_id'],a_d_m['album_name'])
                     if isinstance(result,str):
                         return self.return_param(0,200,{},result)
-                    return self.return_param(1,0,{"id":result},'success')
+                    return self.return_param(1,0,{"id":result,"name":a_d_m['album_name']},'success')
 
         except Exception,e:
             self.treat_except(e)
