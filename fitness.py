@@ -1948,9 +1948,9 @@ class OrgPriHandler(BaseHandler):
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['org_id','album_name'])
                     result = OrgClubController().create_album(a_d['uid'],a_d_m['org_id'],a_d_m['album_name'])
-                    if not result is True:
+                    if isinstance(result,str):
                         return self.return_param(0,200,{},result)
-                    return self.return_param(1,0,{},'success')
+                    return self.return_param(1,0,{"id":result},'success')
 
         except Exception,e:
             self.treat_except(e)

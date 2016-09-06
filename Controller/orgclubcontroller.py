@@ -83,7 +83,7 @@ class OrgClubController:
 		is_admin = OrganizationUserModel().judge_is_admin(org_id,uid)
 		if not is_admin: return "只有管理员可以更改机构/俱乐部信息"
 		result = OrganizationAlbumModel().create_album(uid,org_id,album_name)
-		return True
+		return result
 
 
 	def get_star(self,score):
