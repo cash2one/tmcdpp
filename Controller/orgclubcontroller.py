@@ -172,6 +172,8 @@ class OrgClubController:
 		"""
 		"""
 		pic_list = []
+		pic_num = len(pic_str.split(','))
+		OrganizationAlbumModel().incr_photo_num(album_id,pic_num)
 		for pic in pic_str.split(','):
 			file_name = pic[-17:]
 			PhotoModel().add_pic(uid,album_id,file_name,org_id)
@@ -239,6 +241,8 @@ class OrgClubController:
 			PIC_ROW_MAX = 6 
 			DATE_MAX =2 
 		"""
+
+		OrganizationAlbumModel().incr_album_click(album_id)
 		max_get = PIC_PER_ROW * PIC_ROW_MAX# 24 
 		if not int(last_id):#if the value of the latest_id is 0 ,then it request the data at the first time 
 			last_id = 0 #如果是从第最开始取的话

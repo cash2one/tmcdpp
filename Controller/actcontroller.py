@@ -79,7 +79,8 @@ class ActController:
 		search_str = '|' + str(uid) + '|'
 		if search_str in like_list_str :return '您已经点赞了'
 		new_like_list_str = like_list_str + str(uid)
-		ActivityInfoModel().set_agree_list(id,new_like_list_str)
+		ActivityInfoModel().set_agree_list(id,new_like_list_str)##	
+		ActivityInfoModel().incr_agree_num(id)	###increase the agree num 
 		return True
 
 		# ).get_agree_list(self,a_d_m['id'],a_d_m['page'])
@@ -105,6 +106,7 @@ class ActController:
 		has_attend = ActivitySignUpModel().judge_have_attend(uid,activity_id)
 		if int(has_attend): return "您已经报过名了"
 		else:
+			ActivityInfoModel().incr_attend_num(activity_id)
 			ActivitySignUpModel().attend_activity(activity_id,uid,truename,tel,sex)
 			avatar = UsersModel().get_import_user_info(uid,['avatar'])['avatar']
 			# content = truename

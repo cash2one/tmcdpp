@@ -45,3 +45,18 @@ class OrganizationAlbumModel(DbBase):
 	def get_album_info(self,album_id):
 		return self.find_data(['*'],get_some=False,id=album_id) 
 
+	def incr_photo_num(self,album_id,add_count):
+		sql = " update " + self.table + " set count = count +" + str(add_count) + " where id=" + str(album_id)
+		self.sql_update(sql)
+		return
+
+	def incr_album_click(self,album_id):
+		sql = " update " + self.table + " set show_times = show_times +1" + " where id=" + str(album_id)
+		return self.sql_update(sql)
+
+		  # def sql_update(self,sql):
+    #     """
+    #     you can update using your custom sql 
+    #     """
+    #     self.db.execute(sql)
+
