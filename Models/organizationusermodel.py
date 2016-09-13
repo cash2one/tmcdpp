@@ -121,6 +121,13 @@ class OrganizationUserModel(DbBase):
 		return self.sql_update(sql)
 
 
+	def get_member_list(self,organization_id,page):
+		per_page = 12 #each page show 12 
+		jump = per_page * int(page)
+		sql = "select user_id,type from %s where organization_id=%s and type & 6 > 0 limit %s,%s" % (self.table,organization_id,jump,per_page)
+		return self.sql_select(sql)
+
+
 
 
 

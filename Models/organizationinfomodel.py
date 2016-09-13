@@ -43,7 +43,7 @@ class OrganizationInfoModel(DbBase):
 
 
 	def get_brief_info(self,id):
-		return self.find_data(['intro','`desc`','athletics','name','score','create_time','address','img_path','notice','members','id','join_type'],get_some=False,id=id)
+		return self.find_data(['intro','`desc`','athletics','name','score','create_time','address','img_path','notice','members','id','join_type','concern'],get_some=False,id=id)
 
 	def set_field(self,id,field,new_value):
 		"""

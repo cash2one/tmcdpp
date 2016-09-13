@@ -138,6 +138,20 @@ class OrgClubController:
 		info['has_focus'] = 1 if  OrganizationUserModel().judge_has_focus(id,uid) else 0 
 		return info 
 
+	def get_member_list(self,organization_id,page):
+		print 'the page is ' + str(page)
+		member_list = OrganizationUserModel().get_member_list(organization_id,page)
+		for mem_info in member_list:
+			user_id =  mem_info['user_id']
+			mem_info['role'] = 1 if mem_info['type'] & 4  else 0 #如果用户是管理员则role为1 如果为0表示是普通成员
+			user_info = UsersModel().get_import_user_info(user_id,['avatar','nickname'])
+			mem_info['avatar'] = user_info['avatar']
+			mem_info['nickname'] = options.default_nick_name if not  user_info['nickname'] else user_info['nickname']
+			del mem_info['type']
+
+		return member_list
+
+
 	def search_by_id_name(self,search,page):
 		"""
 		"""

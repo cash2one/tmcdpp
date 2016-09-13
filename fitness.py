@@ -2015,6 +2015,14 @@ class OrgPubHandler(BaseHandler):
                     dy_list = OrgClubController().get_album_list(a_d_m['organization_id'],a_d_m['page'])
                     return self.return_param(1,0,dy_list,'success')
 
+            elif a_d['action'] == 'get_member_list':#获取机构成员列表
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['organization_id','page'])
+                    member_list = OrgClubController().get_member_list(a_d_m['organization_id'],a_d_m['page'])
+                    return self.return_param(1,0,member_list,'success')
+
+
+
             elif a_d['action'] == 'get_album_pic_list':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['org_id','album_id','last_id'])
@@ -2085,6 +2093,7 @@ class ActPubHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['page'])
                     act_list = ActController().get_activity_list(a_d_m['page'])
                     return self.return_param(1,0,act_list,'success')
+
 
 
                     # 1、进行中的（活动结束时间正序），
