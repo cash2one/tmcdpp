@@ -1887,6 +1887,11 @@ class ShareHandler(BaseHandler):
                     if not NoteController().judge_note_exist(a_d_m['note_id']): return self.return_param(0,200,{},options.note_not_exist)
                     share_info = ShareController().share_note(a_d_m['note_id'])
                     return self.return_param(1,0,share_info,'success')
+            elif a_d['action'] =='share_org_act':
+                if a_d['version'] >= options.add_org_version:
+                    a_d_m = self.get_multi_argument(['activity_id'])
+                    share_info = ShareController().share_org_act(a_d_m['activity_id'])
+                    return self.return_param(1,0,share_info,'success')
 
         except Exception,e:
             self.treat_except(e)

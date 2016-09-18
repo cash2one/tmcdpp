@@ -86,6 +86,8 @@ class ActController:
 
 		# ).get_agree_list(self,a_d_m['id'],a_d_m['page'])
 
+
+
 	def get_agree_list(self,id,page):
 		per_page = int(options.act_agree_per_page)
 		page = int(page)

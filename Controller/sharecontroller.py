@@ -32,6 +32,7 @@ from Models.notemodel import NoteModel
 from Models.notecommodel import NoteComModel
 from Models.postmodel import PostModel
 from Models.postcommodel import PostComModel
+from Models.activityinfomodel import ActivityInfoModel
 from Func.publicfunc import PublicFunc
 # from Func.publicfunc import PublicFunc
 from bson.objectid import ObjectId
@@ -54,4 +55,10 @@ class ShareController:
 		token_pos = share_url.find('token')
 		share_url = share_url[:token_pos] + share_url[token_pos + 39:]
 		share_dict = {'title':self.share_title,'content':note_info['title'],'image':'not have','url':share_url}
+		return share_dict
+
+	def share_org_act(self,activity_id):
+		act_info = ActivityInfoModel().get_act_info(activity_id)
+		act_name = act_info['name']
+		share_dict = {'title':act_name,'content':'一起来参加吧','image':'http://101.200.214.68/Uploads/pic1.jpg','url':'http://www.baidu.com'}
 		return share_dict
