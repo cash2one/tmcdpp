@@ -138,7 +138,8 @@ class ActController:
 			act['time_scope'] = act['start_time'][5:16] + ' - ' + act['end_time'][5:16]
 			act['logo_img'] = options.ipnet + act['logo_img']
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
-			act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
+			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
+			act['classify'] = '足球'
 		return act_list
 
 	def get_attend_list(self,activity_id,page):
