@@ -112,6 +112,7 @@ class ActController:
 			ActivityInfoModel().incr_attend_num(activity_id)
 			ActivitySignUpModel().attend_activity(activity_id,uid,truename,tel,sex)
 			avatar = UsersModel().get_import_user_info(uid,['avatar'])['avatar']
+			return True
 			# content = truename
 			# save_message_info(self,type,target_id,title,,avatar,""):
 
