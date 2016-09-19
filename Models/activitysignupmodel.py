@@ -35,7 +35,7 @@ class ActivitySignUpModel(DbBase):
 
 	def attend_activity(self,activity_id,user_id,truename,tel,sex):
 		create_time = PublicFunc.get_current_datetime()
-		info_dict = {"activity_id":activity_id,"user_id":user_id,"truename":truename,"tel":tel,"sex":sex,"create_time":create_time}
+		info_dict = {"activity_id":activity_id,"user_id":user_id,"true_name":truename,"tel":tel,"sex":sex,"create_time":create_time}
 		self.insert_into_db(info_dict)
 		return True
 
