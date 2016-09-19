@@ -154,7 +154,7 @@ class ActController:
 		for user in attend_uid_list:
 			user_info = UsersModel().get_import_user_info(user['user_id'],['avatar'])
 			user_info['uid'] = user['user_id']
-			user_info['truename'] = user['truename']
+			user_info['truename'] = user['true_name']
 			user_info['create_time'] = user['create_time'][:16]
 			attend_user_info.append(user_info)
 		attend_list_return['attend_list'] = attend_user_info

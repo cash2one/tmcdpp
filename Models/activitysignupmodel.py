@@ -42,5 +42,5 @@ class ActivitySignUpModel(DbBase):
 	def get_attend_list(self,activity_id,page):
 		per_page = int(options.act_attend_per_page)
 		jump = per_page*int(page)
-		return self.find_data(['user_id','truename','create_time'],get_some=(jump,per_page),activity_id=activity_id)
+		return self.find_data(['user_id','true_name','create_time'],get_some=(jump,per_page),activity_id=activity_id)
 
