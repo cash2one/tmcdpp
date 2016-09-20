@@ -1650,12 +1650,13 @@ class AdverHandler(BaseHandler):
             elif a_d['action'] == 'get_act_adver':
                 return_list = []
                 info = {}
+                info1 = {}
                 info['html_url'] = "http://www.baidu.com"
                 info['pic_path'] = "http://101.200.214.68/Uploads/Picture/GamePic/2016-04-04/5702794c0a73f.jpg"
                 return_list.append(info)
-                info['html_url'] = "http://www.baidu.com"
-                info['pic_path'] = "http://101.200.214.68/Uploads/Picture/GamePic/2016-08-29/57c3d1c432bfa.jpg"
-                return_list.append(info)
+                info1['html_url'] = "http://www.baidu.com"
+                info1['pic_path'] = "http://101.200.214.68/Uploads/Picture/GamePic/2016-08-29/57c3d1c432bfa.jpg"
+                return_list.append(info1)
                 self.return_param(1,0,return_list,'success')
         except Exception,e:
             self.treat_except(e)
