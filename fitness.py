@@ -1649,6 +1649,7 @@ class AdverHandler(BaseHandler):
                 self.return_param(1,0,return_data,'success');
             elif a_d['action'] == 'get_act_adver':
                 return_list = []
+                info = {}
                 info['html_url'] = "http://www.baidu.com"
                 info['pic_path'] = "http://101.200.214.68/Uploads/Picture/GamePic/2016-04-04/5702794c0a73f.jpg"
                 return_list.append(info)
