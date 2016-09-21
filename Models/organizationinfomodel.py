@@ -38,7 +38,7 @@ class OrganizationInfoModel(DbBase):
 		"""
 		org_per_page = options.org_per_page
 		jump = int(page) * int(org_per_page)
-		return self.find_data(['id','members','create_time','img_path','athletics','score','name','`desc`'],get_some=(jump,org_per_page),order=' score desc ',type=type)
+		return self.find_data(['id','members','create_time','img_path','logo_path','athletics','score','name','`desc`'],get_some=(jump,org_per_page),order=' score desc ',type=type)
 
 
 
