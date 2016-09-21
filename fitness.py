@@ -2132,7 +2132,7 @@ class ActPriHandler(BaseHandler):
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['truename','sex','tel','activity_id'])
                     # if a_d_m['sex'] not in set(['1,','2']): 
-                    result = ActController().attend_act(a_d_m['activity_id'],a_d['uid'],a_d_m['truename'],a_d_m['sex'],a_d_m['tel'])
+                    result = ActController().attend_act(a_d['uid'],a_d_m['activity_id'],a_d_m['truename'],a_d_m['sex'],a_d_m['tel'])
                     if not result is True: return self.return_param(0,200,{},result)
                     self.return_param(1,0,{},'success')
             elif a_d['action'] == 'get_user_info':
