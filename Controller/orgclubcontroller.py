@@ -121,6 +121,7 @@ class OrgClubController:
 		info = OrganizationInfoModel().get_brief_info(id)
 		info['create_time'] = info['create_time'][:9]
 		info['img_path'] = options.ipnet  + info['img_path']
+		info['logo_path'] = options.ipnet  + info['logo_path']
 		info['notice'] = info['notice'].split("||")
 		info['athletics'] = info['athletics'].split('|')[:3]
 		info['stars'] = self.get_star_pic(info['score'])
