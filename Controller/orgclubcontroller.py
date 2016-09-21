@@ -160,7 +160,7 @@ class OrgClubController:
 		info = OrganizationInfoModel().search_by_id_name(search,page)
 		for ele in info:
 			ele['create_time'] = ele['create_time'][:10]
-			ele['img_path'] = options.ipnet + ele['img_path']
+			ele['logo_path'] = options.ipnet + ele['logo_path']
 			ele['athletics'] = ele['athletics'].split("|")[:3]
 			star = self.get_star(ele['score'])
 			ele['star_pic'] = self.get_star_pic(ele['score'])
