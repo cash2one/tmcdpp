@@ -2134,7 +2134,7 @@ class ActPriHandler(BaseHandler):
                     # if a_d_m['sex'] not in set(['1,','2']): 
                     result = ActController().attend_act(a_d['uid'],a_d_m['activity_id'],a_d_m['truename'],a_d_m['sex'],a_d_m['tel'])
                     if not result is True: return self.return_param(0,200,{},result)
-                    self.return_param(1,0,{},'success')
+                    self.return_param(1,0,{},'已报名')
             elif a_d['action'] == 'get_user_info':
                 if a_d['version'] >= options.add_org_version:
                     user_info = self.db.get("select username,sex,tel   from fs_users where uid = %s",a_d['uid'])
