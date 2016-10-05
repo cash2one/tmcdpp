@@ -66,7 +66,7 @@ class ActController:
 			act['act_status'] = act_info_status['name']
 			act['act_status_id'] = act_info_status['flag'] 
 			act['time_scope'] = act['start_time'][5:16] + ' - ' + act['end_time'][5:16]
-			act['logo_img'] = options.ipnet + act['logo_img']
+			act['logo_img'] = act['logo_img']
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
 			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
 			act['classify'] = "足球"
@@ -137,7 +137,7 @@ class ActController:
 			act['act_status'] = act_info_status['name']
 			act['act_status_id'] = act_info_status['flag'] 
 			act['time_scope'] = act['start_time'][5:16] + ' - ' + act['end_time'][5:16]
-			act['logo_img'] = options.ipnet + act['logo_img']
+			act['logo_img'] = act['logo_img']
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
 			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
 			act['classify'] = '足球'

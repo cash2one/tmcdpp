@@ -2143,9 +2143,6 @@ class ActPriHandler(BaseHandler):
         except Exception,e:
             self.treat_except(e)
 
-
-
-
 class FollowPriHandler(BaseHandler):
     def get(self):
         try:

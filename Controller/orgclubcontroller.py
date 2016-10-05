@@ -58,8 +58,8 @@ class OrgClubController:
 		info = OrganizationInfoModel().get_org_club_list(type,page)
 		for ele in info:
 			ele['create_time'] = ele['create_time'][:10]
-			ele['img_path'] = options.ipnet + ele['img_path']
-			ele['logo_path'] = options.ipnet + ele['logo_path']
+			ele['img_path'] = ele['img_path']
+			ele['logo_path'] = ele['logo_path']
 			ele['athletics'] = ele['athletics'].split("|")[:3]
 			star = self.get_star(ele['score'])
 			ele['star_pic'] = self.get_star_pic(ele['score'])
@@ -72,8 +72,8 @@ class OrgClubController:
 			org_id = org_ele['organization_id']
 			org_info = OrganizationInfoModel().get_brief_info(org_id)
 			org_info['create_time'] = org_info['create_time'][:10]
-			org_info['img_path'] = options.ipnet + org_info['img_path']
-			org_info['logo_path'] = options.ipnet + org_info['logo_path']
+			org_info['img_path'] = org_info['img_path']
+			org_info['logo_path'] = org_info['logo_path']
 			org_info['athletics'] = org_info['athletics'].split("|")[:3]
 			org_info['star_pic'] = self.get_star_pic(org_info['score']) 
 			list_return.append(org_info)
@@ -120,8 +120,8 @@ class OrgClubController:
 		"""
 		info = OrganizationInfoModel().get_brief_info(id)
 		info['create_time'] = info['create_time'][:9]
-		info['img_path'] = options.ipnet  + info['img_path']
-		info['logo_path'] = options.ipnet  + info['logo_path']
+		info['img_path'] = info['img_path']
+		info['logo_path'] = info['logo_path']
 		info['notice'] = info['notice'].split("||")
 		info['athletics'] = info['athletics'].split('|')[:3]
 		info['stars'] = self.get_star_pic(info['score'])
@@ -161,7 +161,7 @@ class OrgClubController:
 		info = OrganizationInfoModel().search_by_id_name(search,page)
 		for ele in info:
 			ele['create_time'] = ele['create_time'][:10]
-			ele['logo_path'] = options.ipnet + ele['logo_path']
+			ele['logo_path'] = ele['logo_path']
 			ele['athletics'] = ele['athletics'].split("|")[:3]
 			star = self.get_star(ele['score'])
 			ele['star_pic'] = self.get_star_pic(ele['score'])
