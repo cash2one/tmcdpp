@@ -97,6 +97,7 @@ class OrgClubController:
 		根据积分获取星级(共5级)
 		"""
 		scores = int(score)
+		if not scores: return 1 
 		scores_list = [0,1000,3000,8000,20000]
 		scores_list.append(int(score))
 		scores_list.sort()
