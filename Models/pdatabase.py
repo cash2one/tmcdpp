@@ -55,6 +55,7 @@ class DbBase:
             print e
             raise
 
+   
     def find_db_sum(self,**query_dict):
         """input dict and return the count of query """
         sql = "SELECT COUNT(*) AS sum FROM " + self.table + ' WHERE '

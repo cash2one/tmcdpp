@@ -1982,6 +1982,7 @@ class OrgPriHandler(BaseHandler):
                     return self.return_param(1,0,{"id":result,"name":a_d_m['album_name']},'success')
 
         except Exception,e:
+            raise
             self.treat_except(e)
 
 
@@ -2524,6 +2525,7 @@ class SystemHandler(BaseHandler):
         if action == 'get_sysinfo':
             try:
                 uid = self.get_argument('uid')
+                print uid 
                 sysinfo_list = self.systemmodel.get_sysinfo(uid)
                 self.return_param(1,0,sysinfo_list,'成功')
             except Exception,e: print e
@@ -2535,6 +2537,20 @@ class SystemHandler(BaseHandler):
         elif action == 'get_ad': #get the picList of the add
             ad_list = self.admodel.get_all_ad()
             self.return_param(1,0,ad_list,'成功')
+
+    def post(self):
+        try:
+            action = self.get_argument('action')
+            if action == 'send_sysinfo':
+                a_d = self.get_multi_argument([{'uid_str':False},'title','content','type'])
+                if not 'uid_str' in a_d:#如果是群发的话
+                    self.systemmodel.send_sysinfo(0,a_d['type'],a_d['title'],a_d['content'])
+                else:
+                    self.systemmodel.send_sysinfo(a_d['uid_str'],a_d['type'],a_d['title'],a_d['content'])
+            self.return_param(1,0,{},'success')
+        except Exception,e:
+                self.treat_except(e)
+
 
 class AdminSendHandler(BaseHandler):
     def get(self):

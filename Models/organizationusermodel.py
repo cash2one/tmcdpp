@@ -102,6 +102,20 @@ class OrganizationUserModel(DbBase):
 		new_type = info['type'] | self.is_ord_memeber
 		return self.update_db({'type':new_type},organization_id=organization_id,user_id=user_id,msg=excuse,change_date=PublicFunc.get_current_datetime())
 
+	def set_user_apply(self,organization_id,user_id,excuse):
+		"""
+		设置用户为申请状态
+		"""
+		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
+		if not info:#如果没有该条数据
+			info = {}
+			info['type'] = 0
+			self.insert_into_db({"organization_id":organization_id,"user_id":user_id,"type":self.is_applying,"msg":excuse,"change_date":PublicFunc.get_current_datetime()})
+			return
+		new_type = info['type'] | self.is_ord_memeber
+		return self.update_db({'type':new_type},organization_id=organization_id,user_id=user_id,msg=excuse,change_date=PublicFunc.get_current_datetime())
+
+
 	def get_apply_list(self,id,page):
 		"""
 		"""

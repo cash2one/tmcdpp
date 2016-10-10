@@ -52,7 +52,11 @@ DATE_MAX =2
 
 class OrgClubController:
 	def __init__(self):
-		pass
+		self.is_admin = 4 #是否是管理员 
+		self.has_focus = 1# 是否已经关注
+		self.is_ord_memeber = 2 #是否是普通成员
+		self.is_applying = 32# 
+
 
 	def get_org_club_list(self,type,page):
 		info = OrganizationInfoModel().get_org_club_list(type,page)
@@ -134,7 +138,10 @@ class OrgClubController:
 		if role is 0 or role is 1:#如果用户角色是管理员或者普通成员，则显示已经加入
 			info['can_attend'] = 0 
 			info['status_name'] = "已经加入"
-		elif role is 2 or role is False :
+		elif role is 2:
+			info['can_attend'] = 0 
+			info['status_name'] = "审核中"
+		elif role is False :
 			info['can_attend'] = 1
 			info['status_name'] = "加入机构"
 
@@ -322,9 +329,13 @@ class OrgClubController:
 
 	def attend_org(self,uid,id,excuse):
 		need_check =OrganizationInfoModel().judge_need_check(id)
-		is_member = OrganizationUserModel().judge_is_member(id,uid)
-		if is_member: return "您已经在该机构中"
-		OrganizationUserModel().set_user_member(id,uid,excuse)
+		user_role = OrganizationUserModel().get_user_role(uid,id)
+		if user_role is 3: return '您已经提交申请'
+		elif user_role is 2 or user_role is 1: return '您已经在该机构中'
+		if not int(need_check):#
+			OrganizationUserModel().set_user_member(id,uid,excuse)
+		else:
+			OrganizationUserModel().set_user_apply(id,uid,excuse)
 		return "加入成功" if not int(need_check) else "审核中"
 
 
