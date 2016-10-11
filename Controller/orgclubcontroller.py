@@ -334,8 +334,11 @@ class OrgClubController:
 		elif user_role is 2 or user_role is 1: return '您已经在该机构中'
 		if not int(need_check):#
 			OrganizationUserModel().set_user_member(id,uid,excuse)
+			OrganizationUserModel().add_focus(id,uid)
 		else:
 			OrganizationUserModel().set_user_apply(id,uid,excuse)
+		#set user focus 
+
 		return "加入成功" if not int(need_check) else "审核中"
 
 
