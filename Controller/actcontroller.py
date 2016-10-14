@@ -142,9 +142,9 @@ class ActController:
 			act_info_status = self.get_act_status(act['regis_start_time'],act['regis_end_time'],act['start_time'],act['end_time'])
 			act['act_status'] = act_info_status['name']
 			act['act_status_id'] = act_info_status['flag'] 
-			act['time_scope'] = act['start_time'][5:16] + ' - ' + act['end_time'][5:16]
+			act['time_scope'] = act['start_time'] + '至' + act['end_time']
 			act['logo_img'] = act['logo_img']
-			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
+			if not int(act['regis_cost'])至:act['regis_cost'] = '免费' 
 			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
 			act['classify'] = '足球'
 		return act_list
