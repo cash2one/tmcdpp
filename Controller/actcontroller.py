@@ -96,9 +96,12 @@ class ActController:
 	def get_agree_list(self,id,page):
 		per_page = int(options.act_agree_per_page)
 		page = int(page)
-		agree_uid_list_all = ActivityInfoModel().get_agree_list(id).split('|')
-		print agree_uid_list_all
-		agree_uid_list = agree_uid_list_all[per_page*page:per_page*(page+1)]
+		agree_list = ActivityInfoModel().get_agree_list(id)
+		agree_uid_list = []
+		agree_uid_list_all = []
+		if agree_list:
+			agree_uid_list_all = agree_list.split('|')
+			agree_uid_list = agree_uid_list_all[per_page*page:per_page*(page+1)]
 		agree_user_list = []
 		for uid in agree_uid_list:
 			user_info = UsersModel().get_import_user_info(uid,['avatar','nickname','uid'])

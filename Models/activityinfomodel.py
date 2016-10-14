@@ -50,7 +50,8 @@ class ActivityInfoModel(DbBase):
 		"""
 		get the likelist of the activity
 		"""
-		return self.find_data(['like_list'],get_some=False,id=id)['like_list']
+		like_list = self.find_data(['like_list'],get_some=False,id=id)['like_list']
+		return like_list
 
 	def set_agree_list(self,id,like_list):
 		return self.update_db({'like_list':like_list},id=id)
