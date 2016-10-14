@@ -53,7 +53,7 @@ class ActivityInfoModel(DbBase):
 		return self.find_data(['like_list'],get_some=False,id=id)['like_list']
 
 	def set_agree_list(self,id,like_list):
-		return self.update_db({'like_list':like_list},organization_id=id)
+		return self.update_db({'like_list':like_list},id=id)
 
 	def get_act_info(self,activity_id):
 		act_info = self.find_data(['sponsor_sponsor','like_list','logo_img','start_time','end_time','name','introduce_introduce','regist_notice','activity_rule','address_address','regis_start_time','regis_end_time','regist_member','regis_max'],get_some=False,id=activity_id)

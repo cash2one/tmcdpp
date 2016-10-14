@@ -76,10 +76,15 @@ class ActController:
 		"""
 		给喜欢的活动点赞
 		"""
-		like_list_str= '|' + ActivityInfoModel().get_agree_list(id) + '|'
+		ori_agree_list = ActivityInfoModel().get_agree_list(id)
+		like_list_str = ''
+		if ori_agree_list:
+			like_list_str = '|' + ori_agree_list + '|'
 		search_str = '|' + str(uid) + '|'
+		print 'search_str is ' + search_str + "\n"
+		print 'like_list_str is ' + like_list_str + "\n"
 		if search_str in like_list_str :return '您已经点赞了'
-		new_like_list_str = like_list_str + str(uid)
+		new_like_list_str = like_list_str[1:] + str(uid)
 		ActivityInfoModel().set_agree_list(id,new_like_list_str)##	
 		ActivityInfoModel().incr_agree_num(id)	###increase the agree num 
 		return True
@@ -92,6 +97,7 @@ class ActController:
 		per_page = int(options.act_agree_per_page)
 		page = int(page)
 		agree_uid_list_all = ActivityInfoModel().get_agree_list(id).split('|')
+		print agree_uid_list_all
 		agree_uid_list = agree_uid_list_all[per_page*page:per_page*(page+1)]
 		agree_user_list = []
 		for uid in agree_uid_list:
@@ -119,7 +125,7 @@ class ActController:
 	def get_act_info(self,uid,activity_id):
 		act_info = ActivityInfoModel().get_act_info(activity_id)
 
-		act_info['time_scope'] = act_info['start_time'][5:-2] + " "  + act_info['end_time'][5:-2]
+		act_info['time_scope'] = act_info['start_time'] + "至" + act_info['end_time']
 		act_info_status = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
 		act_info['activity_status'] = act_info_status['name']
 		act_info['activity_status_id'] = act_info_status['flag']
