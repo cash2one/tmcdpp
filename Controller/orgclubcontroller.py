@@ -124,7 +124,7 @@ class OrgClubController:
 		获取机构/俱乐部详细信息
 		"""
 		info = OrganizationInfoModel().get_brief_info(id)
-		info['create_time'] = info['create_time'][:9]
+		info['create_time'] = info['create_time'][:10]
 		info['img_path'] = info['img_path']
 		info['logo_path'] = info['logo_path']
 		info['notice'] = info['notice'].split("||")
@@ -139,7 +139,7 @@ class OrgClubController:
 			info['can_attend'] = 0 
 			info['status_name'] = "已经加入"
 		elif role is 2:
-			info['can_attend'] = 0 
+			info['can_attend'] = 2
 			info['status_name'] = "审核中"
 		elif role is False :
 			info['can_attend'] = 1
