@@ -55,8 +55,9 @@ class OrganizationUserModel(DbBase):
 		return True if has focus else False 
 		"""
 		info = self.find_data(['type'],organization_id=organization_id,user_id=user_id,get_some=False)
-		print info
-		if not info:return False
+		if not info:
+			self.insert_into_db({'user_id':user_id,'organization_id':organization_id,'msg':'','type':0,'change_date':PublicFunc.get_current_datetime()}) 
+			return False
 		return True if int(info['type']) &  self.has_focus else False 
 
 	def get_my_org_club_list(self,uid,page):

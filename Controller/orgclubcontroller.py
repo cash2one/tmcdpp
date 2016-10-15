@@ -318,7 +318,10 @@ class OrgClubController:
 		return info_return
 
 	def focus_org_oper(self,user_id,organization_id):
+		print '---uid ' + user_id + '---\n' 
+		print '---organization_id ' + organization_id + '-----\n'
 		focus_status = OrganizationUserModel().judge_has_focus(organization_id,user_id)
+		print '---the focus status is ' + str(focus_status) + '----\n'
 		if not focus_status:#if not has focus 
 		 	OrganizationUserModel().add_focus(organization_id,user_id)
 			return "已关注"
