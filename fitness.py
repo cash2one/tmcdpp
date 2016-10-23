@@ -1787,8 +1787,9 @@ class PostPubHandler(BaseHandler):
 
             elif a_d['action'] == 'get_user_post':#获取我的朋友圈
                 if a_d['version'] >= '3.2':
-                    a_d_m = self.get_multi_argument(['page'])
-                    post_list = FCirController().get_user_post(a_d['uid'],a_d_m['page'])
+                    a_d_m = self.get_multi_argument(['page',{'perpage':False}])
+                    if not 'perpage' in a_d_m: a_d_m['perpage'] = 3
+                    post_list = FCirController().get_user_post(a_d['uid'],a_d_m['page'],int(a_d_m['perpage']))
                     self.return_param(1,0,post_list,'sucess')
             elif a_d['action'] == 'get_recommend_list':
                 if a_d['version'] >= '3.2':

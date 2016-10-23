@@ -146,11 +146,11 @@ class PostModel(MongoBase):
 		return recommend_user_info
 
 
-	def get_user_post(self,uid,page):
+	def get_user_post(self,uid,page,perpage=3):
 		"""获取用户朋友圈"""
 		page = int(page)
 		uid = int(uid)
-		post_per_page = self.post_per_page
+		post_per_page = perpage
 		post_list = list(self.m_c.find({'status':0,'uid':uid},{'comm_list':0,'latitude':0,'longitude':0,'love_list':0,'pic_list':{"$slice":[0,3]}}).sort([('time',-1)]).skip(page*post_per_page).limit(post_per_page)) 
 		return post_list
 

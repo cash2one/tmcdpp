@@ -213,9 +213,9 @@ class FCirController:
 		return True if result else False
 
 
-	def get_user_post(self,uid,page):
+	def get_user_post(self,uid,page,perpage):
 		"""获取用户的朋友圈"""
-		post_list = PostModel().get_user_post(uid,page)
+		post_list = PostModel().get_user_post(uid,page,perpage)
 		current_time = PublicFunc.get_current_stamp()
 		is_today = 1 # 默认是今天
 		for post in post_list:
