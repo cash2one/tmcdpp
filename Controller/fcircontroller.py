@@ -106,7 +106,8 @@ class FCirController:
 			lover_info = UsersModel().get_import_user_info(lover['uid'],['avatar','nickname'])#获取评论说说的人的信息
 			lover['avatar'] = lover_info['avatar']
 		# post_info['pic_list'] = [options.ipnet + pic for pic in post_info['pic_list']]
-		post_info['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post_info['pic_list']]
+		# post_info['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post_info['pic_list']]
+		post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+pic} for pic in post['pic_list']]
 		#man has love? 
 		post_info['has_love'] = 1 if PostLoveModel().judge_post_love(uid,post_info['post_id']) else 0
 		if int(post_info['uid']) == int(uid): post_info['has_follow'] = ''
