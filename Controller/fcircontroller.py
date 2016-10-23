@@ -152,7 +152,8 @@ class FCirController:
 			post['post_id'] = str(post['_id'])
 			post['have_love'] = 1 if PostLoveModel().judge_post_love(uid,post['_id']) else 0 
 			del post['_id']
-			post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post['pic_list']]
+			# post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post['pic_list']]
+			post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+pic} for pic in post['pic_list']]
 			post['time'] = PublicFunc.time_format_span(post['time'],current_time)
 			user_info = UsersModel().get_import_user_info(post['uid'],['avatar','nickname'])
 			post['avatar'] = user_info['avatar']
@@ -224,7 +225,8 @@ class FCirController:
 			if not PublicFunc.get_date_today() == PublicFunc.stamp_to_Ymd(post['time']):is_today = 0
 			post['is_today'] = is_today
 			date_info = PublicFunc.get_date_info(post['time'],['day','month'])
-			post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post['pic_list']]
+			# post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+options.post_thumb_save_path+'t'+pic[-17:]} for pic in post['pic_list']]
+			post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+pic} for pic in post['pic_list']]
 			post['day'] = date_info['day']
 			post['month'] = date_info['month']
 		return post_list
