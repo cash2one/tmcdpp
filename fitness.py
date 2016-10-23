@@ -1836,11 +1836,10 @@ class PostPriHandler(BaseHandler):
             elif a_d['action'] == 'delete_post':
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['post_id'])
-                    # self.write(a_d_m)
                     if not FCirController().judge_post_exist(a_d_m['post_id']):
                         return self.return_param(0,200,{},'不存在该条互动信息')
                     post_uid = int(PostModel().get_uid(a_d_m['post_id']))
-                    if not int(a_d['uid']) == post_uid:  return self.return_param(0,200,{},'您不能删除其他用户的互动消息')
+                    # if not int(a_d['uid']) == post_uid:  return self.return_param(0,200,{},'您不能删除其他用户的互动消息')
                     #allowed to delete user post 
                     PostModel().delete_post(a_d_m['post_id'])
                     return self.return_param(1,0,{},'删除成功')
