@@ -115,7 +115,9 @@ class Application(tornado.web.Application):
             (r"/[pk]y/orgpub",OrgPubHandler),
             (r"/[pk]y/followpub",FollowPubHandler),
             (r"/[pk]y/userevent",UserEventHandler),
-            (r"/[pk]y/adver",AdverHandler)
+            (r"/[pk]y/adver",AdverHandler),
+             (r"/[pk]y/map",MapHandler)
+
 
 
         ]
@@ -1808,7 +1810,7 @@ class PostPriHandler(BaseHandler):
     def get(self):
         try:
             a_d = self.get_multi_argument(['uid','token','version','action'])
-            if not UsersModel().check_token_available(a_d['uid'],a_d['token']): return self.return_param(0,200,{},'您已经注销登录或者在其他地方登录，请重新登录')
+            # if not UsersModel().check_token_available(a_d['uid'],a_d['token']): return self.return_param(0,200,{},'您已经注销登录或者在其他地方登录，请重新登录')
             if a_d['action'] == 'release_post':
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument([{'pic_str':False},{'content':False},{'address':False},{'longitude':False},{'latitude':False}])
@@ -1823,7 +1825,7 @@ class PostPriHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['post_id','comm_content'])
                     if not FCirController().judge_post_exist(a_d_m['post_id']):return self.return_param(0,200,{},options.post_not_exist)
                     comm_id = FCirController().send_comment(a_d['uid'],a_d_m['post_id'],a_d_m['comm_content'])
-                    self.return_param(1,0,comm_id,'评论成功')
+                    self.return_param(1,0,comm_id,'评论成功')   
 
             elif a_d['action'] == 'update_cir_back':#更新用户朋友圈背景图
                 if a_d['version'] >= '3.2':
