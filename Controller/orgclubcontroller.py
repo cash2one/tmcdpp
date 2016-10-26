@@ -133,6 +133,7 @@ class OrgClubController:
 		info['need_check'] = 1 
 		###check if the user has attend the club 
 		role = OrganizationUserModel().judge_user_role(id,uid)
+		print 'role is ' + str(role)
 		info['can_attend'] = 0 
 		info['status_name'] = ""
 		if role is 0 or role is 1:#如果用户角色是管理员或者普通成员，则显示已经加入
