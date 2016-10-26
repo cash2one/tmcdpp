@@ -333,6 +333,7 @@ class OrgClubController:
 	def attend_org(self,uid,id,excuse):
 		need_check =OrganizationInfoModel().judge_need_check(id)
 		user_role = OrganizationUserModel().get_user_role(uid,id)
+		print user_role
 		if user_role is 3: return '您已经提交申请'
 		elif user_role is 2 or user_role is 1: return '您已经在该机构中'
 		if not int(need_check):#

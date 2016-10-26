@@ -114,7 +114,7 @@ class OrganizationUserModel(DbBase):
 			self.insert_into_db({"organization_id":organization_id,"user_id":user_id,"type":self.is_applying,"msg":excuse,"change_date":PublicFunc.get_current_datetime()})
 			return
 		new_type = info['type'] | self.is_ord_memeber
-		return self.update_db({'type':new_type},organization_id=organization_id,user_id=user_id,msg=excuse,change_date=PublicFunc.get_current_datetime())
+		return self.update_db({'type':new_type},organization_id=organization_id,user_id=user_id)
 
 
 	def get_apply_list(self,id,page):
