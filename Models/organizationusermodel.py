@@ -37,12 +37,12 @@ class OrganizationUserModel(DbBase):
 		获取用户角色
 		"""
 		info = self.find_data(['type'],organization_id=org_id,user_id=uid,get_some=False)
-		if not info: return 0#not the member of the organization 
+		if not info: return False#not the member of the organization 
 		role_field = int(info['type'])
 		if role_field & self.is_admin: return 1 # is admin 
 		elif role_field & self.is_ord_memeber: return 2 #is ord_member
 		elif role_field & self.is_applying: return 3 #is applying 
-		else: return 0
+		else: return False
 
 
 	def judge_is_admin(self,organization_id,user_id):
