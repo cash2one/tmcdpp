@@ -58,7 +58,7 @@ class OrganizationUserModel(DbBase):
 		if not info:
 			self.insert_into_db({'user_id':user_id,'organization_id':organization_id,'msg':'','type':0,'change_date':PublicFunc.get_current_datetime()}) 
 			return False
-		return True if int(info['type']) &  self.has_focus else False 
+		return True if int(info['type']) &  (self.has_focus + self.is_admin + self.is_ord_memeber) else False 
 
 	def get_my_org_club_list(self,uid,page):
 		per_page = options.org_per_page
