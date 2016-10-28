@@ -281,7 +281,6 @@ class OrgClubController:
 		date_pic_list_2 = {}
 		# first_pic_stamp = pic_list[0]['create_time']
 		first_pic_date = pic_list[0]['create_time']
-		
 		print '---' + str(first_pic_date)
 		# first_date = PublicFunc.stamp_to_Ymd(first_pic_stamp)
 		# first_date_stamp = PublicFunc.date_to_stamp(first_date + " 00:00:00")
@@ -292,7 +291,7 @@ class OrgClubController:
 		pic_max_next_date = 24 #init the max rows of the nextdate data 
 		pic_max_num_next_date = 0#
 		for pic_info in pic_list:
-			if  pic_info['create_time'] > first_pic_date:#如果照片是第一批的照片
+			if  pic_info['create_time'] > first_pic_date[0:10]:#如果照片是第一批的照片
 				date_pic_list['date'] = first_pic_date
 				date_pic_list.setdefault('pic_list',[])
 				# pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
@@ -306,15 +305,19 @@ class OrgClubController:
 			else:#这个是更早日期的
 				#计算新的日期, 通过新的一行数据
 				if not calc_once:
+
 					# new_date_late_stamp = pic_info['create_time']
 					# next_date = PublicFunc.stamp_to_Ymd(new_date_late_stamp)
 					next_date = pic_info['create_time'][:10]
-					new_date = pic_info['create_time']
+					print next_date
+					# new_date = pic_info['create_time'][:10]
 					calc_once += 1  
 					pic_num_left = 24 - lenth_of_current_date
 					if pic_num_left < 4:break
 					pic_max_next_date = pic_num_left - pic_num_left%4
+
 				date_pic_list_2['date'] = next_date
+				print 'next date is ' + date_pic_list_2['date']
 				date_pic_list_2.setdefault('pic_list',[])
 				if len(date_pic_list_2['pic_list']) < pic_max_next_date:
 					# pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
@@ -324,10 +327,10 @@ class OrgClubController:
 					del pic_info['file_name']
 					date_pic_list_2['pic_list'].append(pic_info)
 				else:break
+
 		if date_pic_list:
 			info_return.append(date_pic_list)
 		if date_pic_list_2:info_return.append(date_pic_list_2)
-		print info_return
 		return info_return
 
 	def focus_org_oper(self,user_id,organization_id):
