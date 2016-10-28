@@ -308,6 +308,7 @@ class OrgClubController:
 				if not calc_once:
 					# new_date_late_stamp = pic_info['create_time']
 					# next_date = PublicFunc.stamp_to_Ymd(new_date_late_stamp)
+					next_date = pic_info['create_time'][:10]
 					new_date = pic_info['create_time']
 					calc_once += 1  
 					pic_num_left = 24 - lenth_of_current_date
@@ -316,14 +317,17 @@ class OrgClubController:
 				date_pic_list_2['date'] = next_date
 				date_pic_list_2.setdefault('pic_list',[])
 				if len(date_pic_list_2['pic_list']) < pic_max_next_date:
-					pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
-					pic_info['pic_thumb_path'] = options.ipnet + '/Uploads/AlbumPic/' + 't' + pic_info['file_name']
+					# pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
+					# pic_info['pic_thumb_path'] = options.ipnet + '/Uploads/AlbumPic/' + 't' + pic_info['file_name']
+					pic_info['pic_path'] = pic_info['web_path']
+					pic_info['pic_thumb_path'] = pic_info['web_path']
 					del pic_info['file_name']
 					date_pic_list_2['pic_list'].append(pic_info)
 				else:break
 		if date_pic_list:
 			info_return.append(date_pic_list)
 		if date_pic_list_2:info_return.append(date_pic_list_2)
+		print info_return
 		return info_return
 
 	def focus_org_oper(self,user_id,organization_id):
