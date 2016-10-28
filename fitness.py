@@ -2037,7 +2037,7 @@ class OrgPubHandler(BaseHandler):
             elif a_d['action'] == 'get_album_pic_list':
                 if a_d['version'] >= options.add_org_version:
                     a_d_m = self.get_multi_argument(['org_id','album_id','last_id'])
-                    if 'current_date' not in a_d_m: a_d_m['current_date'] = None 
+                    if 'current_date' not in a_d_m: a_d_m['current_date'] = '2016-05-02'
                     pic_list = OrgClubController().get_album_pic_list(a_d_m['org_id'],a_d_m['album_id'],a_d_m['last_id'],a_d_m['current_date'])
                     self.return_param(1,0,pic_list,'success')
 

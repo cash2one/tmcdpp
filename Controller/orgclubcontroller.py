@@ -251,6 +251,7 @@ class OrgClubController:
 		return_list = {}
 		return_list['per_page'] = 5 ##
 		album_list =  OrganizationAlbumModel().get_album_list(organization_id,page)
+
 		for album in album_list:
 			album['pic'] = options.ipnet + '/Uploads/back.jpg'
 		return_list['album_list'] = album_list
@@ -274,24 +275,30 @@ class OrgClubController:
 			last_id = 0 #如果是从第最开始取的话
 		#if not fetch 24 pic means 
 		pic_list = PhotoModel().get_album_pic_list(organization_id,album_id,last_id,max_get)
+		print pic_list
 		if len(pic_list) == 0: return []
 		info_return = []
 		date_pic_list = {}
 		date_pic_list_2 = {}
-		first_pic_stamp = pic_list[0]['create_time']
-		first_date = PublicFunc.stamp_to_Ymd(first_pic_stamp)
-		first_date_stamp = PublicFunc.date_to_stamp(first_date + " 00:00:00")
+		# first_pic_stamp = pic_list[0]['create_time']
+		first_pic_date = pic_list[0]['create_time']
+		print '---' + str(first_pic_date)
+		# first_date = PublicFunc.stamp_to_Ymd(first_pic_stamp)
+		# first_date_stamp = PublicFunc.date_to_stamp(first_date + " 00:00:00")
+		# first_date_stamp = PublicFunc.date_to_stamp(first_pic_date)
 		calc_once = 0#只计算一次新日期  
 		next_date = ''# init the next_date
 		lenth_of_current_date = 0 #当前date的数据量。 
 		pic_max_next_date = 24 #init the max rows of the nextdate data 
 		pic_max_num_next_date = 0#
 		for pic_info in pic_list:
-			if  pic_info['create_time'] > first_date_stamp:#如果照片是第一批的照片
-				date_pic_list['date'] = first_date
+			if  pic_info['create_time'] > first_pic_date:#如果照片是第一批的照片
+				date_pic_list['date'] = first_pic_date
 				date_pic_list.setdefault('pic_list',[])
-				pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
-				pic_info['pic_thumb_path'] = options.ipnet + '/Uploads/AlbumPic/' + 't' + pic_info['file_name']
+				# pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
+				# pic_info['pic_thumb_path'] = options.ipnet + '/Uploads/AlbumPic/' + 't' + pic_info['file_name']
+				pic_info['pic_path'] = pic_info['web_path']
+				pic_info['pic_thumb_path'] = pic_info['web_path']
 				del pic_info['file_name']
 				date_pic_list['pic_list'].append(pic_info) 
 				lenth_of_current_date += 1 ####auto add 1
@@ -299,8 +306,9 @@ class OrgClubController:
 			else:#这个是更早日期的
 				#计算新的日期, 通过新的一行数据
 				if not calc_once:
-					new_date_late_stamp = pic_info['create_time']
-					next_date = PublicFunc.stamp_to_Ymd(new_date_late_stamp)
+					# new_date_late_stamp = pic_info['create_time']
+					# next_date = PublicFunc.stamp_to_Ymd(new_date_late_stamp)
+					new_date = pic_info['create_time']
 					calc_once += 1  
 					pic_num_left = 24 - lenth_of_current_date
 					if pic_num_left < 4:break
@@ -313,7 +321,8 @@ class OrgClubController:
 					del pic_info['file_name']
 					date_pic_list_2['pic_list'].append(pic_info)
 				else:break
-		info_return.append(date_pic_list)
+		if date_pic_list:
+			info_return.append(date_pic_list)
 		if date_pic_list_2:info_return.append(date_pic_list_2)
 		return info_return
 

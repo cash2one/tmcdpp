@@ -41,7 +41,7 @@ class PhotoModel(DbBase):
 	def get_album_pic_list(self,organization_id,album_id,last_id,max_get):
 		if not last_id:
 			last_id = self.db.get("select max(id) as max from photo")['max'] + 1
-		pic_list = self.find_data(['create_time','file_name','id'],type_id=organization_id,target_id=album_id,id={'rule':'<','value':last_id},get_some=(0,max_get),order=" id desc ")
+		pic_list = self.find_data(['create_time','file_name','id','web_path'],type_id=organization_id,target_id=album_id,id={'rule':'<','value':last_id},get_some=(0,max_get),order=" id desc ")
 		return pic_list
 
 
