@@ -275,13 +275,13 @@ class OrgClubController:
 			last_id = 0 #如果是从第最开始取的话
 		#if not fetch 24 pic means 
 		pic_list = PhotoModel().get_album_pic_list(organization_id,album_id,last_id,max_get)
-		print pic_list
 		if len(pic_list) == 0: return []
 		info_return = []
 		date_pic_list = {}
 		date_pic_list_2 = {}
 		# first_pic_stamp = pic_list[0]['create_time']
 		first_pic_date = pic_list[0]['create_time']
+		
 		print '---' + str(first_pic_date)
 		# first_date = PublicFunc.stamp_to_Ymd(first_pic_stamp)
 		# first_date_stamp = PublicFunc.date_to_stamp(first_date + " 00:00:00")

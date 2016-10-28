@@ -30,7 +30,8 @@ class PhotoModel(DbBase):
 
 
 	def add_pic(self,uid,album_id,file_name,org_id):
-		create_time = int(time.time())
+		# create_time = int(time.time())
+		create_time = PublicFunc.get_current_datetime()
 		type = self.org_pic
 		web_path = options.ipnet + "/Uploads/AlbumPic/" + file_name
 		self.insert_into_db({'user_id':uid,'create_time':create_time,'type':type,'type_id':org_id,'target_id':album_id,'file_path':'','web_path':web_path,
