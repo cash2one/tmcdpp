@@ -292,7 +292,7 @@ class OrgClubController:
 		pic_max_num_next_date = 0#
 		for pic_info in pic_list:
 			if  pic_info['create_time'] > first_pic_date[0:10]:#如果照片是第一批的照片
-				date_pic_list['date'] = first_pic_date
+				date_pic_list['date'] = first_pic_date[0:10]
 				date_pic_list.setdefault('pic_list',[])
 				# pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
 				# pic_info['pic_thumb_path'] = options.ipnet + '/Uploads/AlbumPic/' + 't' + pic_info['file_name']
