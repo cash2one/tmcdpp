@@ -120,6 +120,10 @@ class NoteModel(MongoBase):
 
 		return list(note_cur)
 
+	def delete_note(self,note_id):
+		return self.m_c.update({'_id':ObjectId(note_id)},{"status":1})
+
+
 
 
 

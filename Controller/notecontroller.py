@@ -136,6 +136,9 @@ class NoteController:
 		self.musermodel.add_note(uid,note_id,title)
 		return note_id
 
+	def delete_note(self,note_id):
+		return NoteModel().delete_note(note_id)
+
 
 
 

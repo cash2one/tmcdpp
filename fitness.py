@@ -1708,6 +1708,11 @@ class NotePriHandler(BaseHandler):
                     a_d_m = self.get_multi_argument(['title','content'])
                     note_id = NoteController().release_note(a_d['uid'],a_d_m['title'],a_d_m['content'])
                     return self.return_param(1,0,{"note_id":note_id},'发布成功')
+            if a_d['action'] == 'delete_note':
+                if a_d['version'] >= '3.2':
+                    a_d_m = self.get_multi_argument(['note_id'])
+                    NoteController().delete_note(a_d_m['note_id'])
+                    return self.return_param(1,0,{},'success')
         except Exception,e:
             self.treat_except(e)
 
