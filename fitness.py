@@ -60,6 +60,7 @@ from Controller.orgclubcontroller import OrgClubController
 from Controller.actcontroller import ActController
 from Models.notemodel import NoteModel
 from Models.notecommodel import NoteComModel
+from Models.tracemodel import TraceModel
 from Func.publicfunc import PublicFunc
 
 reload(sys)
@@ -116,9 +117,8 @@ class Application(tornado.web.Application):
             (r"/[pk]y/followpub",FollowPubHandler),
             (r"/[pk]y/userevent",UserEventHandler),
             (r"/[pk]y/adver",AdverHandler),
-             (r"/[pk]y/map",MapHandler)
-
-
+             (r"/[pk]y/map",MapHandler),
+             (r"/[pk]y/trace",TraceHandler)
 
         ]
         settings = dict(
@@ -1145,6 +1145,20 @@ class GameHandler(BaseHandler):
             lives_info_db = LiveModel().get_live_list(gid)
             self.return_param(1,0,lives_info_db,'成功')
 
+
+
+class TraceHandler(BaseHandler):
+    def get(self):
+        try:
+            action = self.get_argument('action')
+            if action == 'save_trace':
+                #http://192.168.239.152:8000/py/trace?action=save_trace&uid=32&token=yinshuai&longitude=25.633636&latitude=55.534535
+                a_d = self.get_multi_argument(['uid','token','longitude','latitude'])
+                TraceModel.get_instance().save_trace(a_d['uid'],a_d['longitude'],a_d['latitude'])
+                self.return_param(1,0,{},'success')
+        except Exception,e:
+            raise
+            self.return_param(0,200,{},e)
 class InteractHandler(BaseHandler):
     def get(self):
         action = self.get_argument('action')
