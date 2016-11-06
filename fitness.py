@@ -115,6 +115,7 @@ class Application(tornado.web.Application):
             (r"/[pk]y/orgpri",OrgPriHandler),
             (r"/[pk]y/orgpub",OrgPubHandler),
             (r"/[pk]y/followpub",FollowPubHandler),
+            (r"/[pk]y/followpri",FollowPriHandler),
             (r"/[pk]y/userevent",UserEventHandler),
             (r"/[pk]y/adver",AdverHandler),
              (r"/[pk]y/map",MapHandler),
