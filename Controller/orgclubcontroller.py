@@ -149,7 +149,6 @@ class OrgClubController:
 		return info 
 
 	def get_member_list(self,organization_id,page):
-		print 'the page is ' + str(page)
 		member_list = OrganizationUserModel().get_member_list(organization_id,page)
 		for mem_info in member_list:
 			user_id =  mem_info['user_id']
@@ -280,7 +279,6 @@ class OrgClubController:
 		date_pic_list_2 = {}
 		# first_pic_stamp = pic_list[0]['create_time']
 		first_pic_date = pic_list[0]['create_time']
-		print '---' + str(first_pic_date)
 		# first_date = PublicFunc.stamp_to_Ymd(first_pic_stamp)
 		# first_date_stamp = PublicFunc.date_to_stamp(first_date + " 00:00:00")
 		# first_date_stamp = PublicFunc.date_to_stamp(first_pic_date)
@@ -308,7 +306,6 @@ class OrgClubController:
 					# new_date_late_stamp = pic_info['create_time']
 					# next_date = PublicFunc.stamp_to_Ymd(new_date_late_stamp)
 					next_date = pic_info['create_time'][:10]
-					print next_date
 					# new_date = pic_info['create_time'][:10]
 					calc_once += 1  
 					pic_num_left = 24 - lenth_of_current_date
@@ -316,7 +313,6 @@ class OrgClubController:
 					pic_max_next_date = pic_num_left - pic_num_left%4
 
 				date_pic_list_2['date'] = next_date
-				print 'next date is ' + date_pic_list_2['date']
 				date_pic_list_2.setdefault('pic_list',[])
 				if len(date_pic_list_2['pic_list']) < pic_max_next_date:
 					# pic_info['pic_path'] = options.ipnet + '/Uploads/AlbumPic/' + pic_info['file_name']
@@ -333,10 +329,7 @@ class OrgClubController:
 		return info_return
 
 	def focus_org_oper(self,user_id,organization_id):
-		print '---uid ' + user_id + '---\n' 
-		print '---organization_id ' + organization_id + '-----\n'
 		focus_status = OrganizationUserModel().judge_has_focus(organization_id,user_id)
-		print '---the focus status is ' + str(focus_status) + '----\n'
 		if not focus_status:#if not has focus 
 		 	OrganizationUserModel().add_focus(organization_id,user_id)
 			return "已关注"

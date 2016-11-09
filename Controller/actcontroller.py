@@ -82,8 +82,6 @@ class ActController:
 		if ori_agree_list:
 			like_list_str = '|' + ori_agree_list + '|'
 		search_str = '|' + str(uid) + '|'
-		print 'search_str is ' + search_str + "\n"
-		print 'like_list_str is ' + like_list_str + "\n"
 		if search_str in like_list_str :return '您已经点赞了'
 		new_like_list_str = like_list_str[1:] + str(uid)
 		ActivityInfoModel().set_agree_list(id,new_like_list_str)##	
@@ -142,8 +140,6 @@ attend_status  attend_status_name
 
 		"""
 		act_info = ActivityInfoModel().get_act_info(activity_id)
-		print act_info
-
 		act_info['time_scope'] = act_info['start_time'] + "至" + act_info['end_time']
 		act_info_status = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
 		act_info['activity_status'] = act_info_status['name']
