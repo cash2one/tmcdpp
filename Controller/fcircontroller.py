@@ -157,6 +157,8 @@ class FCirController:
 			post['pic_list'] = [{'ori_pic':options.ipnet + pic,'thumb_pic':options.ipnet+pic} for pic in post['pic_list']]
 			post['time'] = PublicFunc.time_format_span(post['time'],current_time)
 			user_info = UsersModel().get_import_user_info(post['uid'],['avatar','nickname'])
+			# qz = user_info['avatar'][:4]
+			
 			post['avatar'] = user_info['avatar']
 			post['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 			post['self_post'] = 0
