@@ -143,6 +143,7 @@ attend_status  attend_status_name
 		# 'co_organizer','organizer','supporting_agency','crowner_crowner'
 		act_info['co_organizer'] = act_info['co_organizer'].split('||') if act_info['co_organizer'] else [] 
 		act_info['organizer'] = act_info['organizer'].split("||") if act_info['organizer'] else []
+		act_info['sponsor_sponsor'] =  act_info['sponsor_sponsor'].split("||") if act_info['sponsor_sponsor'] else []
 		act_info['supporting_agency'] = act_info['supporting_agency'].split("||") if act_info['supporting_agency'] else []
 		act_info['crowner_crowner'] = act_info['crowner_crowner'].split("||") if act_info['crowner_crowner'] else [] 
 		act_info['time_scope'] = act_info['start_time'] + "至" + act_info['end_time']
