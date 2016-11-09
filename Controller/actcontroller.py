@@ -140,6 +140,11 @@ attend_status  attend_status_name
 
 		"""
 		act_info = ActivityInfoModel().get_act_info(activity_id)
+		# 'co_organizer','organizer','supporting_agency','crowner_crowner'
+		act_info['co_organizer'] = act_info['co_organizer'].split('||') if act_info['co_organizer'] else [] 
+		act_info['organizer'] = act_info['organizer'].split("||") if act_info['organizer'] else []
+		act_info['supporting_agency'] = act_info['supporting_agency'].split("||") if act_info['supporting_agency'] else []
+		act_info['crowner_crowner'] = act_info['crowner_crowner'].split("||") if act_info['crowner_crowner'] else [] 
 		act_info['time_scope'] = act_info['start_time'] + "至" + act_info['end_time']
 		act_info_status = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
 		act_info['activity_status'] = act_info_status['name']
