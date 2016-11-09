@@ -70,7 +70,7 @@ class ActController:
 			act['logo_img'] = act['logo_img']
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
 			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
-			act['classify'] = ClassifyInfoModel.get_instance().get_classname_by_code('10100000')
+			act['classify'] = ClassifyInfoModel.get_instance().get_classname_by_code(act['classify'])['name']
 		return act_list
 
 	def agree_act(self,id,uid):
@@ -197,7 +197,7 @@ attend_status  attend_status_name
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
 			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
 			# act['classify'] = '足球'
-			act['classify'] = ClassifyInfoModel.get_instance().get_classname_by_code(act['classify'])
+			act['classify'] = ClassifyInfoModel.get_instance().get_classname_by_code(act['classify'])['name']
 		return act_list
 
 	def get_attend_list(self,activity_id,page):
