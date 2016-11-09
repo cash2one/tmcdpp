@@ -16,7 +16,7 @@ define("port", default=8888, help="run on the given port", type=int)
 # define("mysql_host", default="192.168.239.1:3306", help="blog database host")
 define("mysql_host", default="101.200.214.68:3306", help="blog database host")
 define("mysql_database", default="fitness", help="blog database name")
-define("mysql_user", default="root", help="blog database user")
+define("mysql_user", default="temp", help="blog database user")
 define("mysql_password", default="tZ3BtYCeQLdwyKqF", help="blog database password")#the password of mysql is null
 
 define('redis_host',default="127.0.0.1",help="redis host")

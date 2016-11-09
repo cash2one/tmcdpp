@@ -144,7 +144,6 @@ class OrgClubController:
 		elif role is False :
 			info['can_attend'] = 1
 			info['status_name'] = "加入机构"
-
 		####get the focus status 
 		info['has_focus'] = 1 if  OrganizationUserModel().judge_has_focus(id,uid) else 0 
 		return info 

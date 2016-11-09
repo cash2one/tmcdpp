@@ -35,6 +35,7 @@ from Models.organizationapplymodel import OrganizationApplyModel
 from Models.organizationusermodel import OrganizationUserModel
 from Models.activityinfomodel import ActivityInfoModel
 from Models.activitysignupmodel import ActivitySignUpModel
+from Models.classifyinfomodel import ClassifyInfoModel
 from Func.publicfunc import PublicFunc
 
 class ActController:
@@ -69,7 +70,7 @@ class ActController:
 			act['logo_img'] = act['logo_img']
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
 			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
-			act['classify'] = "足球"
+			act['classify'] = ClassifyInfoModel.get_instance().get_classname_by_code('10100000')
 		return act_list
 
 	def agree_act(self,id,uid):
@@ -126,15 +127,61 @@ class ActController:
 			# save_message_info(self,type,target_id,title,,avatar,""):
 
 	def get_act_info(self,uid,activity_id):
+		"""
+		attend_status_name  状态名称
+attend_status 状态id
+
+attend_status  attend_status_name 
+   0		 已经报名
+   1		 报名未开始
+   2         	 报名 
+   3 		 报名结束
+   4             参与中
+   5             进行中
+   6             已结束
+
+		"""
 		act_info = ActivityInfoModel().get_act_info(activity_id)
+		print act_info
 
 		act_info['time_scope'] = act_info['start_time'] + "至" + act_info['end_time']
 		act_info_status = self.get_act_status(act_info['regis_start_time'],act_info['regis_end_time'],act_info['start_time'],act_info['end_time'])
 		act_info['activity_status'] = act_info_status['name']
 		act_info['activity_status_id'] = act_info_status['flag']
 		act_info['regist_avail'] = act_info['regis_max'] - act_info['regist_member'] 
-		act_info['has_attend'] = '已报名' if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else '报名'
-		act_info['has_attend_status'] = 1 if int(ActivitySignUpModel().judge_have_attend(uid,activity_id)) else 0
+		attend_status = 0 #init status id 
+		attend_status_name = ''#init status name 
+		user_has_attend = int(ActivitySignUpModel().judge_have_attend(uid,activity_id))
+		current_datatime = PublicFunc.get_current_datetime()
+		if current_datatime < act_info['regis_start_time']:
+			attend_status = 1
+			attend_status_name = '报名未开始'
+		elif current_datatime < act_info['regis_end_time']:
+			if user_has_attend:
+				attend_status = 0 
+				attend_status_name = '已报名'
+			else:
+				attend_status = 2
+				attend_status_name = '报名'
+		elif current_datatime < act_info['start_time']:
+			if user_has_attend:
+				attend_status = 0
+				attend_status_name = '已报名'
+			else:
+				attend_status = 3 
+				attend_status_name = '报名结束'
+		elif current_datatime < act_info['end_time']:
+			if user_has_attend:
+				attend_status = 4
+				attend_status_name = '参与中' 
+			else:
+				attend_status = 5
+				attend_status_name = '进行中'
+		elif current_datatime > act_info['end_time']:
+			attend_status = 6
+			attend_status_name = '已结束' 
+		act_info['attend_status'] = attend_status
+		act_info['attend_status_name'] = attend_status_name
 		##if the man has agree the activity???
 		act_info['have_zan'] = 1 if '|' + str(uid) + "|" in act_info['like_list'] else 0
 		return act_info
@@ -149,7 +196,8 @@ class ActController:
 			act['logo_img'] = act['logo_img']
 			if not int(act['regis_cost']):act['regis_cost'] = '免费' 
 			# act['classify'] = act['classify'].split("|")[:int(options.classify_num_show)]
-			act['classify'] = '足球'
+			# act['classify'] = '足球'
+			act['classify'] = ClassifyInfoModel.get_instance().get_classname_by_code(act['classify'])
 		return act_list
 
 	def get_attend_list(self,activity_id,page):

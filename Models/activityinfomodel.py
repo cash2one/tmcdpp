@@ -26,9 +26,6 @@ class ActivityInfoModel(DbBase):
 		DbBase.__init__(self)
 		self.table = 'activity_info'
 
-
-
-
 	def incr_attend_num(self,activity_id,num=1):
 		"""
 		increase the num of the man attend the game

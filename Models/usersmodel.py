@@ -75,7 +75,8 @@ class UsersModel(DbBase):
         uid = str(uid)
         if not self.cache.exists('users:uid:' + uid):
             user_info = self.find_data(self.user_import_param,get_some=False,uid=uid)
-            user_info['avatar'] = options.ipnet + user_info['avatar']
+            if not user_info['avatar'][:4] == 'http':
+                user_info['avatar'] = options.ipnet + user_info['avatar']
             self.cache.hmset('users:uid:' + uid,user_info)
             self.cache.expire('users:uid:' + uid,options.user_info_expires)
         return True
