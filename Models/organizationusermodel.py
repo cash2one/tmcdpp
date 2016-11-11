@@ -64,7 +64,8 @@ class OrganizationUserModel(DbBase):
 		per_page = options.org_per_page
 		jump = int(page) * int(per_page)
 		is_mem = str(self.is_admin + self.is_ord_memeber)
-		sql = 'select organization_id from ' + self.table + ' where user_id=' + str(uid) + ' and type ^ ' + is_mem  + " >0   order by id desc limit " + str(jump) + ',' + str(per_page)
+		sql = 'select organization_id,type from ' + self.table + ' where user_id=' + str(uid) + ' and type & ' + is_mem  + \
+			   " >0   order by type desc limit " + str(jump) + ',' + str(per_page)
 		return self.sql_select(sql)
 
 

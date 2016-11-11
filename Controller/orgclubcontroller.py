@@ -70,6 +70,9 @@ class OrgClubController:
 		return info 
 
 	def get_my_org_club_list(self,uid,page):
+		"""
+		role_type为0 为管理员 为1为普通会员， 为2为只关注的用户
+		"""
 		info = OrganizationUserModel().get_my_org_club_list(uid,page)
 		list_return =[]
 		for org_ele in info:
@@ -80,6 +83,13 @@ class OrgClubController:
 			org_info['logo_path'] = org_info['logo_path']
 			org_info['athletics'] = org_info['athletics'].split("|")[:3]
 			org_info['star_pic'] = self.get_star_pic(org_info['score']) 
+			role_type = org_ele['type'] # the role type 
+			if role_type & 4 > 0 :
+				org_info['role_type'] = 0#admin user 
+			elif role_type & 2 > 0 :
+				org_info['role_type'] = 1 #ord_user 
+			elif role_type & 1 > 0 :
+				org_info['role_type'] = 2 #just focus 
 			list_return.append(org_info)
 		return list_return 
 
