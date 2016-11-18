@@ -756,8 +756,12 @@ class TestHandler(BaseHandler):
         #check_token_avaiable 
         # print UsersModel().check_token_available(7,'dd')
         # self.write(argu)
+        uid = 23
+        activity_id = 55
+        url_req = options.ipnet + ':8088/napi/userSignUpActivity.shtml?uid=%s&aid=%s' % (uid,activity_id)
+        print url_req
 
-        
+
 
 
 
