@@ -120,10 +120,14 @@ class ActController:
 			ActivityInfoModel().incr_attend_num(activity_id)
 			ActivitySignUpModel().attend_activity(activity_id,uid,truename,tel,sex)
 			avatar = UsersModel().get_import_user_info(uid,['avatar'])['avatar']
+			url_req = options.ipnet + ':8088/napi/userSignUpActivity.shtml?uid=%s&aid=%s' % (uid,activity_id)
+			result = PublicFunc.do_curl_get(url_req)
 			return True
 			# content = truename
 			# save_message_info(self,type,target_id,title,,avatar,""):
 
+
+   
 	def get_act_info(self,uid,activity_id):
 		"""
 		attend_status_name  状态名称

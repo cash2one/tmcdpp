@@ -755,8 +755,10 @@ class TestHandler(BaseHandler):
         # print PublicFunc.get_date_info(1525896369,['year','month','day'])
         #check_token_avaiable 
         # print UsersModel().check_token_available(7,'dd')
-        argu = self.get_argument('yin')
-        self.write(argu)
+        # self.write(argu)
+
+        
+
 
 
 
