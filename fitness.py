@@ -1690,8 +1690,8 @@ class NotePubHandler(BaseHandler):
                 self.return_param(1,0,return_dict,'success')
 
             elif a_d['action'] == 'get_note_list':
-                a_d_m = self.get_multi_argument(['page'])
-                note_list = NoteModel.get_instance().get_note_list(a_d_m['page'])
+                a_d_m = self.get_multi_argument(['page','code'])
+                note_list = NoteModel.get_instance().get_note_list(a_d_m['code'],a_d_m['page'])
                 return self.return_param(1,0,note_list,'success')
 
             elif a_d['action'] == 'get_user_note': #获取我的帖子
@@ -1720,8 +1720,8 @@ class NotePriHandler(BaseHandler):
                 # return self.return_param(0,200,{},options.wrong_login_tip)
             if a_d['action'] == 'release_note':
                 if a_d['version'] >= '3.2':
-                    a_d_m = self.get_multi_argument(['title','content'])
-                    note_id = NoteController().release_note(a_d['uid'],a_d_m['title'],a_d_m['content'])
+                    a_d_m = self.get_multi_argument(['title','content','code'])#add code argument 
+                    note_id = NoteController().release_note(a_d['uid'],a_d_m['title'],a_d_m['content'],a_d_m['code'])
                     return self.return_param(1,0,{"note_id":note_id},'发布成功')
             if a_d['action'] == 'delete_note':
                 if a_d['version'] >= '3.2':
@@ -1739,8 +1739,8 @@ class NotePriHandler(BaseHandler):
                 # return self.return_param(0,200,{},options.wrong_login_tip)
             if a_d['action'] == 'release_note':
                 if a_d['version'] >= '3.2':
-                    a_d_m = self.get_multi_argument(['title','content'])
-                    note_id = NoteController().release_note(a_d['uid'],a_d_m['title'],a_d_m['content'])
+                    a_d_m = self.get_multi_argument(['title','content','code'])#add code argument 
+                    note_id = NoteController().release_note(a_d['uid'],a_d_m['title'],a_d_m['content'],a_d_m['code'])
                     return self.return_param(1,0,{"note_id":note_id},'发布成功')
         except Exception,e:
             self.treat_except(e)
@@ -2455,6 +2455,8 @@ class ThirdHandler(BaseHandler):
             a_d = self.get_multi_argument([{'nickname':False},{'sex':False},{'province':False},{'city':False},{'country':False},{'avatar':False},'unionid'])
             try:
                 user_info = self.wechausermodel.wecha_user_get(a_d)
+                print user_info
+                return 
                 if user_info[0] == 'exist':
                     uid = user_info[1]
                 elif user_info[0] == 'create': 

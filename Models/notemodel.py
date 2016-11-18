@@ -52,21 +52,20 @@ class NoteModel(MongoBase):
 		return cls.model_instance
 
 
-	def release_note(self,uid,title,content):
+	def release_note(self,uid,title,content,code):
 		""" 发布帖子"""
 		uid = int(uid)
-		note_id = self.m_c.insert({'uid':uid,'title':title,'content':content,'time':PublicFunc.get_current_stamp(),'special':0,'up':0,'look_num':0,'com_num':0,'status':0})
+		note_id = self.m_c.insert({'uid':uid,'title':title,'code':code,'content':content,'time':PublicFunc.get_current_stamp(),'special':0,'up':0,'look_num':0,'com_num':0,'status':0})
 		return str(note_id)
 
-	def get_note_list(self,page):
+	def get_note_list(self,code,page):
 		"""
 		function:获取帖子列表
              置顶的排在前面，第二顺序为发布时间，时间越晚越靠前
 		"""
 		note_per_page = int(options.note_per_page)
 		page = int(page)
-		note_list = list(self.m_c.find({'status':0},{'content':0,'status':0}).sort([('up',-1),('time',-1)]).skip(note_per_page*page).limit(note_per_page))
-		print note_list
+		note_list = list(self.m_c.find({'status':0,'code':code},{'content':0,'status':0}).sort([('up',-1),('time',-1)]).skip(note_per_page*page).limit(note_per_page))
 		current_time = PublicFunc.get_current_stamp()
 		for note in note_list:
 			note['time'] = PublicFunc.time_format_span(note['time'],current_time)

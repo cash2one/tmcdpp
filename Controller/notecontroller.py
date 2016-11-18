@@ -58,7 +58,7 @@ class NoteController:
 			comm['comm_id'] = str(comm['_id'])
 			user_info = UsersModel().get_import_user_info(comm['uid'],['avatar','nickname'])
 			comm['avatar'] = user_info['avatar']
-			comm['nickname'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
+			comm['nicknamefr'] = user_info['nickname'] if user_info['nickname'] else options.default_nick_name
 			comm['level'] = note_comm_num
 			comm['time'] = PublicFunc.time_format_span(comm['time'],current_time)
 			note_comm_num -= 1
@@ -130,9 +130,9 @@ class NoteController:
 			note['time'] = PublicFunc.time_format_span(note['time'],current_time)
 		return note_list
 
-	def release_note(self,uid,title,content):
-		""" 发布帖子"""
-		note_id = self.notemodel.release_note(uid,title,content)
+	def release_note(self,uid,title,content,code):
+		""" 发布帖子 add argument code """
+		note_id = self.notemodel.release_note(uid,title,content,code)
 		self.musermodel.add_note(uid,note_id,title)
 		return note_id
 

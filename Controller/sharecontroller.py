@@ -43,7 +43,7 @@ class ShareController:
 
 	def share_post(self,post_id):
 		post_info = PostModel().get_post_info(post_id)
-		share_url = 'http://101.200.214.68/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/hudongxiangqing/' + str(post_id)
+		share_url =  options.ipnet + '/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/hudongxiangqing/' + str(post_id)
 		token_pos = share_url.find('token')
 		share_url = share_url[:token_pos] + share_url[token_pos + 39:]
 		share_dict = {'title':self.share_title,'content':post_info['content'],'image':options.ipnet + post_info['pic_list'][0],'url':share_url}
@@ -51,7 +51,7 @@ class ShareController:
 
 	def share_note(self,note_id):
 		note_info = NoteModel().get_note_info(note_id)
-		share_url = 'http://101.200.214.68/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/tiezixiangqing/' + str(note_id)
+		share_url = options.ipnet +  '/RunCircle/index.html?uid=35&token=83adde48c7654c46ae1bbe73fdac93bd&cat=ios#/app/tiezixiangqing/' + str(note_id)
 		token_pos = share_url.find('token')
 		share_url = share_url[:token_pos] + share_url[token_pos + 39:]
 		share_dict = {'title':self.share_title,'content':note_info['title'],'image':'not have','url':share_url}
@@ -61,6 +61,6 @@ class ShareController:
 		act_info = ActivityInfoModel().get_act_info(activity_id)
 		act_name = act_info['name']
 		logo_img = options.ipnet + act_info['logo_img']
-		url = "http://101.200.214.68/html5/org/detail.html?uid=38&activity_id=%s&token=2388e0ba96055622591a00fc1b23a959" %(activity_id)
+		url = options.ipnet + "/html5/org/detail.html?uid=38&activity_id=%s&token=2388e0ba96055622591a00fc1b23a959" %(activity_id)
 		share_dict = {'title':act_name,'content':'一起来参加吧','image':logo_img,'url':url}
 		return share_dict

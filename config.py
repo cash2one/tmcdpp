@@ -43,7 +43,7 @@ define('recent_run_man',default="10",help="the expires of the 6 recent run man")
 define('rank_data_expires',default="10",help="the expires of the rank_data_expires")
 define('group_show_num',default="20",help="")
 #
-define('ipnet',default="http://101.200.214.68",help="this is the ipnet of the resourse")
+define('ipnet',default="http://mg.booyeee.com",help="this is the ipnet of the resourse")
 define('recent_show',default="6",help="show the recent run man or group num ")
 define('html_path',default="/home/yinshuai/",help="set the default html file save path")
 define('token_request_more_version',default="3.0",help="version 3")
