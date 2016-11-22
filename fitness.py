@@ -756,20 +756,6 @@ class TestHandler(BaseHandler):
         #check_token_avaiable 
         # print UsersModel().check_token_available(7,'dd')
         # self.write(argu)
-        uid = 23
-        activity_id = 55
-        url_req = options.ipnet + ':8088/napi/userSignUpActivity.shtml?uid=%s&aid=%s' % (uid,activity_id)
-        print url_req
-
-
-
-
-
-
-
-
- 
-
         return 
         #       self.m_c.update({'_id':ObjectId(comm_id)},{'$inc':{'member_num':1},'$push':{'comm_member':member_dict}})
         MongoTestModel.get_instance().adding()
@@ -2461,8 +2447,6 @@ class ThirdHandler(BaseHandler):
             a_d = self.get_multi_argument([{'nickname':False},{'sex':False},{'province':False},{'city':False},{'country':False},{'avatar':False},'unionid'])
             try:
                 user_info = self.wechausermodel.wecha_user_get(a_d)
-                print user_info
-                return 
                 if user_info[0] == 'exist':
                     uid = user_info[1]
                 elif user_info[0] == 'create': 
