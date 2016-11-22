@@ -243,8 +243,7 @@ class OrgClubController:
 		"""
 		dy_list = OrganizationStatusMessageModel().get_dy_list(organization_id,page)
 		for dy in dy_list:
-			dy['target_img'] = options.ipnet + dy['target_img']
-			dy['target_img'] = options.ipnet + '/Uploads/pic1.jpg'
+			dy['target_img'] =  dy['target_img']
 			stamp = PublicFunc.date_to_stamp(dy['create_time'])
 			dy['create_time'] = PublicFunc.time_format_span(stamp,int(time.time()))
 		return_info = {}
