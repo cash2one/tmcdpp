@@ -1682,7 +1682,8 @@ class NotePubHandler(BaseHandler):
                 self.return_param(1,0,return_dict,'success')
 
             elif a_d['action'] == 'get_note_list':
-                a_d_m = self.get_multi_argument(['page','code'])
+                a_d_m = self.get_multi_argument(['page',{'code':False}])
+                if not 'code' in a_d_m: a_d_m['code'] = 0
                 note_list = NoteModel.get_instance().get_note_list(a_d_m['code'],a_d_m['page'])
                 return self.return_param(1,0,note_list,'success')
 

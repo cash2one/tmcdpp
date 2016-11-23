@@ -65,7 +65,10 @@ class NoteModel(MongoBase):
 		"""
 		note_per_page = int(options.note_per_page)
 		page = int(page)
-		note_list = list(self.m_c.find({'status':0,'code':code},{'content':0,'status':0}).sort([('up',-1),('time',-1)]).skip(note_per_page*page).limit(note_per_page))
+		if code:
+			note_list = list(self.m_c.find({'status':0,'code':code},{'content':0,'status':0}).sort([('up',-1),('time',-1)]).skip(note_per_page*page).limit(note_per_page))
+		else:
+			note_list = list(self.m_c.find({'status':0},{'content':0,'status':0}).sort([('up',-1),('time',-1)]).skip(note_per_page*page).limit(note_per_page))
 		current_time = PublicFunc.get_current_stamp()
 		for note in note_list:
 			note['time'] = PublicFunc.time_format_span(note['time'],current_time)
