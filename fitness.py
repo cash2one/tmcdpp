@@ -1732,7 +1732,8 @@ class NotePriHandler(BaseHandler):
                 # return self.return_param(0,200,{},options.wrong_login_tip)
             if a_d['action'] == 'release_note':
                 if a_d['version'] >= '3.2':
-                    a_d_m = self.get_multi_argument(['title','content','code'])#add code argument 
+                    a_d_m = self.get_multi_argument(['title','content',{'code':False}])#add code argument 
+                    if 'code' not in a_d_m: a_d_m['code'] = 0
                     note_id = NoteController().release_note(a_d['uid'],a_d_m['title'],a_d_m['content'],a_d_m['code'])
                     return self.return_param(1,0,{"note_id":note_id},'发布成功')
         except Exception,e:
