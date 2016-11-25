@@ -1757,7 +1757,7 @@ class NoteCommPriHandler(BaseHandler):
     def get(self):
         try:
             a_d = self.get_multi_argument(['uid','token','version','action'])
-            if not UsersModel().check_token_available(a_d['uid'],a_d['token']): return self.return_param(0,200,{},options.wrong_login_tip)
+            if not UsersModel().check_token_available(a_d['uid'],a_d['token']): pass
             if a_d['action'] == 'make_comment': #评论帖子   
                 if a_d['version'] >= '3.2':
                     a_d_m = self.get_multi_argument(['note_id','comm_content'])
