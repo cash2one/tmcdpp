@@ -60,7 +60,7 @@ class ShareController:
 	def share_org_act(self,activity_id):
 		act_info = ActivityInfoModel().get_act_info(activity_id)
 		act_name = act_info['name']
-		logo_img = options.ipnet + act_info['logo_img']
+		logo_img = act_info['logo_img']
 		url = options.ipnet + "/html5/org/detail.html?uid=38&activity_id=%s&token=2388e0ba96055622591a00fc1b23a959" %(activity_id)
 		share_dict = {'title':act_name,'content':'一起来参加吧','image':logo_img,'url':url}
 		return share_dict
