@@ -258,9 +258,10 @@ class OrgClubController:
 		return_list = {}
 		return_list['per_page'] = 5 ##
 		album_list =  OrganizationAlbumModel().get_album_list(organization_id,page)
+		print album_list
 
 		for album in album_list:
-			album['pic'] = options.ipnet + '/Uploads/back.jpg'
+			album['pic'] = PhotoModel().get_last_pic(album['id'])
 		return_list['album_list'] = album_list
 		return return_list
 

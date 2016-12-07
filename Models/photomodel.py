@@ -45,5 +45,9 @@ class PhotoModel(DbBase):
 		pic_list = self.find_data(['create_time','file_name','id','web_path'],type_id=organization_id,target_id=album_id,id={'rule':'<','value':last_id},get_some=(0,max_get),order=" id desc ")
 		return pic_list
 
+	def get_last_pic(self,album_id):
+		pic = self.find_data(['web_path'],target_id=album_id,get_some=False)['web_path']
+		return pic
+
 
 
